@@ -20,7 +20,7 @@ export default function Header() {
         <nav className="flex space-x-4">
           <Button variant="ghost" 
           className="px-4 py-2 rounded-full bg-gray-100 text-black transition duration-300 hover:bg-blue-600 hover:text-white" 
-          onClick={() => navigate({ to: "/customer" })}>
+          onClick={() => navigate({ to: "/login" })}>
             Login
           </Button>
 
