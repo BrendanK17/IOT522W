@@ -14,7 +14,7 @@ export default function Home() {
               <h3 className="text-xl font-semibold text-center">For Customers</h3>
               <p className="mt-4 text-gray-600 text-center">Browse the menu, place your order, and track its delivery status.</p>
               <div className="mt-6 text-center">
-                <Link to="/customer">
+                <Link to="/login">
                   <Button className="bg-blue-600 text-white py-2 px-6 rounded-md hover:bg-blue-700">Browse Menu</Button>
                 </Link>
               </div>
@@ -22,25 +22,22 @@ export default function Home() {
   
             {/* Employee Section */}
             <div className="bg-white p-6 rounded-lg shadow-lg">
-              <h3 className="text-xl font-semibold text-center">For Employees</h3>
-              <p className="mt-4 text-gray-600 text-center">View, prepare, and deliver customer orders with ease.</p>
+              <h3 className="text-xl font-semibold text-center">For Food Prep Staff</h3>
+              <p className="mt-4 text-gray-600 text-center">View and prepare orders for customers with ease.</p>
               <div className="mt-6 text-center">
-                <Link to="/manage-orders">
-                  <Button className="bg-green-600 text-white py-2 px-6 rounded-md hover:bg-green-700">Manage Orders</Button>
-                </Link>
-                <Link to="/deliver-orders" className="block mt-4">
-                  <Button className="bg-yellow-600 text-white py-2 px-6 rounded-md hover:bg-yellow-700">Deliver Orders</Button>
+                <Link to="/login">
+                  <Button className="bg-green-600 text-white py-2 px-6 rounded-md hover:bg-green-700">View Orders</Button>
                 </Link>
               </div>
             </div>
   
             {/* Admin Section (if you want to add admin role in the future) */}
             <div className="bg-white p-6 rounded-lg shadow-lg">
-              <h3 className="text-xl font-semibold text-center">For Admins</h3>
-              <p className="mt-4 text-gray-600 text-center">Manage the entire system, including employees and customers.</p>
+              <h3 className="text-xl font-semibold text-center">For Food Delivery Staff</h3>
+              <p className="mt-4 text-gray-600 text-center">Deliver orders to customers quickly and efficiently.</p>
               <div className="mt-6 text-center">
-                <Link to="/admin-dashboard">
-                  <Button className="bg-purple-600 text-white py-2 px-6 rounded-md hover:bg-purple-700">Admin Dashboard</Button>
+              <Link to="/login" className="block mt-4">
+                  <Button className="bg-purple-600 text-white py-2 px-6 rounded-md hover:bg-purple-700">Deliver Orders</Button>
                 </Link>
               </div>
             </div>
