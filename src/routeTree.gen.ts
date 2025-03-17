@@ -12,8 +12,11 @@
 
 import { Route as rootRoute } from './routes/__root'
 import { Route as IndexImport } from './routes/index'
+import { Route as SignupIndexImport } from './routes/signup.index'
+import { Route as LoginIndexImport } from './routes/login.index'
+import { Route as FoodPrepDashboardIndexImport } from './routes/food-prep-dashboard.index'
+import { Route as DeliveryDashboardIndexImport } from './routes/delivery-dashboard.index'
 import { Route as CustomerIndexImport } from './routes/customer.index'
-import { Route as CustomerProfileImport } from './routes/customer.profile'
 import { Route as CustomerOrderImport } from './routes/customer.order'
 import { Route as CustomerCheckoutImport } from './routes/customer.checkout'
 
@@ -25,15 +28,33 @@ const IndexRoute = IndexImport.update({
   getParentRoute: () => rootRoute,
 } as any)
 
-const CustomerIndexRoute = CustomerIndexImport.update({
-  id: '/customer/',
-  path: '/customer/',
+const SignupIndexRoute = SignupIndexImport.update({
+  id: '/signup/',
+  path: '/signup/',
   getParentRoute: () => rootRoute,
 } as any)
 
-const CustomerProfileRoute = CustomerProfileImport.update({
-  id: '/customer/profile',
-  path: '/customer/profile',
+const LoginIndexRoute = LoginIndexImport.update({
+  id: '/login/',
+  path: '/login/',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const FoodPrepDashboardIndexRoute = FoodPrepDashboardIndexImport.update({
+  id: '/food-prep-dashboard/',
+  path: '/food-prep-dashboard/',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const DeliveryDashboardIndexRoute = DeliveryDashboardIndexImport.update({
+  id: '/delivery-dashboard/',
+  path: '/delivery-dashboard/',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const CustomerIndexRoute = CustomerIndexImport.update({
+  id: '/customer/',
+  path: '/customer/',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -74,18 +95,39 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof CustomerOrderImport
       parentRoute: typeof rootRoute
     }
-    '/customer/profile': {
-      id: '/customer/profile'
-      path: '/customer/profile'
-      fullPath: '/customer/profile'
-      preLoaderRoute: typeof CustomerProfileImport
-      parentRoute: typeof rootRoute
-    }
     '/customer/': {
       id: '/customer/'
       path: '/customer'
       fullPath: '/customer'
       preLoaderRoute: typeof CustomerIndexImport
+      parentRoute: typeof rootRoute
+    }
+    '/delivery-dashboard/': {
+      id: '/delivery-dashboard/'
+      path: '/delivery-dashboard'
+      fullPath: '/delivery-dashboard'
+      preLoaderRoute: typeof DeliveryDashboardIndexImport
+      parentRoute: typeof rootRoute
+    }
+    '/food-prep-dashboard/': {
+      id: '/food-prep-dashboard/'
+      path: '/food-prep-dashboard'
+      fullPath: '/food-prep-dashboard'
+      preLoaderRoute: typeof FoodPrepDashboardIndexImport
+      parentRoute: typeof rootRoute
+    }
+    '/login/': {
+      id: '/login/'
+      path: '/login'
+      fullPath: '/login'
+      preLoaderRoute: typeof LoginIndexImport
+      parentRoute: typeof rootRoute
+    }
+    '/signup/': {
+      id: '/signup/'
+      path: '/signup'
+      fullPath: '/signup'
+      preLoaderRoute: typeof SignupIndexImport
       parentRoute: typeof rootRoute
     }
   }
@@ -97,16 +139,22 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/customer/checkout': typeof CustomerCheckoutRoute
   '/customer/order': typeof CustomerOrderRoute
-  '/customer/profile': typeof CustomerProfileRoute
   '/customer': typeof CustomerIndexRoute
+  '/delivery-dashboard': typeof DeliveryDashboardIndexRoute
+  '/food-prep-dashboard': typeof FoodPrepDashboardIndexRoute
+  '/login': typeof LoginIndexRoute
+  '/signup': typeof SignupIndexRoute
 }
 
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/customer/checkout': typeof CustomerCheckoutRoute
   '/customer/order': typeof CustomerOrderRoute
-  '/customer/profile': typeof CustomerProfileRoute
   '/customer': typeof CustomerIndexRoute
+  '/delivery-dashboard': typeof DeliveryDashboardIndexRoute
+  '/food-prep-dashboard': typeof FoodPrepDashboardIndexRoute
+  '/login': typeof LoginIndexRoute
+  '/signup': typeof SignupIndexRoute
 }
 
 export interface FileRoutesById {
@@ -114,8 +162,11 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/customer/checkout': typeof CustomerCheckoutRoute
   '/customer/order': typeof CustomerOrderRoute
-  '/customer/profile': typeof CustomerProfileRoute
   '/customer/': typeof CustomerIndexRoute
+  '/delivery-dashboard/': typeof DeliveryDashboardIndexRoute
+  '/food-prep-dashboard/': typeof FoodPrepDashboardIndexRoute
+  '/login/': typeof LoginIndexRoute
+  '/signup/': typeof SignupIndexRoute
 }
 
 export interface FileRouteTypes {
@@ -124,22 +175,31 @@ export interface FileRouteTypes {
     | '/'
     | '/customer/checkout'
     | '/customer/order'
-    | '/customer/profile'
     | '/customer'
+    | '/delivery-dashboard'
+    | '/food-prep-dashboard'
+    | '/login'
+    | '/signup'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/customer/checkout'
     | '/customer/order'
-    | '/customer/profile'
     | '/customer'
+    | '/delivery-dashboard'
+    | '/food-prep-dashboard'
+    | '/login'
+    | '/signup'
   id:
     | '__root__'
     | '/'
     | '/customer/checkout'
     | '/customer/order'
-    | '/customer/profile'
     | '/customer/'
+    | '/delivery-dashboard/'
+    | '/food-prep-dashboard/'
+    | '/login/'
+    | '/signup/'
   fileRoutesById: FileRoutesById
 }
 
@@ -147,16 +207,22 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   CustomerCheckoutRoute: typeof CustomerCheckoutRoute
   CustomerOrderRoute: typeof CustomerOrderRoute
-  CustomerProfileRoute: typeof CustomerProfileRoute
   CustomerIndexRoute: typeof CustomerIndexRoute
+  DeliveryDashboardIndexRoute: typeof DeliveryDashboardIndexRoute
+  FoodPrepDashboardIndexRoute: typeof FoodPrepDashboardIndexRoute
+  LoginIndexRoute: typeof LoginIndexRoute
+  SignupIndexRoute: typeof SignupIndexRoute
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   CustomerCheckoutRoute: CustomerCheckoutRoute,
   CustomerOrderRoute: CustomerOrderRoute,
-  CustomerProfileRoute: CustomerProfileRoute,
   CustomerIndexRoute: CustomerIndexRoute,
+  DeliveryDashboardIndexRoute: DeliveryDashboardIndexRoute,
+  FoodPrepDashboardIndexRoute: FoodPrepDashboardIndexRoute,
+  LoginIndexRoute: LoginIndexRoute,
+  SignupIndexRoute: SignupIndexRoute,
 }
 
 export const routeTree = rootRoute
@@ -172,8 +238,11 @@ export const routeTree = rootRoute
         "/",
         "/customer/checkout",
         "/customer/order",
-        "/customer/profile",
-        "/customer/"
+        "/customer/",
+        "/delivery-dashboard/",
+        "/food-prep-dashboard/",
+        "/login/",
+        "/signup/"
       ]
     },
     "/": {
@@ -185,11 +254,20 @@ export const routeTree = rootRoute
     "/customer/order": {
       "filePath": "customer.order.tsx"
     },
-    "/customer/profile": {
-      "filePath": "customer.profile.tsx"
-    },
     "/customer/": {
       "filePath": "customer.index.tsx"
+    },
+    "/delivery-dashboard/": {
+      "filePath": "delivery-dashboard.index.tsx"
+    },
+    "/food-prep-dashboard/": {
+      "filePath": "food-prep-dashboard.index.tsx"
+    },
+    "/login/": {
+      "filePath": "login.index.tsx"
+    },
+    "/signup/": {
+      "filePath": "signup.index.tsx"
     }
   }
 }
