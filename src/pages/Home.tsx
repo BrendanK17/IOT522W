@@ -10,7 +10,7 @@ import deliverFoodImg from "../assets/deliver_food.png";
 export default function LandingPage() {
 
   return (
-    <div className="flex min-h-screen flex-col">
+    <div className="flex min-h-screen flex-col items-center">
       <main className="flex-1">
         {/* Hero Section */}
         <section className="relative w-full overflow-hidden bg-gradient-to-r from-[#E6F0FF] to-white py-12 md:py-24 lg:py-32 xl:py-48">
@@ -120,7 +120,7 @@ export default function LandingPage() {
                 <div className="rounded-full bg-[#0052CC] p-3 text-white">
                   <Utensils className="h-6 w-6" />
                 </div>
-                <h3 className="text-xl font-bold">For Customers</h3>
+                <h3 className="text-xl font-bold">Customers</h3>
                 <p className="text-center text-muted-foreground">
                   Browse menus, place orders, and track delivery in real-time. Pay securely and save your favorites.
                 </p>
@@ -129,7 +129,7 @@ export default function LandingPage() {
                 <div className="rounded-full bg-[#0052CC] p-3 text-white">
                   <ChefHat className="h-6 w-6" />
                 </div>
-                <h3 className="text-xl font-bold">For Kitchen Staff</h3>
+                <h3 className="text-xl font-bold">Kitchen Staff</h3>
                 <p className="text-center text-muted-foreground">
                   Manage incoming orders, update preparation status, and optimise your kitchen workflow.
                 </p>
@@ -138,7 +138,7 @@ export default function LandingPage() {
                 <div className="rounded-full bg-[#0052CC] p-3 text-white">
                   <MapPin className="h-6 w-6" />
                 </div>
-                <h3 className="text-xl font-bold">For Delivery Staff</h3>
+                <h3 className="text-xl font-bold">Delivery Staff</h3>
                 <p className="text-center text-muted-foreground">
                   Get clear delivery instructions, optimise routes, and confirm deliveries with ease.
                 </p>
