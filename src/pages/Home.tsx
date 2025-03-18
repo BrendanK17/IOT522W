@@ -10,8 +10,8 @@ import deliverFoodImg from "../assets/deliver_food.png";
 export default function LandingPage() {
 
   return (
-    <div className="flex min-h-screen flex-col items-center">
-      <main className="flex-1">
+    <div className="flex flex-col items-center justify-center min-h-screen w-full">
+      <main className="flex-1 w-full">
         {/* Hero Section */}
         <section className="relative w-full overflow-hidden bg-gradient-to-r from-[#E6F0FF] to-white py-12 md:py-24 lg:py-32 xl:py-48">
           {/* Graphic elements */}
@@ -23,26 +23,23 @@ export default function LandingPage() {
             </div>
             <div
               className="food-item absolute"
-              style={{ top: "70%", left: "15%"}}
-            >
+              style={{ top: "70%", left: "15%"}}>
               <div className="h-12 w-12 rounded-full bg-[#FF6347]/20 shadow-lg"></div>
             </div>
             <div
               className="food-item absolute"
-              style={{ top: "30%", right: "10%" }}
-            >
+              style={{ top: "30%", right: "10%" }}>
               <div className="h-14 w-14 rounded-full bg-[#32CD32]/20 shadow-lg"></div>
             </div>
             <div
               className="food-item absolute"
-              style={{ top: "80%", right: "20%"}}
-            >
+              style={{ top: "80%", right: "20%"}}>
               <div className="h-10 w-10 rounded-full bg-[#9370DB]/20 shadow-lg"></div>
             </div>
           </div>
 
           {/* Text Section */}
-          <div className="container relative px-4 md:px-6 flex flex-col items-center text-center">
+          <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative flex flex-col items-center text-center">
             <div className="max-w-2xl mx-auto space-y-6">
               <h1 className="text-4xl font-bold tracking-tighter sm:text-5xl xl:text-6xl">
                 Food delivery right to your{" "}
@@ -82,7 +79,7 @@ export default function LandingPage() {
 
         {/* Stats banner */}
         <section className="bg-[#0052CC] py-8 text-white">
-          <div className="container">
+        <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="grid grid-cols-2 gap-4 md:grid-cols-4">
               <div className="flex flex-col items-center justify-center p-4 text-center">
                 <span className="text-3xl font-bold">30+</span>
@@ -106,7 +103,7 @@ export default function LandingPage() {
 
         {/* Features Section */}
         <section id="features" className="w-full py-12 md:py-24 lg:py-32 bg-[#E6F0FF]">
-          <div className="container px-4 md:px-6">
+        <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="flex flex-col items-center justify-center space-y-4 text-center">
               <div className="space-y-2">
                 <h2 className="text-3xl font-bold tracking-tighter md:text-4xl">One platform for everyone</h2>
@@ -155,7 +152,7 @@ export default function LandingPage() {
             <div className="absolute -right-20 bottom-20 h-64 w-64 rounded-full bg-[#0052CC]/5"></div>
           </div>
 
-          <div className="container px-4 md:px-6">
+          <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="flex flex-col items-center justify-center space-y-4 text-center">
               <div className="inline-flex items-center rounded-full border border-[#0052CC] bg-white px-3 py-1 text-sm text-[#0052CC]">
                 <span>Streamlined Process</span>
@@ -241,7 +238,7 @@ export default function LandingPage() {
         </section>
 
         <section className="w-full py-12 md:py-24 lg:py-32 bg-[#0052CC] text-white">
-          <div className="container px-4 md:px-6">
+        <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="grid gap-6 lg:grid-cols-2 lg:gap-12">
               <div className="flex flex-col justify-center space-y-4">
                 <div className="space-y-2">
