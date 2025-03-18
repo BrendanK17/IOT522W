@@ -1,5 +1,4 @@
 import type React from "react"
-
 import { useState } from "react"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
@@ -9,6 +8,7 @@ import { Link } from "@tanstack/react-router"
 import { Mail, Lock, User, ArrowRight, Utensils, MapPin, ChefHat } from "lucide-react"
 import { Label } from "@/components/ui/label"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
+import { signup } from "../lib/auth"
 
 const Signup = () => {
   const [email, setEmail] = useState("")
@@ -17,7 +17,13 @@ const Signup = () => {
 
   const handleSignup = (e: React.FormEvent) => {
     e.preventDefault()
-    toast.error("Signup is disabled. Use the predefined accounts to log in.")
+
+    const response = signup(email, password, role)
+    if (response === "User created successfully") {
+      toast.success("Account created! You can now log in.")
+    } else {
+      toast.error(response)
+    }
   }
 
   // Role icons and descriptions
@@ -160,4 +166,3 @@ const Signup = () => {
 }
 
 export default Signup
-
