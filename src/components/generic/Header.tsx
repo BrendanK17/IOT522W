@@ -6,8 +6,8 @@ export default function Header() {
   const navigate = useNavigate();
 
   return (
-    <header className="sticky top-0 bg-white text-black py-4 px-8 border-b border-gray-200 z-10">
-      <div className="container mx-auto flex justify-between items-center">
+    <header className="sticky top-0 bg-white text-black py-4 px-4 sm:px-6 lg:px-8 border-b border-gray-200 z-10 w-full">
+      <div className="w-full max-w-7xl mx-auto flex justify-between items-center">
         {/* Logo */}
         <h1
           className="cursor-pointer"
