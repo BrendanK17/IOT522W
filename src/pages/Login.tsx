@@ -19,7 +19,7 @@ const Login = () => {
 
     const user = login(email, password);
     if (user) {
-      toast.success(`Welcome, ${user.role}!`);
+      toast.success(`Welcome, ${user.role}! You should be redirected shortly...`);
       if (user.role === "customer") navigate({ to: "/customer/order" });
       else if (user.role === "food-prep-staff") navigate({ to: "/food-prep-dashboard" });
       else if (user.role === "delivery-staff") navigate({ to: "/delivery-dashboard" });
