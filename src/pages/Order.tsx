@@ -78,7 +78,7 @@ export default function Order() {
                   </div>
                 </div>
                 <Input
-                  placeholder="Add a comment..."
+                  placeholder="Add any special requests here..."
                   value={item.comment || ""} // Ensure comment is always a string
                   onChange={(e) => updateComment(item.id, e.target.value)} // Update comment functionality
                   className="mt-2 bg-blue-100 text-blue-900"
