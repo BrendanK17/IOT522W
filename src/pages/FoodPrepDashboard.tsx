@@ -7,6 +7,8 @@ import {
   TableRow,
 } from "@/components/ui/table"
 import { Separator } from "@/components/ui/separator"
+import { Button } from "@/components/ui/button";
+import { useNavigate } from "@tanstack/react-router";
 
 
 const orders = [
@@ -69,6 +71,7 @@ const orders = [
 ];
 
 export default function FoodPrepDashboard() {
+  const navigate = useNavigate();
     return (
       <div className="flex flex-col h-screen px-6 md:px-16 lg:px-28 py-4">
         <h1 className="text-3xl font-bold">Incoming Orders Dashboard</h1>
@@ -98,6 +101,12 @@ export default function FoodPrepDashboard() {
             </TableBody>
           </Table>
         </div>
+        {/* Button at the bottom of the screen */}
+        <div className="fixed bottom-4 left-1/2 transform -translate-x-1/2">
+          <Button onClick={() => navigate({ to: "/food-prep-inventory" })}>
+            Go to Food Prep Inventory
+          </Button>
+        </div>
       </div>
-      );
-} 
+    );
+}
