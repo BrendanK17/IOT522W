@@ -7,3 +7,12 @@ export const users = [
 export const login = (email: string, password: string) => {
     return users.find((user) => user.email === email && user.password === password);
 };
+
+export const signup = (email: string, password: string, role: string): string => {
+    const existingUser = users.find((user) => user.email === email)
+    if (existingUser) {
+      return "User already exists"
+    }
+    users.push({ email, password, role })
+    return "User created successfully"
+  }
