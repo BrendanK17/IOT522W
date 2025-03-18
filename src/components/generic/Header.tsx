@@ -6,7 +6,7 @@ export default function Header() {
   const navigate = useNavigate();
 
   return (
-    <header className="bg-white text-black py-4 px-8 border-b border-gray-200">
+    <header className="sticky top-0 bg-white text-black py-4 px-8 border-b border-gray-200 z-10">
       <div className="container mx-auto flex justify-between items-center">
         {/* Logo */}
         <h1
@@ -17,21 +17,16 @@ export default function Header() {
         </h1>
 
         {/* Customer Login Button */}
-        <nav className="flex space-x-4">
-          <Button variant="ghost" 
-          className="px-4 py-2 rounded-full bg-gray-100 text-black transition duration-300 hover:bg-blue-600 hover:text-white" 
-          onClick={() => navigate({ to: "/login" })}>
-            Login
+        <nav className="flex space-x-4" >
+          <Button variant="ghost" size="sm" onClick={() => navigate({ to: "/login" })}>
+                Log in
           </Button>
 
         {/* Sign Up Button */}
-        <Button
-            variant="ghost"
-            className="px-4 py-2 rounded-full bg-blue-600 text-white transition duration-300 hover:bg-blue-700"
-            onClick={() => navigate({ to: "/signup" })}
-          >
-            Sign Up
-          </Button>  
+        <Button size="sm" 
+        onClick={() => navigate({ to: "/signup" })}
+        className="bg-blue-600 text-white hover:bg-blue-800"
+        >Sign up</Button>
         </nav>
       </div>
     </header>
