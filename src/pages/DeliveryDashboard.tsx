@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef  } from "react"
+import { useState, useEffect, } from "react"
 import {
   Package,
   MapPin,
@@ -146,9 +146,11 @@ export default function DeliveryDashboard() {
   const navigate = useNavigate()
 
   const handleLogout = () => {
-    // In a real app, you would clear auth state here
-    navigate({ to: "/" })
-  }
+    // Scroll to the top of the page
+    window.scrollTo({ top: 0, behavior: "smooth" });
+
+    navigate({ to: "/" });
+  };
 
   // Function to view a delivery on the map
   const viewOnMap = (delivery: any) => {
@@ -158,6 +160,13 @@ export default function DeliveryDashboard() {
       floor: delivery.floor,
       deskId: delivery.deskId,
     })
+    // Add a delay to ensure the tab switch completes before scrolling
+      setTimeout(() => {
+        window.scrollTo({
+          top: 0,
+          behavior: "smooth",
+        });
+      }, 300); // Adjust delay if needed
   }
 
   // Reset highlighted desk when changing tabs
@@ -321,7 +330,10 @@ export default function DeliveryDashboard() {
                     className="bg-white text-[#0052CC] hover:bg-blue-50"
                     onClick={() => {
                       setActiveTab("deliveries")
-                      window.scrollTo(0, 0)
+                      window.scrollTo({
+                        top: 0,
+                        behavior: "smooth",
+                      });
                     }}
                   >
                     Start Delivering
@@ -420,7 +432,10 @@ export default function DeliveryDashboard() {
                       className="rounded-lg mt-2"
                       onClick={() => {
                         setActiveTab("deliveries")
-                        window.scrollTo(0, 0)
+                        window.scrollTo({
+                          top: 0,
+                          behavior: "smooth",
+                        });
                       }}
                     >
                       View All
@@ -728,7 +743,6 @@ export default function DeliveryDashboard() {
                     {/* Floor 1 Map */}
                     <TabsContent value="1" className="mt-0">
                       <div className="relative aspect-[16/9] w-full bg-gray-100 p-4">
-                        {/* This would be replaced with an actual floor map image */}
                         <div className="h-full w-full bg-white rounded-lg border border-gray-200 relative">
                         <img
                             src={floor1}
@@ -796,7 +810,6 @@ export default function DeliveryDashboard() {
                     <TabsContent value="2" className="mt-0">
                       <div className="relative aspect-[16/9] w-full bg-gray-100 p-4">
                         <div className="h-full w-full bg-white rounded-lg border border-gray-200 relative">
-                          {/* Floor plan image as background */}
                           <img
                             src={floor2}
                             alt="Floor 2 Plan"
@@ -855,7 +868,6 @@ export default function DeliveryDashboard() {
                     <TabsContent value="3" className="mt-0">
                       <div className="relative aspect-[16/9] w-full bg-gray-100 p-4">
                         <div className="h-full w-full bg-white rounded-lg border border-gray-200 relative">
-                          {/* Floor plan image as background */}
                           <img
                             src={floor3}
                             alt="Floor 3 Plan"
