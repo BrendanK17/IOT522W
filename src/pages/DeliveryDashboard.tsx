@@ -672,6 +672,21 @@ export default function DeliveryDashboard() {
             <div className="space-y-6">
               <div className="flex items-center justify-between">
                 <h2 className="text-2xl font-bold">Office Floor Map</h2>
+                {/* Key for Pin Colors */}
+                <div className="flex items-center gap-4 text-sm">
+                  <div className="flex items-center">
+                    <div className="h-4 w-4 rounded-full bg-green-500 mr-2"></div>
+                    <span>Delivered</span>
+                  </div>
+                  <div className="flex items-center">
+                    <div className="h-4 w-4 rounded-full bg-[#0052CC] mr-2"></div>
+                    <span>Pending</span>
+                  </div>
+                  <div className="flex items-center">
+                    <div className="h-4 w-4 rounded-full bg-red-500 mr-2"></div>
+                    <span>High Priority</span>
+                  </div>
+                </div>
               </div>
 
               <Card className="border-none shadow-lg">
