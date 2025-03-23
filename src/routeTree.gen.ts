@@ -13,6 +13,7 @@
 import { Route as rootRoute } from './routes/__root'
 import { Route as FoodPrepInventoryImport } from './routes/food-prep-inventory'
 import { Route as IndexImport } from './routes/index'
+import { Route as UnauthorisedIndexImport } from './routes/unauthorised.index'
 import { Route as SignupIndexImport } from './routes/signup.index'
 import { Route as LoginIndexImport } from './routes/login.index'
 import { Route as FoodPrepDashboardIndexImport } from './routes/food-prep-dashboard.index'
@@ -32,6 +33,12 @@ const FoodPrepInventoryRoute = FoodPrepInventoryImport.update({
 const IndexRoute = IndexImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const UnauthorisedIndexRoute = UnauthorisedIndexImport.update({
+  id: '/unauthorised/',
+  path: '/unauthorised/',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -144,6 +151,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SignupIndexImport
       parentRoute: typeof rootRoute
     }
+    '/unauthorised/': {
+      id: '/unauthorised/'
+      path: '/unauthorised'
+      fullPath: '/unauthorised'
+      preLoaderRoute: typeof UnauthorisedIndexImport
+      parentRoute: typeof rootRoute
+    }
   }
 }
 
@@ -159,6 +173,7 @@ export interface FileRoutesByFullPath {
   '/food-prep-dashboard': typeof FoodPrepDashboardIndexRoute
   '/login': typeof LoginIndexRoute
   '/signup': typeof SignupIndexRoute
+  '/unauthorised': typeof UnauthorisedIndexRoute
 }
 
 export interface FileRoutesByTo {
@@ -171,6 +186,7 @@ export interface FileRoutesByTo {
   '/food-prep-dashboard': typeof FoodPrepDashboardIndexRoute
   '/login': typeof LoginIndexRoute
   '/signup': typeof SignupIndexRoute
+  '/unauthorised': typeof UnauthorisedIndexRoute
 }
 
 export interface FileRoutesById {
@@ -184,6 +200,7 @@ export interface FileRoutesById {
   '/food-prep-dashboard/': typeof FoodPrepDashboardIndexRoute
   '/login/': typeof LoginIndexRoute
   '/signup/': typeof SignupIndexRoute
+  '/unauthorised/': typeof UnauthorisedIndexRoute
 }
 
 export interface FileRouteTypes {
@@ -198,6 +215,7 @@ export interface FileRouteTypes {
     | '/food-prep-dashboard'
     | '/login'
     | '/signup'
+    | '/unauthorised'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -209,6 +227,7 @@ export interface FileRouteTypes {
     | '/food-prep-dashboard'
     | '/login'
     | '/signup'
+    | '/unauthorised'
   id:
     | '__root__'
     | '/'
@@ -220,6 +239,7 @@ export interface FileRouteTypes {
     | '/food-prep-dashboard/'
     | '/login/'
     | '/signup/'
+    | '/unauthorised/'
   fileRoutesById: FileRoutesById
 }
 
@@ -233,6 +253,7 @@ export interface RootRouteChildren {
   FoodPrepDashboardIndexRoute: typeof FoodPrepDashboardIndexRoute
   LoginIndexRoute: typeof LoginIndexRoute
   SignupIndexRoute: typeof SignupIndexRoute
+  UnauthorisedIndexRoute: typeof UnauthorisedIndexRoute
 }
 
 const rootRouteChildren: RootRouteChildren = {
@@ -245,6 +266,7 @@ const rootRouteChildren: RootRouteChildren = {
   FoodPrepDashboardIndexRoute: FoodPrepDashboardIndexRoute,
   LoginIndexRoute: LoginIndexRoute,
   SignupIndexRoute: SignupIndexRoute,
+  UnauthorisedIndexRoute: UnauthorisedIndexRoute,
 }
 
 export const routeTree = rootRoute
@@ -265,7 +287,8 @@ export const routeTree = rootRoute
         "/delivery-dashboard/",
         "/food-prep-dashboard/",
         "/login/",
-        "/signup/"
+        "/signup/",
+        "/unauthorised/"
       ]
     },
     "/": {
@@ -294,6 +317,9 @@ export const routeTree = rootRoute
     },
     "/signup/": {
       "filePath": "signup.index.tsx"
+    },
+    "/unauthorised/": {
+      "filePath": "unauthorised.index.tsx"
     }
   }
 }
