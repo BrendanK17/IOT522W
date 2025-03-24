@@ -22,7 +22,7 @@ import { useNavigate } from "@tanstack/react-router"
 import { Link } from "@tanstack/react-router"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
-
+import Header from "@/components/generic/Header"
 
 
 import logo from "../assets/logo.png"
@@ -40,8 +40,8 @@ const pendingOrders = [
       items: ["Chicken Salad", "Sparkling Water"],
       placedAt: "12:00 PM",
       dueAt: "13:45 PM",
-      notes: "Extra dressing on the side",
-      status: "ready",
+      notes: ["Extra dressing on the side"],
+      status: "orderPlaced",
       time: "2 mins ago",
       avatar: avatar1,
       priority: "high",
@@ -56,8 +56,8 @@ const pendingOrders = [
       items: ["Veggie Wrap", "Green Tea", "Chocolate Brownie"],
       placedAt: "11:43 AM",
       dueAt: "12:30 PM",
-      notes: "No lettuce in the wrap",
-      status: "ready",
+      notes: ["No lettuce in the wrap"],
+      status: "orderPlaced",
       time: "5 mins ago",
       avatar: avatar2,
       priority: "medium",
@@ -72,13 +72,30 @@ const pendingOrders = [
       items: ["Beef Burger", "Fries", "Cola"],
       placedAt: "10:39 AM",
       dueAt: "13:00 PM",
-      status: "ready",
+      notes: [],
+      status: "beingPrepared",
       time: "7 mins ago",
       avatar: avatar3,
       priority: "medium",
       floor: "4",
       deskId: "15",
       coordinates: { x: 45, y: 30 },
+    },
+    {
+      id: "ORD-1237",
+      customer: "Emily Davis",
+      location: "Floor 1, Desk 5",
+      items: ["Caesar Salad", "Iced Tea"],
+      placedAt: "09:00 AM",
+      dueAt: "10:30 AM",
+      notes: ["No croutons"],
+      status: "orderPlaced",
+      time: "10 mins ago",
+      avatar: avatar1,
+      priority: "low",
+      floor: "1",
+      deskId: "5",
+      coordinates: { x: 20, y: 80 },
     },
 ];
 
@@ -133,62 +150,6 @@ export default function FoodPrepDashboard() {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white">
-      {/* Header */}
-      <header className="sticky top-0 z-50 bg-white border-b shadow-sm">
-        <div className="flex h-16 items-center justify-between px-4 md:px-6">
-          {/* Mobile sidebar toggle */}
-          <Button
-            variant="outline"
-            size="icon"
-            onClick={() => setSidebarOpen(!sidebarOpen)}
-            className="lg:hidden rounded-full"
-          >
-            {sidebarOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
-          </Button>
-
-          {/* Logo and title */}
-          <div className="flex items-center gap-3">
-            <div className="hidden lg:flex items-center gap-2">
-              {/* Logo */}
-              <h1 className="cursor-pointer" onClick={() => navigate({ to: "/food-prep-dashboard" })}>
-                <img src={logo || "/placeholder.svg"} alt="Logo" className="w-auto h-10" />
-              </h1>
-            </div>
-            <div className="h-8 w-[1px] bg-gray-200 hidden lg:block"></div>
-            <h1 className="text-lg font-semibold md:text-xl">
-              {activeTab === "dashboard" && "Food Preparation Dashboard"}
-              {activeTab === "orders" && "Orders"}
-              {activeTab === "inventory" && "Inventory"}
-            </h1>
-          </div>
-          {/* Right-Side Header Action */}
-          <div className="flex items-center gap-3">
-              <Link to="/report-issue" className="flex items-center">
-                {/* Round Button */}
-                <Button variant="outline" size="lg" className="rounded-full py-3 px-6 flex items-center space-x-3">
-                  {/* Report Issue Icon */}
-                  <AlertCircle className="h-5 w-5 text-red-500" />
-
-                  {/* Report Issue Text */}
-                  <span className="text-red-500 text-sm font-semibold">Report Issue</span>
-                </Button>
-              </Link>
-
-              {/* User Profile Icon */}
-              <div className="flex items-center gap-2">
-                <Avatar className="h-8 w-8 border-2 border-[#0052CC]">
-                  <AvatarImage src={chefIcon} alt="Delivery Staff" />
-                  <AvatarFallback>DS</AvatarFallback>
-                </Avatar>
-                <div className="hidden md:block">
-                  <p className="text-sm font-medium">Chris Walker</p>
-                  <p className="text-xs text-muted-foreground">foodprep@example.com</p>
-                </div>
-              </div>
-            </div>
-          </div>
-      </header>
-
       <div className="flex">
         {/* Sidebar */}
         <div
