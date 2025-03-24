@@ -133,11 +133,11 @@ const userLocation = {
 };
 
 const shiftSchedule = [
-  { day: "Mon", shift: "08:00 AM - 04:00 PM" },
-  { day: "Tue", shift: "10:00 AM - 06:00 PM" },
-  { day: "Wed", shift: "OFF" },
-  { day: "Thu", shift: "08:00 AM - 04:00 PM" },
-  { day: "Fri", shift: "12:00 PM - 08:00 PM" },
+  { day: "Monday", shift: "08:00 AM - 04:00 PM" },
+  { day: "Tuesday", shift: "10:00 AM - 06:00 PM" },
+  { day: "Wednesday", shift: "OFF" },
+  { day: "Thursday", shift: "08:00 AM - 04:00 PM" },
+  { day: "Friday", shift: "12:00 PM - 08:00 PM" },
 ];
 
 export default function FoodPrepDashboard() {
