@@ -1,8 +1,7 @@
 import React from "react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { CheckCircle, LogOut } from "lucide-react";
-import { useNavigate } from "@tanstack/react-router";
+import { CheckCircle } from "lucide-react";
 
 interface MenuItem {
   label: string;
@@ -18,7 +17,6 @@ interface SidebarProps {
   setActiveTab: (tab: string) => void;
   onNavigate: (path: string) => void;
   sidebarOpen: boolean;
-  handleLogout: () => void;
 }
 
 const Sidebar: React.FC<SidebarProps> = ({
@@ -27,15 +25,14 @@ const Sidebar: React.FC<SidebarProps> = ({
   setActiveTab,
   onNavigate,
   sidebarOpen,
-  handleLogout,
 }) => {
   return (
     <div
-      className={`fixed inset-y-0 left-0 z-40 w-64 transform bg-white shadow-lg transition-transform duration-200 ease-in-out lg:translate-x-0 ${
+      className={`fixed inset-y-0 left-0 z-30 w-64 transform bg-white shadow-lg transition-transform duration-200 ease-in-out lg:translate-x-0 ${
         sidebarOpen ? "translate-x-0" : "-translate-x-full"
-      } lg:relative lg:w-64 border-r`}
+      } lg:relative lg:w-64 border-r overflow-y-auto min-h-screen`} // Ensure min-height is 100vh
     >
-      <div className="flex flex-col h-screen">
+      <div className="flex flex-col flex-grow h-full">
         {/* Main Menu */}
         <nav className="flex flex-col space-y-2 px-3 py-4">
           <div className="px-3">
@@ -63,7 +60,7 @@ const Sidebar: React.FC<SidebarProps> = ({
           ))}
         </nav>
 
-        {/* User Profile Status */}
+        {/* User Active Status */}
         <div className="border-t p-4 mt-auto">
           <div className="mx-3 mb-6">
             <div className="rounded-lg bg-gradient-to-r from-green-50 to-green-100 p-3 border border-green-200">
@@ -78,16 +75,6 @@ const Sidebar: React.FC<SidebarProps> = ({
               </div>
             </div>
           </div>
-
-          {/* Log Out Button */}
-          <Button
-            variant="outline"
-            className="w-full justify-start text-red-500 hover:bg-red-50 hover:text-red-600 rounded-lg"
-            onClick={handleLogout}
-          >
-            <LogOut className="mr-2 h-4 w-4" />
-            Log Out
-          </Button>
         </div>
       </div>
     </div>

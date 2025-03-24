@@ -144,7 +144,8 @@ export default function FoodPrepOrders() {
     navigate({ to: "/" });
   };
 
-  return (    <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white">
+  return (    
+    <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white">
       <div className="flex">
         {/* Sidebar Component */}
         <Sidebar
@@ -153,58 +154,57 @@ export default function FoodPrepOrders() {
             setActiveTab={setActiveTab}
             onNavigate={(path) => navigate({ to: path })}
             sidebarOpen={sidebarOpen}
-            handleLogout={() => console.log("Logging out...")}
         />  
 
         {/* Main content */}
         <div className="flex-1 px-4 py-6 md:px-6 lg:px-8">
         <div className="space-y-8">
 
-            {/* Welcome banner */}
-            <div className="rounded-xl bg-gradient-to-r from-[#f1f5f9] to-[##e2e8f0] p-6 text-white shadow-lg">
-                <div className="grid grid-cols-4">
-                    <div className="flex flex-col md:flex-row md:items-center md:justify-between col-span-3">
-                        <div className="mb-4 md:mb-0">
-                        <h2 className="text-2xl font-bold text-black">{pendingOrders.length} orders pending...</h2>
-                        <p className="mt-1 text-black">
-                            You have prepared {completedOrders.length} out of {(pendingOrders.length + completedOrders.length)} orders today.
-                        </p>
-                        </div>
-                        <div className="flex items-center justify-center space-x-4 col-span-1">
-                            <CircularProgress
-                            progress={progress}
-                            />
-                        </div>
-                    </div>
+        {/* Welcome banner */}
+        <div className="rounded-xl bg-gradient-to-r from-[#f1f5f9] to-[#e2e8f0] p-6 text-white shadow-lg">
+            <div className="flex items-center justify-between">
+                {/* Left Section - Text */}
+                <div>
+                    <h2 className="text-2xl font-bold text-black">{pendingOrders.length} orders pending...</h2>
+                    <p className="mt-1 text-black">
+                        You have prepared {completedOrders.length} out of {(pendingOrders.length + completedOrders.length)} orders today.
+                    </p>
+                </div>
+
+                {/* Right Section - Circular Progress with Padding */}
+                <div className="p-2"> 
+                    <CircularProgress progress={progress} />
                 </div>
             </div>
+        </div>
 
-            {/* Order View Switch */}
-            <div className="flex items-center space-x-2">
-            <Switch
-                id="order-table-view"
-                checked={orderView === "table"} // This ensures the switch reflects the current view
-                onCheckedChange={(checked) => setOrderView(checked ? "table" : "cards")} // Toggle back to "cards" when unchecked
-            />
-            <Label htmlFor="order-table-view">Table View</Label>
+
+
+        {/* Order View Switch */}
+        <div className="flex items-center space-x-2">
+        <Switch
+            id="order-table-view"
+            checked={orderView === "table"} // This ensures the switch reflects the current view
+            onCheckedChange={(checked) => setOrderView(checked ? "table" : "cards")} // Toggle back to "cards" when unchecked
+        />
+        <Label htmlFor="order-table-view">Table View</Label>
+        </div>
+
+        {/* Orders */}
+        <div className="space-y-4">
+        {orderView === "cards" && (
+            <div className="grid gap-6 md:grid-cols-2">
+                <OrderCard key={orders[0].id} order={orders[0]} changeStatus={changeStatus} />
+                <OrderCard key={orders[1].id} order={orders[1]} changeStatus={changeStatus} />
+                <OrderCard key={orders[2].id} order={orders[2]} changeStatus={changeStatus} />
+                <OrderCard key={orders[3].id} order={orders[3]} changeStatus={changeStatus} />
             </div>
+        )}
 
-
-            {/* Orders */}
-            <div className="space-y-4">
-            {orderView === "cards" && (
-                <div className="grid gap-6 md:grid-cols-2">
-                    <OrderCard key={orders[0].id} order={orders[0]} changeStatus={changeStatus} />
-                    <OrderCard key={orders[1].id} order={orders[1]} changeStatus={changeStatus} />
-                    <OrderCard key={orders[2].id} order={orders[2]} changeStatus={changeStatus} />
-                    <OrderCard key={orders[3].id} order={orders[3]} changeStatus={changeStatus} />
-                </div>
-            )}
-
-            {orderView === "table" && (
-                <FoodPrepOrdersTable orders={orders} changeStatus={changeStatus} />
-            )}
-            </div>
+        {orderView === "table" && (
+            <FoodPrepOrdersTable orders={orders} changeStatus={changeStatus} />
+        )}
+        </div>
         </div>
         </div>
 
