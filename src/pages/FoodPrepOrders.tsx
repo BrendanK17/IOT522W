@@ -176,11 +176,6 @@ export default function FoodPrepOrders() {
                             />
                         </div>
                     </div>
-                    {/* Order View Switch */}
-                    <div className="flex items-center space-x-2">
-                    <Switch id="order-table-view" onClick={() => setOrderView("table")} />
-                    <Label htmlFor="order-table-view">Table View</Label>
-                    </div>
                 </div>
             </div>
 
