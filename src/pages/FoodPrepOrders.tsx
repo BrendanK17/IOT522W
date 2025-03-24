@@ -25,6 +25,18 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import  CircularProgress from "@/components/customized/progress/progress-10"
 import { Switch } from "@/components/ui/switch"
 import { Label } from "@/components/ui/label"
+<<<<<<< HEAD
+=======
+import {
+    Select,
+    SelectContent,
+    SelectGroup,
+    SelectItem,
+    SelectLabel,
+    SelectTrigger,
+    SelectValue,
+  } from "@/components/ui/select"
+>>>>>>> 85d7af4 (food prep dashboard and orders pages)
 
 
 import { Progress } from "@/components/ui/progress"
@@ -48,7 +60,11 @@ const pendingOrders = [
         placedAt: "12:00 PM",
         dueAt: "13:45 PM",
         notes: ["Extra dressing on the side"],
+<<<<<<< HEAD
         status: "ready",
+=======
+        status: "orderPlaced",
+>>>>>>> 85d7af4 (food prep dashboard and orders pages)
         time: "2 mins ago",
         avatar: avatar1,
         priority: "high",
@@ -64,7 +80,11 @@ const pendingOrders = [
         placedAt: "11:43 AM",
         dueAt: "12:30 PM",
         notes: ["No lettuce in the wrap"],
+<<<<<<< HEAD
         status: "ready",
+=======
+        status: "orderPlaced",
+>>>>>>> 85d7af4 (food prep dashboard and orders pages)
         time: "5 mins ago",
         avatar: avatar2,
         priority: "medium",
@@ -80,7 +100,11 @@ const pendingOrders = [
         placedAt: "10:39 AM",
         dueAt: "13:00 PM",
         notes: [],
+<<<<<<< HEAD
         status: "ready",
+=======
+        status: "beingPrepared",
+>>>>>>> 85d7af4 (food prep dashboard and orders pages)
         time: "7 mins ago",
         avatar: avatar3,
         priority: "medium",
@@ -135,6 +159,13 @@ export default function FoodPrepOrders() {
   const navigate = useNavigate()
   const [orderView, setOrderView] = useState("cards")
 
+<<<<<<< HEAD
+=======
+  const changeStatus = (newStatus: string, status: string) => {
+    status = newStatus;
+  }
+
+>>>>>>> 85d7af4 (food prep dashboard and orders pages)
 
   const handleLogout = () => {
     // Scroll to the top of the page
@@ -367,6 +398,221 @@ export default function FoodPrepOrders() {
                                     </div>
                                     ))}
                                 </div>
+<<<<<<< HEAD
+=======
+                                <div className="flex items-center justify-between mt-4">
+                                {/* <Select onValueChange={(newStatus) => changeStatus(newStatus, pendingOrders[0].status)}>
+                                <SelectTrigger className="w-[180px]">
+                                    <SelectValue placeholder={pendingOrders[0].status} />
+                                </SelectTrigger>
+                                <SelectContent>
+                                    <SelectItem value="beingPrepared">Being Prepared</SelectItem>
+                                    <SelectItem value="beingPackaged">Being Packaged</SelectItem>
+                                    <SelectItem value="readyForPickup">Ready for Pickup</SelectItem>
+                                </SelectContent>
+                                </Select> */}
+                              </div>
+                              </div>
+                            </div>
+                          </div>
+                        </CardContent>
+                        </Card>
+
+                        <Card className="overflow-hidden border-none shadow-md">
+                        <CardHeader className="bg-gradient-to-r from-gray-50 to-gray-100 pb-3 border-b">
+                          <div className="flex items-center justify-between">
+                            <div className="flex items-center gap-2">
+                              <Badge variant="outline" className="bg-[#0052CC] text-white border-none mt-3">
+                                {pendingOrders[1].id}
+                              </Badge>
+                              <Badge
+                                variant="outline"
+                                className={`
+                                border-none mt-3
+                                ${
+                                    pendingOrders[1].priority === "high"
+                                    ? "bg-red-100 text-red-700"
+                                    : pendingOrders[1].priority === "medium"
+                                      ? "bg-amber-100 text-amber-700"
+                                      : "bg-green-100 text-green-700"
+                                }
+                              `}
+                              >
+                                {pendingOrders[1].priority === "high"
+                                  ? "High Priority"
+                                  : pendingOrders[1].priority === "medium"
+                                    ? "Medium Priority"
+                                    : "Low Priority"}
+                              </Badge>
+
+                              <Badge variant="outline" className={`
+                                border-none mt-3
+                                ${
+                                    pendingOrders[1].status === "beingPrepared"
+                                    ? "bg-red-100 text-red-700"
+                                    : pendingOrders[1].status === "orderPlaced"
+                                      ? "bg-rose-100 text-rose-700"
+                                      : pendingOrders[1].status === "beingPackaged"
+                                      ? "bg-amber-100 text-amber-700"
+                                        : "bg-yellow-100 text-yellow-700"
+                                }
+                              `}
+                              >
+                                {pendingOrders[1].status === "beingPrepared"
+                                  ? "Being Prepared"
+                                  : pendingOrders[1].status === "beingPackaged"
+                                    ? "Being Packaged"
+                                      : "Order Placed"}
+                                </Badge>
+                            </div>
+                            <p className="text-sm font-medium mt-3">DUE AT {pendingOrders[1].dueAt}</p>
+                          </div>
+                        </CardHeader>
+                        <CardContent className="pt-4">
+                          <div className="flex items-start gap-4">
+                            <Avatar className="h-12 w-12 border-2 border-gray-200">
+                              <AvatarImage src={pendingOrders[1].avatar} alt={pendingOrders[1].customer} />
+                              <AvatarFallback>
+                                {pendingOrders[1].customer
+                                  .split(" ")
+                                  .map((n) => n[1])
+                                  .join("")}
+                              </AvatarFallback>
+                            </Avatar>
+                            <div className="flex-1">
+                              <p className="font-medium text-lg">{pendingOrders[1].customer}</p>
+                              <div className="mt-4">
+                                <p className="text-sm font-medium mb-2">Items</p>
+                                <div className="grid grid-cols-1 gap-2">
+                                  {pendingOrders[1].items.map((item, index) => (
+                                    <div key={index} className="flex items-center rounded-lg bg-gray-50 p-2 text-sm">
+                                      <Coffee className="mr-2 h-4 w-4 text-[#0052CC]" />
+                                      {item}
+                                    </div>
+                                  ))}
+                                </div>
+                                <p className="text-sm font-medium mt-4 mb-2">Notes</p>
+                                <div className="grid grid-cols-1 gap-2">
+                                    {pendingOrders[1].notes.map((item, index) => (
+                                    <div key={index} className="flex items-center rounded-lg bg-gray-50 p-2 text-sm">
+                                      <BadgeAlert className="mr-2 h-4 w-4 text-[#ef4444]" />
+                                      {item}
+                                    </div>
+                                    ))}
+                                </div>
+                                <div className="flex items-center justify-between mt-4">
+                                <Select onValueChange={(newStatus) => changeStatus(newStatus, pendingOrders[1].status)}>
+                                <SelectTrigger className="w-[180px]">
+                                    <SelectValue placeholder={pendingOrders[1].status} />
+                                </SelectTrigger>
+                                <SelectContent>
+                                    <SelectItem value="beingPrepared">Being Prepared</SelectItem>
+                                    <SelectItem value="beingPackaged">Being Packaged</SelectItem>
+                                    <SelectItem value="readyForPickup">Ready for Pickup</SelectItem>
+                                </SelectContent>
+                                </Select>
+                              </div>
+                              </div>
+                            </div>
+                          </div>
+                        </CardContent>
+                        </Card>
+
+                        <Card className="overflow-hidden border-none shadow-md">
+                        <CardHeader className="bg-gradient-to-r from-gray-50 to-gray-100 pb-3 border-b">
+                          <div className="flex items-center justify-between">
+                            <div className="flex items-center gap-2">
+                              <Badge variant="outline" className="bg-[#0052CC] text-white border-none mt-3">
+                                {pendingOrders[2].id}
+                              </Badge>
+                              <Badge
+                                variant="outline"
+                                className={`
+                                border-none mt-3
+                                ${
+                                    pendingOrders[2].priority === "high"
+                                    ? "bg-red-100 text-red-700"
+                                    : pendingOrders[2].priority === "medium"
+                                      ? "bg-amber-100 text-amber-700"
+                                      : "bg-green-100 text-green-700"
+                                }
+                              `}
+                              >
+                                {pendingOrders[2].priority === "high"
+                                  ? "High Priority"
+                                  : pendingOrders[2].priority === "medium"
+                                    ? "Medium Priority"
+                                    : "Low Priority"}
+                              </Badge>
+
+                              <Badge variant="outline" className={`
+                                border-none mt-3
+                                ${
+                                    pendingOrders[2].status === "beingPrepared"
+                                    ? "bg-red-100 text-red-700"
+                                    : pendingOrders[2].status === "orderPlaced"
+                                      ? "bg-rose-100 text-rose-700"
+                                      : pendingOrders[2].status === "beingPackaged"
+                                      ? "bg-amber-100 text-amber-700"
+                                        : "bg-yellow-100 text-yellow-700"
+                                }
+                              `}
+                              >
+                                {pendingOrders[2].status === "beingPrepared"
+                                  ? "Being Prepared"
+                                  : pendingOrders[2].status === "beingPackaged"
+                                    ? "Being Packaged"
+                                      : "Order Placed"}
+                                </Badge>
+                            </div>
+                            <p className="text-sm font-medium mt-3">DUE AT {pendingOrders[2].dueAt}</p>
+                          </div>
+                        </CardHeader>
+                        <CardContent className="pt-4">
+                          <div className="flex items-start gap-4">
+                            <Avatar className="h-12 w-12 border-2 border-gray-200">
+                              <AvatarImage src={pendingOrders[2].avatar} alt={pendingOrders[2].customer} />
+                              <AvatarFallback>
+                                {pendingOrders[2].customer
+                                  .split(" ")
+                                  .map((n) => n[1])
+                                  .join("")}
+                              </AvatarFallback>
+                            </Avatar>
+                            <div className="flex-1">
+                              <p className="font-medium text-lg">{pendingOrders[2].customer}</p>
+                              <div className="mt-4">
+                                <p className="text-sm font-medium mb-2">Items</p>
+                                <div className="grid grid-cols-1 gap-2">
+                                  {pendingOrders[2].items.map((item, index) => (
+                                    <div key={index} className="flex items-center rounded-lg bg-gray-50 p-2 text-sm">
+                                      <Coffee className="mr-2 h-4 w-4 text-[#0052CC]" />
+                                      {item}
+                                    </div>
+                                  ))}
+                                </div>
+                                <p className="text-sm font-medium mt-4 mb-2">Notes</p>
+                                <div className="grid grid-cols-1 gap-2">
+                                    {pendingOrders[2].notes.map((item, index) => (
+                                    <div key={index} className="flex items-center rounded-lg bg-gray-50 p-2 text-sm">
+                                      <BadgeAlert className="mr-2 h-4 w-4 text-[#ef4444]" />
+                                      {item}
+                                    </div>
+                                    ))}
+                                </div>
+                                <div className="flex justify-center justify-items-center gap-4 mt-4 w-full">
+                                <Select onValueChange={(newStatus) => changeStatus(newStatus, pendingOrders[2].status)}>
+                                <SelectTrigger className="w-full">
+                                    <SelectValue placeholder={pendingOrders[2].status} />
+                                </SelectTrigger>
+                                <SelectContent>
+                                    <SelectItem value="beingPrepared">Being Prepared</SelectItem>
+                                    <SelectItem value="beingPackaged">Being Packaged</SelectItem>
+                                    <SelectItem value="readyForPickup">Ready for Pickup</SelectItem>
+                                </SelectContent>
+                                </Select>
+                              </div>
+>>>>>>> 85d7af4 (food prep dashboard and orders pages)
                               </div>
                             </div>
                           </div>
