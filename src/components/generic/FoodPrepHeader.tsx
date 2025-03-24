@@ -1,11 +1,19 @@
 import { Button } from "@/components/ui/button";
-import { useNavigate, useLocation } from "@tanstack/react-router";
+import { useNavigate, useLocation, useRouter } from "@tanstack/react-router";
 import logo from '../../assets/logo.png';
 
 export default function FoodPrepHeader() {
   const navigate = useNavigate();
   const location = useLocation(); // Get the current location
+  const router = useRouter();
 
+  // List of routes where you want to hide the header
+  const hiddenRoutes = ['/food-prep-dashboard', '/food-prep-dashboard/orders' ];
+
+  // If the current route is in the hiddenRoutes list, don't render the header
+  if (hiddenRoutes.includes(router.state.location.pathname)) {
+    return null;  
+  }
   // Determine which button should be highlighted based on the current path
   const isIncomingOrdersActive = location.pathname === "/food-prep-dashboard";
   const isInventoryActive = location.pathname === "/food-prep-inventory";
@@ -23,7 +31,7 @@ export default function FoodPrepHeader() {
         <img src={logo} alt="Logo" className="w-auto h-10" />
       </h1>
 
-      {/* Navigation Buttons */}
+      Navigation Buttons
       <nav className="flex space-x-6">
         {/* Incoming Orders Dashboard Button */}
         <Button

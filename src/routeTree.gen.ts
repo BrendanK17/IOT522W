@@ -11,23 +11,18 @@
 // Import Routes
 
 import { Route as rootRoute } from './routes/__root'
-import { Route as FoodPrepInventoryImport } from './routes/food-prep-inventory'
 import { Route as IndexImport } from './routes/index'
 import { Route as SignupIndexImport } from './routes/signup.index'
 import { Route as LoginIndexImport } from './routes/login.index'
 import { Route as FoodPrepDashboardIndexImport } from './routes/food-prep-dashboard.index'
 import { Route as DeliveryDashboardIndexImport } from './routes/delivery-dashboard.index'
 import { Route as CustomerIndexImport } from './routes/customer.index'
+import { Route as FoodPrepDashboardOrdersImport } from './routes/food-prep-dashboard.orders'
+import { Route as FoodPrepDashboardInventoryImport } from './routes/food-prep-dashboard.inventory'
 import { Route as CustomerOrderImport } from './routes/customer.order'
 import { Route as CustomerCheckoutImport } from './routes/customer.checkout'
 
 // Create/Update Routes
-
-const FoodPrepInventoryRoute = FoodPrepInventoryImport.update({
-  id: '/food-prep-inventory',
-  path: '/food-prep-inventory',
-  getParentRoute: () => rootRoute,
-} as any)
 
 const IndexRoute = IndexImport.update({
   id: '/',
@@ -65,6 +60,20 @@ const CustomerIndexRoute = CustomerIndexImport.update({
   getParentRoute: () => rootRoute,
 } as any)
 
+const FoodPrepDashboardOrdersRoute = FoodPrepDashboardOrdersImport.update({
+  id: '/food-prep-dashboard/orders',
+  path: '/food-prep-dashboard/orders',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const FoodPrepDashboardInventoryRoute = FoodPrepDashboardInventoryImport.update(
+  {
+    id: '/food-prep-dashboard/inventory',
+    path: '/food-prep-dashboard/inventory',
+    getParentRoute: () => rootRoute,
+  } as any,
+)
+
 const CustomerOrderRoute = CustomerOrderImport.update({
   id: '/customer/order',
   path: '/customer/order',
@@ -88,13 +97,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexImport
       parentRoute: typeof rootRoute
     }
-    '/food-prep-inventory': {
-      id: '/food-prep-inventory'
-      path: '/food-prep-inventory'
-      fullPath: '/food-prep-inventory'
-      preLoaderRoute: typeof FoodPrepInventoryImport
-      parentRoute: typeof rootRoute
-    }
     '/customer/checkout': {
       id: '/customer/checkout'
       path: '/customer/checkout'
@@ -107,6 +109,20 @@ declare module '@tanstack/react-router' {
       path: '/customer/order'
       fullPath: '/customer/order'
       preLoaderRoute: typeof CustomerOrderImport
+      parentRoute: typeof rootRoute
+    }
+    '/food-prep-dashboard/inventory': {
+      id: '/food-prep-dashboard/inventory'
+      path: '/food-prep-dashboard/inventory'
+      fullPath: '/food-prep-dashboard/inventory'
+      preLoaderRoute: typeof FoodPrepDashboardInventoryImport
+      parentRoute: typeof rootRoute
+    }
+    '/food-prep-dashboard/orders': {
+      id: '/food-prep-dashboard/orders'
+      path: '/food-prep-dashboard/orders'
+      fullPath: '/food-prep-dashboard/orders'
+      preLoaderRoute: typeof FoodPrepDashboardOrdersImport
       parentRoute: typeof rootRoute
     }
     '/customer/': {
@@ -151,9 +167,10 @@ declare module '@tanstack/react-router' {
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/food-prep-inventory': typeof FoodPrepInventoryRoute
   '/customer/checkout': typeof CustomerCheckoutRoute
   '/customer/order': typeof CustomerOrderRoute
+  '/food-prep-dashboard/inventory': typeof FoodPrepDashboardInventoryRoute
+  '/food-prep-dashboard/orders': typeof FoodPrepDashboardOrdersRoute
   '/customer': typeof CustomerIndexRoute
   '/delivery-dashboard': typeof DeliveryDashboardIndexRoute
   '/food-prep-dashboard': typeof FoodPrepDashboardIndexRoute
@@ -163,9 +180,10 @@ export interface FileRoutesByFullPath {
 
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/food-prep-inventory': typeof FoodPrepInventoryRoute
   '/customer/checkout': typeof CustomerCheckoutRoute
   '/customer/order': typeof CustomerOrderRoute
+  '/food-prep-dashboard/inventory': typeof FoodPrepDashboardInventoryRoute
+  '/food-prep-dashboard/orders': typeof FoodPrepDashboardOrdersRoute
   '/customer': typeof CustomerIndexRoute
   '/delivery-dashboard': typeof DeliveryDashboardIndexRoute
   '/food-prep-dashboard': typeof FoodPrepDashboardIndexRoute
@@ -176,9 +194,10 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRoute
   '/': typeof IndexRoute
-  '/food-prep-inventory': typeof FoodPrepInventoryRoute
   '/customer/checkout': typeof CustomerCheckoutRoute
   '/customer/order': typeof CustomerOrderRoute
+  '/food-prep-dashboard/inventory': typeof FoodPrepDashboardInventoryRoute
+  '/food-prep-dashboard/orders': typeof FoodPrepDashboardOrdersRoute
   '/customer/': typeof CustomerIndexRoute
   '/delivery-dashboard/': typeof DeliveryDashboardIndexRoute
   '/food-prep-dashboard/': typeof FoodPrepDashboardIndexRoute
@@ -190,9 +209,10 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
-    | '/food-prep-inventory'
     | '/customer/checkout'
     | '/customer/order'
+    | '/food-prep-dashboard/inventory'
+    | '/food-prep-dashboard/orders'
     | '/customer'
     | '/delivery-dashboard'
     | '/food-prep-dashboard'
@@ -201,9 +221,10 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
-    | '/food-prep-inventory'
     | '/customer/checkout'
     | '/customer/order'
+    | '/food-prep-dashboard/inventory'
+    | '/food-prep-dashboard/orders'
     | '/customer'
     | '/delivery-dashboard'
     | '/food-prep-dashboard'
@@ -212,9 +233,10 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/'
-    | '/food-prep-inventory'
     | '/customer/checkout'
     | '/customer/order'
+    | '/food-prep-dashboard/inventory'
+    | '/food-prep-dashboard/orders'
     | '/customer/'
     | '/delivery-dashboard/'
     | '/food-prep-dashboard/'
@@ -225,9 +247,10 @@ export interface FileRouteTypes {
 
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
-  FoodPrepInventoryRoute: typeof FoodPrepInventoryRoute
   CustomerCheckoutRoute: typeof CustomerCheckoutRoute
   CustomerOrderRoute: typeof CustomerOrderRoute
+  FoodPrepDashboardInventoryRoute: typeof FoodPrepDashboardInventoryRoute
+  FoodPrepDashboardOrdersRoute: typeof FoodPrepDashboardOrdersRoute
   CustomerIndexRoute: typeof CustomerIndexRoute
   DeliveryDashboardIndexRoute: typeof DeliveryDashboardIndexRoute
   FoodPrepDashboardIndexRoute: typeof FoodPrepDashboardIndexRoute
@@ -237,9 +260,10 @@ export interface RootRouteChildren {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  FoodPrepInventoryRoute: FoodPrepInventoryRoute,
   CustomerCheckoutRoute: CustomerCheckoutRoute,
   CustomerOrderRoute: CustomerOrderRoute,
+  FoodPrepDashboardInventoryRoute: FoodPrepDashboardInventoryRoute,
+  FoodPrepDashboardOrdersRoute: FoodPrepDashboardOrdersRoute,
   CustomerIndexRoute: CustomerIndexRoute,
   DeliveryDashboardIndexRoute: DeliveryDashboardIndexRoute,
   FoodPrepDashboardIndexRoute: FoodPrepDashboardIndexRoute,
@@ -258,9 +282,10 @@ export const routeTree = rootRoute
       "filePath": "__root.tsx",
       "children": [
         "/",
-        "/food-prep-inventory",
         "/customer/checkout",
         "/customer/order",
+        "/food-prep-dashboard/inventory",
+        "/food-prep-dashboard/orders",
         "/customer/",
         "/delivery-dashboard/",
         "/food-prep-dashboard/",
@@ -271,14 +296,17 @@ export const routeTree = rootRoute
     "/": {
       "filePath": "index.tsx"
     },
-    "/food-prep-inventory": {
-      "filePath": "food-prep-inventory.tsx"
-    },
     "/customer/checkout": {
       "filePath": "customer.checkout.tsx"
     },
     "/customer/order": {
       "filePath": "customer.order.tsx"
+    },
+    "/food-prep-dashboard/inventory": {
+      "filePath": "food-prep-dashboard.inventory.tsx"
+    },
+    "/food-prep-dashboard/orders": {
+      "filePath": "food-prep-dashboard.orders.tsx"
     },
     "/customer/": {
       "filePath": "customer.index.tsx"
