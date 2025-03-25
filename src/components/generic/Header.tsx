@@ -8,12 +8,6 @@ export default function Header() {
   const router = useRouter();
   const { user, logout } = useAuth();
 
-  const hiddenRoutes = ['/delivery-dashboard'];
-
-  if (hiddenRoutes.includes(router.state.location.pathname)) {
-    return null;
-  }
-
   const isActiveRoute = (path: string) => router.state.location.pathname === path;
 
   return (
