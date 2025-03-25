@@ -1,4 +1,6 @@
+// AuthContext.tsx
 import React, { createContext, useContext, useState, useEffect } from 'react';
+import { initialUsers } from '../lib/auth'; // <-- Adjust path accordingly
 
 interface User {
   email: string;
@@ -20,7 +22,7 @@ export const useAuth = () => {
   return context;
 };
 
-export const AuthProvider: React.FC<{children: React.ReactNode}> = ({ children }) => {
+export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [user, setUser] = useState<User | null>(() => {
     const storedUser = localStorage.getItem("user");
     return storedUser ? JSON.parse(storedUser) : null;
@@ -28,11 +30,7 @@ export const AuthProvider: React.FC<{children: React.ReactNode}> = ({ children }
 
   const [users, setUsers] = useState(() => {
     const storedUsers = localStorage.getItem("users");
-    return storedUsers ? JSON.parse(storedUsers) : [
-      { email: "customer@example.com", password: "customer123", role: "customer" },
-      { email: "foodprep@example.com", password: "foodprep123", role: "food-prep-staff" },
-      { email: "delivery@example.com", password: "delivery123", role: "delivery-staff" },
-    ];
+    return storedUsers ? JSON.parse(storedUsers) : initialUsers; // ✅ Use imported initialUsers here
   });
 
   useEffect(() => {
