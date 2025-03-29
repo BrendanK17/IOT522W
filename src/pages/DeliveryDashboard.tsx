@@ -1,4 +1,5 @@
 import { useState, useEffect, } from "react"
+import { UserMenu } from "@/components/generic/UserMenu"
 import {
   Package,
   MapPin,
@@ -226,16 +227,14 @@ export default function DeliveryDashboard() {
             </Link>
 
             {/* User menu */}
-            <div className="flex items-center gap-2">
-              <Avatar className="h-8 w-8 border-2 border-[#0052CC]">
-                <AvatarImage src={deliveryStaffIcon} alt="Delivery Staff" />
-                <AvatarFallback>DS</AvatarFallback>
-              </Avatar>
-              <div className="hidden md:block">
-                <p className="text-sm font-medium">Delivery Staff</p>
-                <p className="text-xs text-muted-foreground">delivery@example.com</p>
-              </div>
-            </div>
+            <UserMenu
+              role="delivery-staff"
+              name="Delivery Staff"
+              email="delivery@example.com"
+              avatarSrc={deliveryStaffIcon}
+              onLogout={handleLogout}
+            />
+            
           </div>
         </div>
       </header>
