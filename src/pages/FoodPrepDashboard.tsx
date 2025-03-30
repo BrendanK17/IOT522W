@@ -2,31 +2,22 @@ import { Button } from "@/components/ui/button"
 import { useState } from "react"
 import {
   Package,
-  MapPin,
   CheckCircle,
   Clock,
   BarChart3,
-  LogOut,
+  CalendarClock,
   ChevronRight,
-  Coffee,
-  Menu,
-  X,
-  AlertCircle,
   TrendingUp,
-  Truck,
   Award,
-  Navigation,
+  MapPin,
+  Calendar,
+  Building,
 } from "lucide-react"
 import { Badge } from "@/components/ui/badge"
 import { useNavigate } from "@tanstack/react-router"
-import { Link } from "@tanstack/react-router"
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
-
-
-
-import logo from "../assets/logo.png"
-import chefIcon from "../assets/chef_icon.png"
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import Sidebar from "@/components/generic/Sidebar"
+import NextShiftCard from "@/components/generic/NextShiftCard"
 
 import avatar1 from "../assets/avatar_1.png"
 import avatar2 from "../assets/avatar_2.png"
@@ -40,8 +31,8 @@ const pendingOrders = [
       items: ["Chicken Salad", "Sparkling Water"],
       placedAt: "12:00 PM",
       dueAt: "13:45 PM",
-      notes: "Extra dressing on the side",
-      status: "ready",
+      notes: ["Extra dressing on the side"],
+      status: "orderPlaced",
       time: "2 mins ago",
       avatar: avatar1,
       priority: "high",
@@ -56,8 +47,8 @@ const pendingOrders = [
       items: ["Veggie Wrap", "Green Tea", "Chocolate Brownie"],
       placedAt: "11:43 AM",
       dueAt: "12:30 PM",
-      notes: "No lettuce in the wrap",
-      status: "ready",
+      notes: ["No lettuce in the wrap"],
+      status: "orderPlaced",
       time: "5 mins ago",
       avatar: avatar2,
       priority: "medium",
@@ -72,7 +63,8 @@ const pendingOrders = [
       items: ["Beef Burger", "Fries", "Cola"],
       placedAt: "10:39 AM",
       dueAt: "13:00 PM",
-      status: "ready",
+      notes: [],
+      status: "beingPrepared",
       time: "7 mins ago",
       avatar: avatar3,
       priority: "medium",
@@ -80,8 +72,23 @@ const pendingOrders = [
       deskId: "15",
       coordinates: { x: 45, y: 30 },
     },
+    {
+      id: "ORD-1237",
+      customer: "Emily Davis",
+      location: "Floor 1, Desk 5",
+      items: ["Caesar Salad", "Iced Tea"],
+      placedAt: "09:00 AM",
+      dueAt: "10:30 AM",
+      notes: ["No croutons"],
+      status: "orderPlaced",
+      time: "10 mins ago",
+      avatar: avatar1,
+      priority: "low",
+      floor: "1",
+      deskId: "5",
+      coordinates: { x: 20, y: 80 },
+    },
 ];
-
 
 const completedOrders = [
 {
@@ -119,10 +126,26 @@ const completedOrders = [
 
 ];
 
+const userLocation = {
+  building: "Building 5",
+  street: "Baker Street",
+  city: "London",
+};
+
+const shiftSchedule = [
+  { day: "Monday", shift: "08:00 AM - 04:00 PM" },
+  { day: "Tuesday", shift: "10:00 AM - 06:00 PM" },
+  { day: "Wednesday", shift: "OFF" },
+  { day: "Thursday", shift: "08:00 AM - 04:00 PM" },
+  { day: "Friday", shift: "12:00 PM - 08:00 PM" },
+];
+
 export default function FoodPrepDashboard() {
   const [sidebarOpen, setSidebarOpen] = useState(false)
   const [activeTab, setActiveTab] = useState("dashboard")
   const navigate = useNavigate()
+  const [orders, setOrders] = useState(pendingOrders);
+  
 
   const handleLogout = () => {
     // Scroll to the top of the page
@@ -131,136 +154,24 @@ export default function FoodPrepDashboard() {
     navigate({ to: "/" });
   };
 
+  const menuItems = [
+    { label: "Dashboard", icon: <BarChart3 className="mr-2 h-5 w-5" />, value: "dashboard", path: "/food-prep-dashboard" },
+    { label: "Orders", icon: <Package className="mr-2 h-5 w-5" />, value: "orders", badgeCount: orders.length, path: "/food-prep-dashboard/orders" },
+    { label: "Inventory", icon: <Package className="mr-2 h-5 w-5" />, value: "inventory" },
+  ];
+
   return (
     <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white">
-      {/* Header */}
-      <header className="sticky top-0 z-50 bg-white border-b shadow-sm">
-        <div className="flex h-16 items-center justify-between px-4 md:px-6">
-          {/* Mobile sidebar toggle */}
-          <Button
-            variant="outline"
-            size="icon"
-            onClick={() => setSidebarOpen(!sidebarOpen)}
-            className="lg:hidden rounded-full"
-          >
-            {sidebarOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
-          </Button>
-
-          {/* Logo and title */}
-          <div className="flex items-center gap-3">
-            <div className="hidden lg:flex items-center gap-2">
-              {/* Logo */}
-              <h1 className="cursor-pointer" onClick={() => navigate({ to: "/food-prep-dashboard" })}>
-                <img src={logo || "/placeholder.svg"} alt="Logo" className="w-auto h-10" />
-              </h1>
-            </div>
-            <div className="h-8 w-[1px] bg-gray-200 hidden lg:block"></div>
-            <h1 className="text-lg font-semibold md:text-xl">
-              {activeTab === "dashboard" && "Food Preparation Dashboard"}
-              {activeTab === "orders" && "Orders"}
-              {activeTab === "inventory" && "Inventory"}
-            </h1>
-          </div>
-          {/* Right-Side Header Action */}
-          <div className="flex items-center gap-3">
-              <Link to="/report-issue" className="flex items-center">
-                {/* Round Button */}
-                <Button variant="outline" size="lg" className="rounded-full py-3 px-6 flex items-center space-x-3">
-                  {/* Report Issue Icon */}
-                  <AlertCircle className="h-5 w-5 text-red-500" />
-
-                  {/* Report Issue Text */}
-                  <span className="text-red-500 text-sm font-semibold">Report Issue</span>
-                </Button>
-              </Link>
-
-              {/* User Profile Icon */}
-              <div className="flex items-center gap-2">
-                <Avatar className="h-8 w-8 border-2 border-[#0052CC]">
-                  <AvatarImage src={chefIcon} alt="Delivery Staff" />
-                  <AvatarFallback>DS</AvatarFallback>
-                </Avatar>
-                <div className="hidden md:block">
-                  <p className="text-sm font-medium">Chris Walker</p>
-                  <p className="text-xs text-muted-foreground">foodprep@example.com</p>
-                </div>
-              </div>
-            </div>
-          </div>
-      </header>
-
       <div className="flex">
         {/* Sidebar */}
-        <div
-            className={`fixed inset-y-0 left-0 z-40 w-64 transform bg-white shadow-lg transition-transform duration-200 ease-in-out lg:translate-x-0 ${
-              sidebarOpen ? "translate-x-0" : "-translate-x-full"
-            } lg:relative lg:w-64 border-r`}
-          >
-            {/* Sidebar layout */}
-            <div className="flex h-full flex-col h-screen">
-              {/* Main Menu at Top */}
-              <nav className="flex flex-col space-y-2 px-3 py-4">
-                <div className="px-3">
-                  <h2 className="text-xs font-semibold text-gray-500 uppercase tracking-wider">Main Menu</h2>
-                </div>
+        <Sidebar
+            menuItems={menuItems}
+            activeTab={activeTab}
+            setActiveTab={setActiveTab}
+            onNavigate={(path) => navigate({ to: path })}
+            sidebarOpen={sidebarOpen}
+        />
 
-                <Button
-                  variant={activeTab === "dashboard" ? "default" : "ghost"}
-                  className={`w-full justify-start rounded-lg ${activeTab === "dashboard" ? "bg-[#0052CC]" : ""}`}
-                  onClick={() => setActiveTab("dashboard")}
-                >
-                  <BarChart3 className="mr-2 h-5 w-5" />
-                  Dashboard
-                </Button>
-
-                <Button
-                  variant={activeTab === "orders" ? "default" : "ghost"}
-                  className={`w-full justify-start rounded-lg ${activeTab === "orders" ? "bg-[#0052CC]" : ""}`}
-                  onClick={() => {setActiveTab("orders"); navigate({ to: "/food-prep-dashboard/orders" });}}
-                >
-                  <Package className="mr-2 h-5 w-5" />
-                  Orders
-                  <Badge className="ml-auto bg-red-500 text-white">{pendingOrders.length}</Badge>
-                </Button>
-
-                <Button
-                  variant={activeTab === "inventory" ? "default" : "ghost"}
-                  className={`w-full justify-start rounded-lg ${activeTab === "inventory" ? "bg-[#0052CC]" : ""}`}
-                  onClick={() => setActiveTab("inventory")}
-                >
-                  <Package className="mr-2 h-5 w-5" />
-                  Inventory
-                </Button>
-              </nav>
-
-              {/* User Profile Status (Sidebar) */}
-              <div className="border-t p-4 mt-auto">
-                  {/* Status indicator */}
-                <div className="mx-3 mb-6">
-                  <div className="rounded-lg bg-gradient-to-r from-green-50 to-green-100 p-3 border border-green-200">
-                    <div className="flex items-center">
-                      <div className="h-8 w-8 rounded-full bg-green-500/20 flex items-center justify-center">
-                        <CheckCircle className="h-4 w-4 text-green-600" />
-                      </div>
-                      <div className="ml-3">
-                        <p className="text-sm font-medium text-green-800">Active Status</p>
-                        <p className="text-xs text-green-700">You're online and ready for deliveries</p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                  {/* Log Out Button */}
-                  <Button
-                    variant="outline"
-                    className="w-full justify-start text-red-500 hover:bg-red-50 hover:text-red-600 rounded-lg"
-                    onClick={handleLogout}
-                  >
-                    <LogOut className="mr-2 h-4 w-4" />
-                    Log Out
-                  </Button>
-                </div>
-              </div>
-            </div>
         {/* Main content */}
         <div className="flex-1 px-4 py-6 md:px-6 lg:px-8">
         {activeTab === "dashboard" && (
@@ -289,6 +200,9 @@ export default function FoodPrepDashboard() {
                   </Button>
               </div>
             </div> 
+            <div className="flex items-center rounded-lg bg-gray-50 p-2 text-lg text-black gap-4 font-bold">
+              <h3>Shift Stats Overview</h3>
+            </div>
 
             {/* Stats cards */}
             <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
@@ -367,7 +281,72 @@ export default function FoodPrepDashboard() {
                     </div>
                   </CardContent>
                 </Card>
-              </div>            
+              </div>   
+
+            {/* Location and Shift Schedule */}
+            <div className="grid grid-cols-3 gap-4">
+              <div className="col-span-1">
+                <div className="grid grid-rows-2 gap-4 h-full">
+
+                {/* NEXT SHIFT */}
+                <NextShiftCard shiftSchedule={shiftSchedule} />   
+
+                {/* User Location */}
+                <Card className="overflow-hidden border-none shadow-md h-full">
+                  <div className="absolute top-0 right-0 h-16 w-16 rounded-bl-full bg-gradient-to-br from-blue-100 to-blue-200"></div>
+                  <CardHeader className="flex flex-row items-center justify-between pb-2">
+                    <CardTitle className="text-sm font-medium">Your Location</CardTitle>
+                    <div className="h-8 w-8 rounded-full bg-blue-100 flex items-center justify-center">
+                      <MapPin className="h-4 w-4 text-blue-600" />
+                    </div>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="flex items-center pb-4">
+                    <Building className="h-8 w-8 text-blue-600 mr-2"/>
+                    </div>
+                    <div className="text-lg font-semibold text-blue-600">
+                      {userLocation.building}
+                    </div>
+                    <div className="text-sm text-gray-600">
+                      {userLocation.street}, {userLocation.city}
+                    </div>
+                  </CardContent>
+                </Card>
+                  </div>
+              </div>
+
+              {/* Shift Schedule */}
+              <div className="col-span-2">
+                <Card className="overflow-hidden border-none shadow-md h-full">
+                  <div className="absolute top-0 right-0 h-16 w-16 rounded-bl-full bg-gradient-to-br from-indigo-100 to-indigo-200"></div>
+                  <CardHeader className="flex flex-row items-center justify-between pb-2">
+                    <CardTitle className="text-sm font-medium">Shift Schedule</CardTitle>
+                    <div className="h-8 w-8 rounded-full bg-blue-100 flex items-center justify-center">
+                      <Calendar className="h-4 w-4 text-blue-600" />
+                    </div>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="grid grid-rows-5 gap-2">
+                      {shiftSchedule.map((shift) => (
+                        <div className="rounded-lg bg-gradient-to-r from-blue-50 to-white p-3 border border-blue-200">
+                        <div
+                          key={shift.day}
+                          className={`flex items-left px-4 py-2 rounded-lg min-w-[100px] ${
+                            shift.shift === "OFF" ? "text-gray-400" : "text-blue-600 font-semibold"
+                          }`}
+                        >
+                          <CalendarClock className="h-4 w-4 text-blue-600 mr-2" />
+                          <span className="text-sm text-left text-gray-600">{shift.day}</span>
+                          <span className="flex-grow text-base text-right">{shift.shift}</span>
+                        </div>
+                        </div>
+                      ))}
+                    </div>
+                  </CardContent>
+                </Card>
+              </div>
+
+            </div>         
           </div>
         )}
         </div>
@@ -375,5 +354,6 @@ export default function FoodPrepDashboard() {
 
     </div>
   );
+  
 
 }
