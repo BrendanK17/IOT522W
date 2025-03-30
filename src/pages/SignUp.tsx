@@ -8,12 +8,13 @@ import { Link } from "@tanstack/react-router"
 import { Mail, Lock, User, ArrowRight, Utensils, MapPin, ChefHat } from "lucide-react"
 import { Label } from "@/components/ui/label"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { signup } from "../lib/auth"
+import { useAuth } from "@/context/AuthContext"
 
 const Signup = () => {
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
   const [role, setRole] = useState("customer")
+  const { signup } = useAuth();
 
   const handleSignup = (e: React.FormEvent) => {
     e.preventDefault()
