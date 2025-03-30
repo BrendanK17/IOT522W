@@ -1,45 +1,43 @@
-import { useState } from "react"
-import { useNavigate } from "@tanstack/react-router"
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
+import { useState } from "react";
+import { useNavigate } from "@tanstack/react-router";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
-import { LogOut, User } from "lucide-react"
+} from "@/components/ui/dropdown-menu";
+import { LogOut, User } from "lucide-react";
+import { useAuth } from "@/context/AuthContext";
+import { toast } from "sonner";
 
 interface UserMenuProps {
-  role: 'customer' | 'food-prep-staff' | 'delivery-staff';
-  name: string
-  email: string
-  avatarSrc?: string
-  onLogout?: () => void
+  role: "customer" | "food-prep-staff" | "delivery-staff";
+  name: string;
+  email: string;
+  avatarSrc?: string;
 }
 
-export function UserMenu({ role, name, email, avatarSrc, onLogout }: UserMenuProps) {
-  const navigate = useNavigate()
-  const [open, setOpen] = useState(false)
+export function UserMenu({ role, name, email, avatarSrc }: UserMenuProps) {
+  const navigate = useNavigate();
+  const [open, setOpen] = useState(false);
+  const { logout } = useAuth();
 
-  const rolesToRoute: Record<UserMenuProps['role'], string> = {
-    'customer': "/customer-profile",
-    'food-prep-staff': "/food-prep-profile",
-    'delivery-staff': "/delivery-profile",
+  const rolesToRoute: Record<UserMenuProps["role"], string> = {
+    customer: "/customer-profile",
+    "food-prep-staff": "/food-prep-profile",
+    "delivery-staff": "/delivery-profile",
   };
 
   const handleLogout = () => {
-    if (onLogout) {
-      onLogout()
-    } else {
-      // Default logout behavior
-      window.scrollTo({ top: 0, behavior: "smooth" })
-      navigate({ to: "/" })
-    }
-  }
+    logout();
+    toast.info("You have been logged out.");
+    navigate({ to: "/login" });
+  };
 
   const handleViewProfile = () => {
-    const route = rolesToRoute[role]; 
+    const route = rolesToRoute[role];
     if (route) {
       navigate({ to: route });
       window.scrollTo({ top: 0, behavior: "smooth" });
@@ -68,12 +66,14 @@ export function UserMenu({ role, name, email, avatarSrc, onLogout }: UserMenuPro
           <span>View Profile</span>
         </DropdownMenuItem>
         <DropdownMenuSeparator />
-        <DropdownMenuItem onClick={handleLogout} className="text-red-500 focus:text-red-500 cursor-pointer">
+        <DropdownMenuItem
+          onClick={handleLogout}
+          className="text-red-500 focus:text-red-500 cursor-pointer"
+        >
           <LogOut className="mr-2 h-4 w-4 text-red-500" />
           <span>Log out</span>
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
-  )
+  );
 }
-
