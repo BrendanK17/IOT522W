@@ -157,7 +157,7 @@ export default function FoodPrepDashboard() {
   const menuItems = [
     { label: "Dashboard", icon: <BarChart3 className="mr-2 h-5 w-5" />, value: "dashboard", path: "/food-prep-dashboard" },
     { label: "Orders", icon: <Package className="mr-2 h-5 w-5" />, value: "orders", badgeCount: orders.length, path: "/food-prep-dashboard/orders" },
-    { label: "Inventory", icon: <Package className="mr-2 h-5 w-5" />, value: "inventory" },
+    { label: "Inventory", icon: <Package className="mr-2 h-5 w-5" />, value: "inventory", path: "/food-prep-dashboard/inventory" }
   ];
 
   return (
