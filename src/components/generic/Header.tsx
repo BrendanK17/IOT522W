@@ -20,28 +20,6 @@ export default function Header() {
             <img src={logo} alt="Logo" className="w-auto h-10" />
           </h1>
 
-          {user?.role === "food-prep-staff" && (
-            <>
-              <Button
-                variant={isActiveRoute("/food-prep-dashboard") ? "default" : "ghost"}
-                size="sm"
-                onClick={() => navigate({ to: "/food-prep-dashboard" })}
-                className={isActiveRoute("/food-prep-dashboard") ? "bg-orange-400 text-white hover:bg-orange-700" : ""}
-              >
-                Incoming Orders
-              </Button>
-
-              <Button
-                variant={isActiveRoute("/food-prep-inventory") ? "default" : "ghost"}
-                size="sm"
-                onClick={() => navigate({ to: "/food-prep-inventory" })}
-                className={isActiveRoute("/food-prep-inventory") ? "bg-orange-400 text-white hover:bg-orange-700" : ""}
-              >
-                Inventory Dashboard
-              </Button>
-            </>
-          )}
-
           {user?.role === "delivery-staff" && (
             <>
               <Button
