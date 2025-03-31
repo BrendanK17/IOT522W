@@ -133,11 +133,11 @@ export default function FoodPrepInventory() {
             <div className="rounded-xl bg-gradient-to-r from-[#f1f5f9] to-[#e2e8f0] p-6 text-white shadow-lg">
               <h1 className="text-2xl font-bold text-black">Welcome to the Inventory Dashboard</h1>
             </div>
-            <InventoryCarousel title="FISH & MEAT" inventory={meat_fish_inventory} titleColor="bg-orange-500" pillColor="bg-orange-300" collapsed={collapsedSections.meat_fish} toggleSection={() => toggleSection("meat_fish")} />
-            <InventoryCarousel title="CARBS" inventory={carbs_inventory} titleColor="bg-yellow-500" pillColor="bg-yellow-300" collapsed={collapsedSections.carbs} toggleSection={() => toggleSection("carbs")} />
-            <InventoryCarousel title="VEGETABLES" inventory={vegetables_inventory} titleColor="bg-green-500" pillColor="bg-green-300" collapsed={collapsedSections.vegetables} toggleSection={() => toggleSection("vegetables")} />
-            <InventoryCarousel title="FRUITS" inventory={fruits_inventory} titleColor="bg-red-500" pillColor="bg-red-300" collapsed={collapsedSections.fruits} toggleSection={() => toggleSection("fruits")} />
-            <InventoryCarousel title="BEVERAGES" inventory={beverages_inventory} titleColor="bg-blue-500" pillColor="bg-blue-300" collapsed={collapsedSections.beverages} toggleSection={() => toggleSection("beverages")} />
+            <InventoryCarousel title="FISH & MEAT" inventory={meat_fish_inventory} titleColor="bg-orange-400" pillColor="bg-orange-300" collapsed={collapsedSections.meat_fish} toggleSection={() => toggleSection("meat_fish")} />
+            <InventoryCarousel title="CARBS" inventory={carbs_inventory} titleColor="bg-yellow-400" pillColor="bg-yellow-300" collapsed={collapsedSections.carbs} toggleSection={() => toggleSection("carbs")} />
+            <InventoryCarousel title="VEGETABLES" inventory={vegetables_inventory} titleColor="bg-green-400" pillColor="bg-green-300" collapsed={collapsedSections.vegetables} toggleSection={() => toggleSection("vegetables")} />
+            <InventoryCarousel title="FRUITS" inventory={fruits_inventory} titleColor="bg-red-400" pillColor="bg-red-300" collapsed={collapsedSections.fruits} toggleSection={() => toggleSection("fruits")} />
+            <InventoryCarousel title="BEVERAGES" inventory={beverages_inventory} titleColor="bg-blue-400" pillColor="bg-blue-300" collapsed={collapsedSections.beverages} toggleSection={() => toggleSection("beverages")} />
           </div>
         </div>
       </div>
