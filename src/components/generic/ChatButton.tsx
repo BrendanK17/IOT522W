@@ -173,15 +173,6 @@ export function ChatButton() {
                   <User className="mr-2 h-4 w-4" />
                   <span>Select Customer</span>
                 </DropdownMenuItem>
-                {selectedCustomer && (
-                  <>
-                    <DropdownMenuSeparator />
-                    <DropdownMenuItem className="cursor-pointer" onClick={() => setIsOpen(true)}>
-                      <MessageSquare className="mr-2 h-4 w-4" />
-                      <span>Chat with {selectedCustomer.customer}</span>
-                    </DropdownMenuItem>
-                  </>
-                )}
               </>
             ) : (
               <DropdownMenuItem className="cursor-pointer" onClick={() => setIsOpen(false)}>
