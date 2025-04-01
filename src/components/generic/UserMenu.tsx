@@ -25,7 +25,7 @@ export function UserMenu({ role, name, email, avatarSrc }: UserMenuProps) {
   const { logout } = useAuth();
 
   const rolesToRoute: Record<UserMenuProps["role"], string> = {
-    customer: "/customer-profile",
+    "customer": "/customer-profile",
     "food-prep-staff": "/food-prep-profile",
     "delivery-staff": "/delivery-profile",
   };
