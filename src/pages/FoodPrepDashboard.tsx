@@ -71,13 +71,15 @@ export default function FoodPrepDashboard() {
 
       <div className="flex">
         {/* Sidebar */}
-        <Sidebar
+        <div className="sticky top-0 h-screen overflow-y-auto border-r bg-white shadow-sm">
+          <Sidebar
             menuItems={menuItems}
             activeTab={activeTab}
             setActiveTab={setActiveTab}
             onNavigate={(path) => navigate({ to: path })}
             sidebarOpen={sidebarOpen}
-        />
+          />
+        </div>
 
         {/* Main content */}
         <div className="flex-1 px-4 py-6 md:px-6 lg:px-8">
@@ -252,13 +254,11 @@ export default function FoodPrepDashboard() {
                   </CardContent>
                 </Card>
               </div>
-
             </div>         
           </div>
         )}
         </div>
       </div>
-
     </div>
   );
   
