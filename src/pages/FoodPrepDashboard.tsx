@@ -22,6 +22,7 @@ import NextShiftCard from "@/components/generic/NextShiftCard"
 import avatar1 from "../assets/avatar_1.png"
 import avatar2 from "../assets/avatar_2.png"
 import avatar3 from "../assets/avatar_3.png"
+import DashboardHeader from "@/components/generic/DashboardHeader"
 
 const pendingOrders = [
   {
@@ -162,6 +163,16 @@ export default function FoodPrepDashboard() {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white">
+      <DashboardHeader
+        title={
+          activeTab === 'dashboard'
+            ? 'Food Prep Dashboard'
+            : activeTab === 'orders'
+            ? 'Orders'
+            : 'Inventory'
+        }
+      />
+
       <div className="flex">
         {/* Sidebar */}
         <Sidebar
