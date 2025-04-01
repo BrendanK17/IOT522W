@@ -17,6 +17,8 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { Badge } from "@/components/ui/badge"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { ChatButton } from "@/components/generic/ChatButton"
+import { ChatProvider } from "@/components/generic/ChatContext"
 
 import floor1 from '../assets/floor-1.png'
 import floor2 from '../assets/floor-2.png'
@@ -905,6 +907,9 @@ export default function DeliveryDashboard() {
             </div>
           )}
         </div>
+        <ChatProvider>
+          <ChatButton />
+        </ChatProvider>
       </div>
     </div>
   )
