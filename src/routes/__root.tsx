@@ -6,8 +6,6 @@ export const Route = createRootRoute({
   component: () => {
     return (
       <div className="min-h-screen flex flex-col">
-        <Header />
-
         {/* Main content area */}
         <main className="flex-grow">
           <Outlet />

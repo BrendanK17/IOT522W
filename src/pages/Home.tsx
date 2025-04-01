@@ -6,11 +6,13 @@ import { Button } from "@/components/ui/button"
 import orderFoodImg from "../assets/order_food.png";
 import prepareFoodImg from "../assets/prepare_food.png";
 import deliverFoodImg from "../assets/deliver_food.png";
+import Header from "@/components/generic/Header";
 
 export default function LandingPage() {
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen w-full">
+      <Header />
       <main className="flex-1 w-full">
         {/* Hero Section */}
         <section className="relative w-full overflow-hidden bg-gradient-to-r from-[#E6F0FF] to-white py-12 md:py-24 lg:py-32 xl:py-48">

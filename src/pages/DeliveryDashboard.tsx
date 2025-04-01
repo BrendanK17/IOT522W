@@ -39,6 +39,7 @@ import floor1 from '../assets/floor-1.png'
 import floor2 from '../assets/floor-2.png'
 import floor3 from "../assets/floor-3.png"
 import floor4 from "../assets/floor-4.png"
+import DashboardHeader from "@/components/generic/DashboardHeader"
 
 // Update the mock data to include floor, deskId and coordinates for map functionality
 const pendingDeliveries = [
@@ -184,60 +185,15 @@ export default function DeliveryDashboard() {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white">
-      {/* Header */}
-      <header className="sticky top-0 z-50 bg-white border-b shadow-sm">
-        <div className="flex h-16 items-center justify-between px-4 md:px-6">
-          {/* Mobile sidebar toggle */}
-          <Button
-            variant="outline"
-            size="icon"
-            onClick={() => setSidebarOpen(!sidebarOpen)}
-            className="lg:hidden rounded-full"
-          >
-            {sidebarOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
-          </Button>
-
-          {/* Logo and title */}
-          <div className="flex items-center gap-3">
-            <div className="hidden lg:flex items-center gap-2">
-              {/* Logo */}
-              <h1 className="cursor-pointer" onClick={() => navigate({ to: "/delivery-dashboard" })}>
-                <img src={logo || "/placeholder.svg"} alt="Logo" className="w-auto h-10" />
-              </h1>
-            </div>
-            <div className="h-8 w-[1px] bg-gray-200 hidden lg:block"></div>
-            <h1 className="text-lg font-semibold md:text-xl">
-              {activeTab === "dashboard" && "Delivery Dashboard"}
-              {activeTab === "deliveries" && "Deliveries"}
-              {activeTab === "map" && "Office Floor Map"}
-            </h1>
-          </div>
-
-          {/* Right side actions */}
-          <div className="flex items-center gap-3">
-            <Link to="/report-issue" className="flex items-center">
-              {/* Round Button */}
-              <Button variant="outline" size="lg" className="rounded-full py-3 px-6 flex items-center space-x-3">
-                {/* Report Issue Icon */}
-                <AlertCircle className="h-5 w-5 text-red-500" />
-
-                {/* Report Issue Text */}
-                <span className="text-red-500 text-sm font-semibold">Report Issue</span>
-              </Button>
-            </Link>
-
-            {/* User menu */}
-            <UserMenu
-              role="delivery-staff"
-              name="Delivery Staff"
-              email="delivery@example.com"
-              avatarSrc={deliveryStaffIcon}
-              onLogout={handleLogout}
-            />
-            
-          </div>
-        </div>
-      </header>
+      <DashboardHeader
+        title={
+          activeTab === "dashboard"
+            ? "Delivery Dashboard"
+            : activeTab === "deliveries"
+            ? "Deliveries"
+            : "Office Floor Map"
+        }
+      />
 
       <div className="flex">
         {/* Sidebar */}
@@ -300,14 +256,6 @@ export default function DeliveryDashboard() {
                 </div>
               </div>
             </div>
-              <Button
-                variant="outline"
-                className="w-full justify-start text-red-500 hover:bg-red-50 hover:text-red-600 rounded-lg"
-                onClick={handleLogout}
-              >
-                <LogOut className="mr-2 h-4 w-4" />
-                Log Out
-              </Button>
             </div>
           </div>
         </div>
