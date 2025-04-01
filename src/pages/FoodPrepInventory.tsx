@@ -1,12 +1,13 @@
 import { useState } from "react";
 import { useNavigate } from "@tanstack/react-router";
-import { BarChart3, Package } from "lucide-react"; 
 import Sidebar from "@/components/generic/Sidebar";
-import { pendingOrders } from "@/lib/orders";
+import { pendingOrders } from "@/lib/foodPrep/orders";
 import { Card } from "@/components/ui/card";
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
 import { Button } from "@/components/ui/button";
-import { meat_fish_inventory, vegetables_inventory, carbs_inventory, fruits_inventory, beverages_inventory } from "@/lib/inventory";
+import { meat_fish_inventory, vegetables_inventory, carbs_inventory, fruits_inventory, beverages_inventory } from "@/lib/foodPrep/inventory";
+import DashboardHeader from "@/components/generic/DashboardHeader";
+import { menuItems } from "@/lib/foodPrep/menuItems";
 
 // Define the Inventory Item Type
 interface InventoryItem {
@@ -116,18 +117,28 @@ export default function FoodPrepInventory() {
   
   return (
     <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white">
+      <DashboardHeader
+        title={
+          activeTab === 'dashboard'
+            ? 'Food Prep Dashboard'
+            : activeTab === 'orders'
+            ? 'Orders'
+            : 'Inventory'
+        }
+      />
+
       <div className="flex">
-        <Sidebar
-          menuItems={[
-            { label: "Dashboard", icon: <BarChart3 className="mr-2 h-5 w-5" />, value: "dashboard", path: "/food-prep-dashboard" },
-            { label: "Orders", icon: <Package className="mr-2 h-5 w-5" />, value: "orders", badgeCount: orders.length, path: "/food-prep-dashboard/orders" },
-            { label: "Inventory", icon: <Package className="mr-2 h-5 w-5" />, value: "inventory", path: "/food-prep-dashboard/inventory" },
-          ]}
-          activeTab={activeTab}
-          setActiveTab={setActiveTab}
-          onNavigate={(path) => navigate({ to: path })}
-          sidebarOpen={sidebarOpen}
-        />
+        {/* Sidebar */}
+        <div className="sticky top-0 h-screen overflow-y-auto border-r bg-white shadow-sm">
+          <Sidebar
+            menuItems={menuItems}
+            activeTab={activeTab}
+            setActiveTab={setActiveTab}
+            onNavigate={(path) => navigate({ to: path })}
+            sidebarOpen={sidebarOpen}
+          />
+        </div>
+        
         <div className="flex-1 px-4 py-6 md:px-6 lg:px-8">
           <div className="space-y-8">
             <div className="rounded-xl bg-gradient-to-r from-[#f1f5f9] to-[#e2e8f0] p-6 text-white shadow-lg">
