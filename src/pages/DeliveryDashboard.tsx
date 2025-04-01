@@ -1,139 +1,29 @@
 import { useState, useEffect, } from "react"
-import { UserMenu } from "@/components/generic/UserMenu"
 import {
   Package,
   MapPin,
   CheckCircle,
   Clock,
   BarChart3,
-  LogOut,
   ChevronRight,
   Coffee,
-  Menu,
-  X,
-  AlertCircle,
-  TrendingUp,
   Truck,
   Award,
   Navigation,
+  TrendingUp,
 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { useNavigate } from "@tanstack/react-router"
-import { Link } from "@tanstack/react-router"
-
-import logo from "../assets/logo.png"
-import deliveryStaffIcon from "../assets/delivery_staff_icon.png"
-import avatar1 from "../assets/avatar_1.png"
-import avatar2 from "../assets/avatar_2.png"
-import avatar3 from "../assets/avatar_3.png"
-import avatar4 from "../assets/avatar_4.png"
-import avatar5 from "../assets/avatar_5.png"
-import avatar6 from "../assets/avatar_6.png"
-import avatar7 from "../assets/avatar_7.png"
 
 import floor1 from '../assets/floor-1.png'
 import floor2 from '../assets/floor-2.png'
 import floor3 from "../assets/floor-3.png"
 import floor4 from "../assets/floor-4.png"
-
-// Update the mock data to include floor, deskId and coordinates for map functionality
-const pendingDeliveries = [
-  {
-    id: "ORD-1234",
-    customer: "Alex Johnson",
-    location: "Floor 3, Desk 42",
-    items: ["Chicken Salad", "Sparkling Water"],
-    status: "ready",
-    time: "2 mins ago",
-    avatar: avatar1,
-    priority: "high",
-    floor: "3",
-    deskId: "42",
-    coordinates: { x: 65, y: 5 },
-  },
-  {
-    id: "ORD-1235",
-    customer: "Sarah Miller",
-    location: "Floor 2, Meeting Room B",
-    items: ["Veggie Wrap", "Green Tea", "Chocolate Brownie"],
-    status: "ready",
-    time: "5 mins ago",
-    avatar: avatar2,
-    priority: "medium",
-    floor: "2",
-    deskId: "MR-B",
-    coordinates: { x: 65, y: 65 },
-  },
-  {
-    id: "ORD-1236",
-    customer: "David Chen",
-    location: "Floor 4, Desk 15",
-    items: ["Beef Burger", "Fries", "Cola"],
-    status: "ready",
-    time: "7 mins ago",
-    avatar: avatar3,
-    priority: "medium",
-    floor: "4",
-    deskId: "15",
-    coordinates: { x: 45, y: 30 },
-  },
-  {
-    id: "ORD-1237",
-    customer: "Lisa Wong",
-    location: "Floor 1, Reception",
-    items: ["Pasta Carbonara", "Garlic Bread", "Iced Tea"],
-    status: "ready",
-    time: "10 mins ago",
-    avatar: avatar4,
-    priority: "low",
-    floor: "1",
-    deskId: "Reception",
-    coordinates: { x: 58, y: 40 },
-  },
-]
-
-const completedDeliveries = [
-  {
-    id: "ORD-1230",
-    customer: "Emma Wilson",
-    location: "Floor 1, Reception",
-    items: ["Caesar Salad", "Orange Juice"],
-    status: "completed",
-    time: "25 mins ago",
-    avatar: avatar5,
-    floor: "1",
-    deskId: "Reception",
-    coordinates: { x: 81, y: 80 },
-  },
-  {
-    id: "ORD-1231",
-    customer: "Michael Brown",
-    location: "Floor 3, Desk 28",
-    items: ["Tuna Sandwich", "Apple", "Water"],
-    status: "completed",
-    time: "45 mins ago",
-    avatar: avatar6,
-    floor: "3",
-    deskId: "28",
-    coordinates: { x: 54, y: 82 },
-  },
-  {
-    id: "ORD-1232",
-    customer: "James Smith",
-    location: "Floor 2, Meeting Room A",
-    items: ["Chicken Wrap", "Coffee"],
-    status: "completed",
-    time: "1 hour ago",
-    avatar: avatar7,
-    floor: "2",
-    deskId: "MR-A",
-    coordinates: { x: 25, y: 45 },
-  },
-]
+import DashboardHeader from "@/components/generic/DashboardHeader"
+import { completedDeliveries, pendingDeliveries } from "@/lib/delivery/deliveries"
 
 // All deliveries combined for map view
 const allDeliveries = [...pendingDeliveries, ...completedDeliveries]
@@ -144,14 +34,6 @@ export default function DeliveryDashboard() {
   const [selectedDelivery, setSelectedDelivery] = useState<string | null>(null)
   const [activeFloor, setActiveFloor] = useState("1")
   const [highlightedDesk, setHighlightedDesk] = useState<{ floor: string; deskId: string } | null>(null)
-  const navigate = useNavigate()
-
-  const handleLogout = () => {
-    // Scroll to the top of the page
-    window.scrollTo({ top: 0, behavior: "smooth" });
-
-    navigate({ to: "/" });
-  };
 
   // Function to view a delivery on the map
   const viewOnMap = (delivery: any) => {
@@ -184,60 +66,15 @@ export default function DeliveryDashboard() {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white">
-      {/* Header */}
-      <header className="sticky top-0 z-50 bg-white border-b shadow-sm">
-        <div className="flex h-16 items-center justify-between px-4 md:px-6">
-          {/* Mobile sidebar toggle */}
-          <Button
-            variant="outline"
-            size="icon"
-            onClick={() => setSidebarOpen(!sidebarOpen)}
-            className="lg:hidden rounded-full"
-          >
-            {sidebarOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
-          </Button>
-
-          {/* Logo and title */}
-          <div className="flex items-center gap-3">
-            <div className="hidden lg:flex items-center gap-2">
-              {/* Logo */}
-              <h1 className="cursor-pointer" onClick={() => navigate({ to: "/delivery-dashboard" })}>
-                <img src={logo || "/placeholder.svg"} alt="Logo" className="w-auto h-10" />
-              </h1>
-            </div>
-            <div className="h-8 w-[1px] bg-gray-200 hidden lg:block"></div>
-            <h1 className="text-lg font-semibold md:text-xl">
-              {activeTab === "dashboard" && "Delivery Dashboard"}
-              {activeTab === "deliveries" && "Deliveries"}
-              {activeTab === "map" && "Office Floor Map"}
-            </h1>
-          </div>
-
-          {/* Right side actions */}
-          <div className="flex items-center gap-3">
-            <Link to="/report-issue" className="flex items-center">
-              {/* Round Button */}
-              <Button variant="outline" size="lg" className="rounded-full py-3 px-6 flex items-center space-x-3">
-                {/* Report Issue Icon */}
-                <AlertCircle className="h-5 w-5 text-red-500" />
-
-                {/* Report Issue Text */}
-                <span className="text-red-500 text-sm font-semibold">Report Issue</span>
-              </Button>
-            </Link>
-
-            {/* User menu */}
-            <UserMenu
-              role="delivery-staff"
-              name="Delivery Staff"
-              email="delivery@example.com"
-              avatarSrc={deliveryStaffIcon}
-              onLogout={handleLogout}
-            />
-            
-          </div>
-        </div>
-      </header>
+      <DashboardHeader
+        title={
+          activeTab === "dashboard"
+            ? "Delivery Dashboard"
+            : activeTab === "deliveries"
+            ? "Deliveries"
+            : "Office Floor Map"
+        }
+      />
 
       <div className="flex">
         {/* Sidebar */}
@@ -300,14 +137,6 @@ export default function DeliveryDashboard() {
                 </div>
               </div>
             </div>
-              <Button
-                variant="outline"
-                className="w-full justify-start text-red-500 hover:bg-red-50 hover:text-red-600 rounded-lg"
-                onClick={handleLogout}
-              >
-                <LogOut className="mr-2 h-4 w-4" />
-                Log Out
-              </Button>
             </div>
           </div>
         </div>

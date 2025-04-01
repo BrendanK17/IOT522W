@@ -19,54 +19,39 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import Sidebar from "@/components/generic/Sidebar"
 import NextShiftCard from "@/components/generic/NextShiftCard"
 
-import { pendingOrders } from "@/lib/orders";
-import { completedOrders } from "@/lib/orders";
-
-const userLocation = {
-  building: "Building 5",
-  street: "Baker Street",
-  city: "London",
-};
-
-const shiftSchedule = [
-  { day: "Monday", shift: "08:00 AM - 04:00 PM" },
-  { day: "Tuesday", shift: "10:00 AM - 06:00 PM" },
-  { day: "Wednesday", shift: "OFF" },
-  { day: "Thursday", shift: "08:00 AM - 04:00 PM" },
-  { day: "Friday", shift: "12:00 PM - 08:00 PM" },
-];
+import { pendingOrders } from "@/lib/foodPrep/orders";
+import { completedOrders } from "@/lib/foodPrep/orders";
+import DashboardHeader from "@/components/generic/DashboardHeader"
+import { menuItems } from "@/lib/foodPrep/menuItems"
+import { shiftSchedule, userLocation } from "@/lib/foodPrep/user"
 
 export default function FoodPrepDashboard() {
   const [sidebarOpen, setSidebarOpen] = useState(false)
   const [activeTab, setActiveTab] = useState("dashboard")
   const navigate = useNavigate()
-  const [orders, setOrders] = useState(pendingOrders);
   
-
-  const handleLogout = () => {
-    // Scroll to the top of the page
-    window.scrollTo({ top: 0, behavior: "smooth" });
-
-    navigate({ to: "/" });
-  };
-
-  const menuItems = [
-    { label: "Dashboard", icon: <BarChart3 className="mr-2 h-5 w-5" />, value: "dashboard", path: "/food-prep-dashboard" },
-    { label: "Orders", icon: <Package className="mr-2 h-5 w-5" />, value: "orders", badgeCount: orders.length, path: "/food-prep-dashboard/orders" },
-    { label: "Inventory", icon: <Package className="mr-2 h-5 w-5" />, value: "inventory", path: "/food-prep-dashboard/inventory" }
-  ];
-
   return (
     <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white">
+      <DashboardHeader
+        title={
+          activeTab === 'dashboard'
+            ? 'Food Prep Dashboard'
+            : activeTab === 'orders'
+            ? 'Orders'
+            : 'Inventory'
+        }
+      />
+
       <div className="flex">
         {/* Sidebar */}
         <Sidebar
-            menuItems={menuItems}
-            activeTab={activeTab}
-            setActiveTab={setActiveTab}
-            onNavigate={(path) => navigate({ to: path })}
-            sidebarOpen={sidebarOpen}
+          menuItems={menuItems}
+          activeTab={activeTab}
+          setActiveTab={setActiveTab}
+          onNavigate={(path) => navigate({ to: path })}
+          sidebarOpen={sidebarOpen}
         />
+
 
         {/* Main content */}
         <div className="flex-1 px-4 py-6 md:px-6 lg:px-8">
@@ -241,13 +226,11 @@ export default function FoodPrepDashboard() {
                   </CardContent>
                 </Card>
               </div>
-
             </div>         
           </div>
         )}
         </div>
       </div>
-
     </div>
   );
   
