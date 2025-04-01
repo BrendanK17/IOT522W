@@ -2,21 +2,19 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Separator } from "@/components/ui/separator"
 import { Button } from "@/components/ui/button"
 import { Avatar, AvatarImage } from "@/components/ui/avatar"
-import { Badge } from "@/components/ui/badge"
-import { ArrowLeft, Mail, Phone, MapPin, Calendar, Award, Package, CheckCircle, Star } from "lucide-react"
+import { ArrowLeft, Mail, Phone, MapPin, Calendar, Package, CheckCircle } from "lucide-react"
 import deliveryStaffIcon from "../assets/delivery_staff_icon.png"
 import { Link } from "@tanstack/react-router"
 
 export default function ProfilePage() {
   const profileData = {
-    name: "Delivery Staff",
-    email: "delivery@example.com",
+    name: "Food Prep Staff",
+    email: "foodprep@example.com",
     phone: "+1 (555) 123-4567",
-    address: "123 Delivery St, Logistics City, LC 12345",
-    joinDate: "January 15, 2023",
-    deliveriesCompleted: 256,
-    rating: 4.9,
-    pendingDeliveries: 4,
+    address: "123 Prep Lane, Chop Town, TX 12345",
+    joinDate: "September 1, 2020",
+    mealsPrepped: 1982,    
+    pendingOrders: 4,
   }
 
   return (
@@ -32,8 +30,7 @@ export default function ProfilePage() {
         </Link>  
         </div>
 
-        <Card className="w-full border-none shadow-xl overflow-hidden">
-          <CardHeader className="bg-gradient-to-r from-blue-600 to-indigo-700 text-white p-8 relative">
+        <Card className="w-full border-none shadow-xl overflow-hidden">           <CardHeader className="bg-gradient-to-r from-blue-600 to-indigo-700 text-white p-8 relative">
             <div className="absolute inset-0 opacity-10">
               <div className="absolute -right-10 -top-10 w-40 h-40 rounded-full bg-white/20"></div>
               <div className="absolute right-20 bottom-5 w-20 h-20 rounded-full bg-white/20"></div>
@@ -47,13 +44,7 @@ export default function ProfilePage() {
             </div>
               <div className="text-center md:text-left">
                 <CardTitle className="text-2xl font-bold">{profileData.name}</CardTitle>
-                <CardDescription className="text-blue-100 text-lg mt-1">Canteen Personnel</CardDescription>
-                <div className="flex items-center justify-center md:justify-start mt-3 gap-2">
-                  <Badge variant="secondary" className="bg-blue-700 text-white hover:bg-blue-800">
-                    <Star className="h-3 w-3 mr-1 fill-yellow-300 stroke-yellow-400" />
-                    {profileData.rating}/5.0
-                  </Badge>
-                </div>
+                <CardDescription className="text-blue-100 text-lg mt-1">Delivery Personnel</CardDescription>
               </div>
             </div>
           </CardHeader>
@@ -91,21 +82,14 @@ export default function ProfilePage() {
                     <CheckCircle className="h-6 w-6 text-green-600" />
                   </div>
                   <p className="text-sm text-muted-foreground text-center">Completed</p>
-                  <p className="text-2xl font-bold text-center">{profileData.deliveriesCompleted}</p>
+                  <p className="text-2xl font-bold text-center">{profileData.mealsPrepped}</p>
                 </div>
                 <div className="bg-blue-50 p-4 rounded-lg border border-blue-100 shadow-sm">
                   <div className="flex items-center justify-center mb-2">
                     <Package className="h-6 w-6 text-blue-600" />
                   </div>
                   <p className="text-sm text-muted-foreground text-center">Pending</p>
-                  <p className="text-2xl font-bold text-center">{profileData.pendingDeliveries}</p>
-                </div>
-                <div className="bg-blue-50 p-4 rounded-lg border border-blue-100 shadow-sm">
-                  <div className="flex items-center justify-center mb-2">
-                    <Award className="h-6 w-6 text-purple-600" />
-                  </div>
-                  <p className="text-sm text-muted-foreground text-center">Rating</p>
-                  <p className="text-2xl font-bold text-center">{profileData.rating}/5.0</p>
+                  <p className="text-2xl font-bold text-center">{profileData.pendingOrders}</p>
                 </div>
                 <div className="bg-blue-50 p-4 rounded-lg border border-blue-100 shadow-sm">
                   <div className="flex items-center justify-center mb-2">
