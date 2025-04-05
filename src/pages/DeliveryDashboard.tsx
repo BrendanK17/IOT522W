@@ -88,7 +88,7 @@ export default function DeliveryDashboard() {
           />
 
           <SidebarInset className="flex-1 flex flex-col">
-            <div className="flex items-center h-12 px-4 border-b">
+            <div className="flex items-center h-12 px-4 border-b mt-4">
               <SidebarTrigger className="mr-2 hover:bg-gray-100 rounded-md transition-colors" />
               <span className="font-medium text-sm text-muted-foreground">
                 {activeTab === "dashboard"
