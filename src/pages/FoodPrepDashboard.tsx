@@ -4,7 +4,6 @@ import {
   Package,
   CheckCircle,
   Clock,
-  BarChart3,
   CalendarClock,
   ChevronRight,
   TrendingUp,
@@ -14,24 +13,23 @@ import {
   Building,
 } from "lucide-react"
 import { Badge } from "@/components/ui/badge"
-import { useNavigate } from "@tanstack/react-router"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import Sidebar from "@/components/generic/Sidebar"
 import NextShiftCard from "@/components/generic/NextShiftCard"
 
 import { pendingOrders } from "@/lib/foodPrep/orders";
 import { completedOrders } from "@/lib/foodPrep/orders";
 import DashboardHeader from "@/components/generic/DashboardHeader"
-import { menuItems } from "@/lib/foodPrep/menuItems"
+import { SidebarProvider, SidebarInset, SidebarTrigger } from "@/components/ui/sidebar"
+import { FoodPrepSidebar } from "@/components/customized/sidebar/FoodPrepSidebar"
+
 import { shiftSchedule, userLocation } from "@/lib/foodPrep/user"
 
 export default function FoodPrepDashboard() {
   const [sidebarOpen, setSidebarOpen] = useState(false)
   const [activeTab, setActiveTab] = useState("dashboard")
-  const navigate = useNavigate()
   
   return (
-    <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white">
+    <div className="min-h-screen flex flex-col bg-gradient-to-b from-gray-50 to-white">
       <DashboardHeader
         title={
           activeTab === 'dashboard'
@@ -42,16 +40,25 @@ export default function FoodPrepDashboard() {
         }
       />
 
-      <div className="flex">
+      <div className="flex-1 flex max-h-96">
         {/* Sidebar */}
-        <Sidebar
-          menuItems={menuItems}
-          activeTab={activeTab}
-          setActiveTab={setActiveTab}
-          onNavigate={(path) => navigate({ to: path })}
-          sidebarOpen={sidebarOpen}
-        />
+        <SidebarProvider defaultOpen={!sidebarOpen}>
+          <FoodPrepSidebar
+            activeTab={activeTab}
+            setActiveTab={setActiveTab}
+          />
 
+          <SidebarInset className="flex-1 flex flex-col">
+            <div className="flex items-center h-12 px-4 border-b">
+              <SidebarTrigger className="mr-2 hover:bg-gray-100 rounded-md transition-colors" />
+              <span className="font-medium text-sm text-muted-foreground">
+                {activeTab === "dashboard"
+                  ? "Food Prep Dashboard"
+                  : activeTab === "orders"
+                    ? "Orders"
+                    : "Inventory"}
+              </span>
+            </div>
 
         {/* Main content */}
         <div className="flex-1 px-4 py-6 md:px-6 lg:px-8">
@@ -230,9 +237,9 @@ export default function FoodPrepDashboard() {
           </div>
         )}
         </div>
+        </SidebarInset>
+        </SidebarProvider>
       </div>
     </div>
   );
-  
-
 }

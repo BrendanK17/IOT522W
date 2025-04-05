@@ -1,12 +1,12 @@
 import { useState } from "react";
 import { useNavigate } from "@tanstack/react-router";
-import Sidebar from "@/components/generic/Sidebar";
+import { SidebarProvider, SidebarInset, SidebarTrigger } from "@/components/ui/sidebar"
+import { FoodPrepSidebar } from "@/components/customized/sidebar/FoodPrepSidebar"
 import { Card } from "@/components/ui/card";
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
 import { Button } from "@/components/ui/button";
 import { meat_fish_inventory, vegetables_inventory, carbs_inventory, fruits_inventory, beverages_inventory } from "@/lib/foodPrep/inventory";
 import DashboardHeader from "@/components/generic/DashboardHeader";
-import { menuItems } from "@/lib/foodPrep/menuItems";
 import { SquareChevronDown, SquareChevronUp, CupSoda, Apple, Carrot, Bean, Beef } from "lucide-react";
 
 interface InventoryItem {
@@ -102,7 +102,27 @@ export default function FoodPrepInventory() {
     <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white">
       <DashboardHeader title="Inventory" />
       <div className="flex">
-        <Sidebar menuItems={menuItems} activeTab={activeTab} setActiveTab={setActiveTab} onNavigate={(path) => navigate({ to: path })} sidebarOpen={sidebarOpen} />
+        
+      <div className="flex-1 flex max-h-96">
+        {/* Sidebar */}
+        <SidebarProvider defaultOpen={!sidebarOpen}>
+          <FoodPrepSidebar
+            activeTab={activeTab}
+            setActiveTab={setActiveTab}
+          />
+
+          <SidebarInset className="flex-1 flex flex-col">
+            <div className="flex items-center h-12 px-4 border-b">
+              <SidebarTrigger className="mr-2 hover:bg-gray-100 rounded-md transition-colors" />
+              <span className="font-medium text-sm text-muted-foreground">
+                {activeTab === "dashboard"
+                  ? "Overview"
+                  : activeTab === "deliveries"
+                    ? "Orders"
+                    : "Inventory"}
+              </span>
+            </div>
+
         <div className="flex-1 px-4 py-6 md:px-6 lg:px-8">
           <div className="space-y-8">
             <h1 className="text-2xl font-bold text-black">Welcome to the Inventory Dashboard</h1>
@@ -113,7 +133,10 @@ export default function FoodPrepInventory() {
             <InventoryCarousel title={<><CupSoda className="inline-block mr-2" /> BEVERAGES</>} inventory={beverages_inventory} titleColor="bg-blue-400" pillColor="bg-blue-300" collapsed={collapsedSections.beverages} toggleSection={() => toggleSection("beverages")} />
           </div>
         </div>
+        </SidebarInset>
+        </SidebarProvider>
       </div>
+    </div>
     </div>
   );
 }
