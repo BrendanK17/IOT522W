@@ -49,7 +49,7 @@ export default function FoodPrepDashboard() {
           />
 
           <SidebarInset className="flex-1 flex flex-col">
-            <div className="flex items-center h-12 px-4 border-b">
+            <div className="flex items-center h-12 px-4 border-b mt-4">
               <SidebarTrigger className="mr-2 hover:bg-gray-100 rounded-md transition-colors" />
               <span className="font-medium text-sm text-muted-foreground">
                 {activeTab === "dashboard"
@@ -95,7 +95,6 @@ export default function FoodPrepDashboard() {
             {/* Stats cards */}
             <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
                 <Card className="overflow-hidden border-none shadow-md">
-                  <div className="absolute top-0 right-0 h-16 w-16 rounded-bl-full bg-gradient-to-br from-[#0052CC]/10 to-[#0052CC]/30"></div>
                   <CardHeader className="flex flex-row items-center justify-between pb-2">
                     <CardTitle className="text-sm font-medium">Orders Prepared</CardTitle>
                     <div className="h-8 w-8 rounded-full bg-[#0052CC]/10 flex items-center justify-center">
@@ -114,7 +113,6 @@ export default function FoodPrepDashboard() {
                 </Card>
 
                 <Card className="overflow-hidden border-none shadow-md">
-                  <div className="absolute top-0 right-0 h-16 w-16 rounded-bl-full bg-gradient-to-br from-green-100 to-green-200"></div>
                   <CardHeader className="flex flex-row items-center justify-between pb-2">
                     <CardTitle className="text-sm font-medium">Completed Today</CardTitle>
                     <div className="h-8 w-8 rounded-full bg-green-100 flex items-center justify-center">
@@ -133,7 +131,6 @@ export default function FoodPrepDashboard() {
                 </Card>
 
                 <Card className="overflow-hidden border-none shadow-md">
-                  <div className="absolute top-0 right-0 h-16 w-16 rounded-bl-full bg-gradient-to-br from-amber-100 to-amber-200"></div>
                   <CardHeader className="flex flex-row items-center justify-between pb-2">
                     <CardTitle className="text-sm font-medium">Avg. Preparation Time</CardTitle>
                     <div className="h-8 w-8 rounded-full bg-amber-100 flex items-center justify-center">
@@ -152,7 +149,6 @@ export default function FoodPrepDashboard() {
                 </Card>
 
                 <Card className="overflow-hidden border-none shadow-md">
-                  <div className="absolute top-0 right-0 h-16 w-16 rounded-bl-full bg-gradient-to-br from-purple-100 to-purple-200"></div>
                   <CardHeader className="flex flex-row items-center justify-between pb-2">
                     <CardTitle className="text-sm font-medium">Customer Rating</CardTitle>
                     <div className="h-8 w-8 rounded-full bg-purple-100 flex items-center justify-center">
@@ -181,7 +177,6 @@ export default function FoodPrepDashboard() {
 
                 {/* User Location */}
                 <Card className="overflow-hidden border-none shadow-md h-full">
-                  <div className="absolute top-0 right-0 h-16 w-16 rounded-bl-full bg-gradient-to-br from-blue-100 to-blue-200"></div>
                   <CardHeader className="flex flex-row items-center justify-between pb-2">
                     <CardTitle className="text-sm font-medium">Your Location</CardTitle>
                     <div className="h-8 w-8 rounded-full bg-blue-100 flex items-center justify-center">
@@ -206,7 +201,6 @@ export default function FoodPrepDashboard() {
               {/* Shift Schedule */}
               <div className="col-span-2">
                 <Card className="overflow-hidden border-none shadow-md h-full">
-                  <div className="absolute top-0 right-0 h-16 w-16 rounded-bl-full bg-gradient-to-br from-indigo-100 to-indigo-200"></div>
                   <CardHeader className="flex flex-row items-center justify-between pb-2">
                     <CardTitle className="text-sm font-medium">Shift Schedule</CardTitle>
                     <div className="h-8 w-8 rounded-full bg-blue-100 flex items-center justify-center">
