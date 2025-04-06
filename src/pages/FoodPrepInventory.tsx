@@ -20,7 +20,7 @@ interface InventoryItem {
 interface InventoryCarouselProps {
   title: React.ReactNode;
   inventory: InventoryItem[];
-  titleColor: string;
+  borderColor: string;
   pillColor: string;
   collapsed: boolean;
   toggleSection: () => void;
@@ -43,7 +43,7 @@ const itemsLowOnStock = allInventories.filter(
 ).length;
 
 
-const InventoryCarousel: React.FC<InventoryCarouselProps> = ({ title, inventory, titleColor, pillColor, collapsed, toggleSection }) => {
+const InventoryCarousel: React.FC<InventoryCarouselProps> = ({ title, inventory, borderColor, pillColor, collapsed, toggleSection }) => {
   const [counts, setCounts] = useState<number[]>(inventory.map((item) => item.count));
 
   const increaseCount = (index: number) => {
@@ -55,7 +55,7 @@ const InventoryCarousel: React.FC<InventoryCarouselProps> = ({ title, inventory,
   };
 
   return (
-    <Card className={`p-5 rounded-lg shadow-md ${titleColor.replace("bg", "border")} border-4 relative`}>
+    <Card className={`p-5 rounded-lg shadow-md ${borderColor} border-4 relative`}>
       <h2 onClick={toggleSection} className="text-sm font-bold text-black absolute top-2 left-4 cursor-pointer">
         {title}
       </h2>
@@ -176,11 +176,11 @@ export default function FoodPrepInventory() {
                 </div>
               </div>
             </div>
-            <InventoryCarousel title={<><Beef className="inline-block mr-2" /> FISH & MEAT</>} inventory={meat_fish_inventory} titleColor="bg-orange-400" pillColor="bg-orange-300" collapsed={collapsedSections.meat_fish} toggleSection={() => toggleSection("meat_fish")} />
-            <InventoryCarousel title={<><Bean className="inline-block mr-2" /> CARBS</>} inventory={carbs_inventory} titleColor="bg-yellow-400" pillColor="bg-yellow-300" collapsed={collapsedSections.carbs} toggleSection={() => toggleSection("carbs")} />
-            <InventoryCarousel title={<><Carrot className="inline-block mr-2" /> VEGETABLES</>} inventory={vegetables_inventory} titleColor="bg-green-400" pillColor="bg-green-300" collapsed={collapsedSections.vegetables} toggleSection={() => toggleSection("vegetables")} />
-            <InventoryCarousel title={<><Apple className="inline-block mr-2" /> FRUITS</>} inventory={fruits_inventory} titleColor="bg-red-400" pillColor="bg-red-300" collapsed={collapsedSections.fruits} toggleSection={() => toggleSection("fruits")} />
-            <InventoryCarousel title={<><CupSoda className="inline-block mr-2" /> BEVERAGES</>} inventory={beverages_inventory} titleColor="bg-blue-400" pillColor="bg-blue-300" collapsed={collapsedSections.beverages} toggleSection={() => toggleSection("beverages")} />
+            <InventoryCarousel title={<><Beef className="inline-block mr-2" /> FISH & MEAT</>} inventory={meat_fish_inventory} borderColor="border-orange-400" pillColor="bg-orange-300" collapsed={collapsedSections.meat_fish} toggleSection={() => toggleSection("meat_fish")} />
+            <InventoryCarousel title={<><Bean className="inline-block mr-2" /> CARBS</>} inventory={carbs_inventory} borderColor="border-yellow-400" pillColor="bg-yellow-300" collapsed={collapsedSections.carbs} toggleSection={() => toggleSection("carbs")} />
+            <InventoryCarousel title={<><Carrot className="inline-block mr-2" /> VEGETABLES</>} inventory={vegetables_inventory} borderColor="border-green-400" pillColor="bg-green-300" collapsed={collapsedSections.vegetables} toggleSection={() => toggleSection("vegetables")} />
+            <InventoryCarousel title={<><Apple className="inline-block mr-2" /> FRUITS</>} inventory={fruits_inventory} borderColor="border-red-400" pillColor="bg-red-300" collapsed={collapsedSections.fruits} toggleSection={() => toggleSection("fruits")} />
+            <InventoryCarousel title={<><CupSoda className="inline-block mr-2" /> BEVERAGES</>} inventory={beverages_inventory} borderColor="border-blue-400" pillColor="bg-blue-300" collapsed={collapsedSections.beverages} toggleSection={() => toggleSection("beverages")} />
           </div>
         </div>
         </SidebarInset>
