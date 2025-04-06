@@ -25,6 +25,8 @@ import { Route as FoodPrepDashboardOrdersImport } from './routes/food-prep-dashb
 import { Route as FoodPrepDashboardInventoryImport } from './routes/food-prep-dashboard.inventory'
 import { Route as CustomerTrackOrderImport } from './routes/customer.track-order'
 import { Route as CustomerOrderImport } from './routes/customer.order'
+import { Route as CustomerNotificationsImport } from './routes/customer.notifications'
+import { Route as CustomerDeliveryCalendarImport } from './routes/customer.delivery-calendar'
 import { Route as CustomerCheckoutImport } from './routes/customer.checkout'
 
 // Create/Update Routes
@@ -115,6 +117,18 @@ const CustomerOrderRoute = CustomerOrderImport.update({
   getParentRoute: () => rootRoute,
 } as any)
 
+const CustomerNotificationsRoute = CustomerNotificationsImport.update({
+  id: '/customer/notifications',
+  path: '/customer/notifications',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const CustomerDeliveryCalendarRoute = CustomerDeliveryCalendarImport.update({
+  id: '/customer/delivery-calendar',
+  path: '/customer/delivery-calendar',
+  getParentRoute: () => rootRoute,
+} as any)
+
 const CustomerCheckoutRoute = CustomerCheckoutImport.update({
   id: '/customer/checkout',
   path: '/customer/checkout',
@@ -137,6 +151,20 @@ declare module '@tanstack/react-router' {
       path: '/customer/checkout'
       fullPath: '/customer/checkout'
       preLoaderRoute: typeof CustomerCheckoutImport
+      parentRoute: typeof rootRoute
+    }
+    '/customer/delivery-calendar': {
+      id: '/customer/delivery-calendar'
+      path: '/customer/delivery-calendar'
+      fullPath: '/customer/delivery-calendar'
+      preLoaderRoute: typeof CustomerDeliveryCalendarImport
+      parentRoute: typeof rootRoute
+    }
+    '/customer/notifications': {
+      id: '/customer/notifications'
+      path: '/customer/notifications'
+      fullPath: '/customer/notifications'
+      preLoaderRoute: typeof CustomerNotificationsImport
       parentRoute: typeof rootRoute
     }
     '/customer/order': {
@@ -238,6 +266,8 @@ declare module '@tanstack/react-router' {
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/customer/checkout': typeof CustomerCheckoutRoute
+  '/customer/delivery-calendar': typeof CustomerDeliveryCalendarRoute
+  '/customer/notifications': typeof CustomerNotificationsRoute
   '/customer/order': typeof CustomerOrderRoute
   '/customer/track-order': typeof CustomerTrackOrderRoute
   '/food-prep-dashboard/inventory': typeof FoodPrepDashboardInventoryRoute
@@ -256,6 +286,8 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/customer/checkout': typeof CustomerCheckoutRoute
+  '/customer/delivery-calendar': typeof CustomerDeliveryCalendarRoute
+  '/customer/notifications': typeof CustomerNotificationsRoute
   '/customer/order': typeof CustomerOrderRoute
   '/customer/track-order': typeof CustomerTrackOrderRoute
   '/food-prep-dashboard/inventory': typeof FoodPrepDashboardInventoryRoute
@@ -275,6 +307,8 @@ export interface FileRoutesById {
   __root__: typeof rootRoute
   '/': typeof IndexRoute
   '/customer/checkout': typeof CustomerCheckoutRoute
+  '/customer/delivery-calendar': typeof CustomerDeliveryCalendarRoute
+  '/customer/notifications': typeof CustomerNotificationsRoute
   '/customer/order': typeof CustomerOrderRoute
   '/customer/track-order': typeof CustomerTrackOrderRoute
   '/food-prep-dashboard/inventory': typeof FoodPrepDashboardInventoryRoute
@@ -295,6 +329,8 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/customer/checkout'
+    | '/customer/delivery-calendar'
+    | '/customer/notifications'
     | '/customer/order'
     | '/customer/track-order'
     | '/food-prep-dashboard/inventory'
@@ -312,6 +348,8 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/customer/checkout'
+    | '/customer/delivery-calendar'
+    | '/customer/notifications'
     | '/customer/order'
     | '/customer/track-order'
     | '/food-prep-dashboard/inventory'
@@ -329,6 +367,8 @@ export interface FileRouteTypes {
     | '__root__'
     | '/'
     | '/customer/checkout'
+    | '/customer/delivery-calendar'
+    | '/customer/notifications'
     | '/customer/order'
     | '/customer/track-order'
     | '/food-prep-dashboard/inventory'
@@ -348,6 +388,8 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   CustomerCheckoutRoute: typeof CustomerCheckoutRoute
+  CustomerDeliveryCalendarRoute: typeof CustomerDeliveryCalendarRoute
+  CustomerNotificationsRoute: typeof CustomerNotificationsRoute
   CustomerOrderRoute: typeof CustomerOrderRoute
   CustomerTrackOrderRoute: typeof CustomerTrackOrderRoute
   FoodPrepDashboardInventoryRoute: typeof FoodPrepDashboardInventoryRoute
@@ -366,6 +408,8 @@ export interface RootRouteChildren {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   CustomerCheckoutRoute: CustomerCheckoutRoute,
+  CustomerDeliveryCalendarRoute: CustomerDeliveryCalendarRoute,
+  CustomerNotificationsRoute: CustomerNotificationsRoute,
   CustomerOrderRoute: CustomerOrderRoute,
   CustomerTrackOrderRoute: CustomerTrackOrderRoute,
   FoodPrepDashboardInventoryRoute: FoodPrepDashboardInventoryRoute,
@@ -393,6 +437,8 @@ export const routeTree = rootRoute
       "children": [
         "/",
         "/customer/checkout",
+        "/customer/delivery-calendar",
+        "/customer/notifications",
         "/customer/order",
         "/customer/track-order",
         "/food-prep-dashboard/inventory",
@@ -413,6 +459,12 @@ export const routeTree = rootRoute
     },
     "/customer/checkout": {
       "filePath": "customer.checkout.tsx"
+    },
+    "/customer/delivery-calendar": {
+      "filePath": "customer.delivery-calendar.tsx"
+    },
+    "/customer/notifications": {
+      "filePath": "customer.notifications.tsx"
     },
     "/customer/order": {
       "filePath": "customer.order.tsx"
