@@ -6,6 +6,8 @@ import { useBasket } from "@/context/BasketContext"; // Use BasketContext
 import DashboardHeader from "@/components/generic/DashboardHeader";
 import { useState } from "react";
 import { BarChart3, Package } from "lucide-react";
+import { Sidebar } from "@/components/ui/sidebar";
+import { CustomerSidebar } from "@/components/customized/sidebar/CustomerSidebar";
 
 const menuItems = [
   { id: 1, name: "Club Sandwich", price: 6.95, photo: "https://www.seriouseats.com/thmb/HliR9y_Dqf3zbBR86k9Aie2uEnM=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/20231204-SEA-TurkeyClub-FredHardy-01-6679650f138a4f419e330a8a0f31576d.jpg" },
@@ -41,7 +43,11 @@ export default function Order() {
               />
 
       <div className="min-h-screen p-6 bg-gray-50 flex">
-        
+      <CustomerSidebar
+        activeTab={activeTab}
+        setActiveTab={setActiveTab}
+        pendingDeliveriesCount={3}
+      />
         <div className="flex-1">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {menuItems.map((item) => (
