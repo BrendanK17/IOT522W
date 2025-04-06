@@ -3,9 +3,29 @@ import { useNavigate } from "@tanstack/react-router";
 import { useAuth } from "@/context/AuthContext";
 import logo from '../../assets/logo.png';
 
-export default function Header() {
+interface HeaderProps{
+  role: "customer" | "food-prep-staff" | "delivery-staff";
+}
+
+export default function Header({ role }: HeaderProps) {
   const navigate = useNavigate();
   const { user, logout } = useAuth();
+
+  const handleLogoClick = () => {
+    const roleToRoute: Record<typeof role, string> = {
+      "customer": "/customer/orders",
+      "food-prep-staff": "food-prep-dashboard",
+      "delivery-staff": "/delivery-dashboard",
+    };
+
+    if (user && role && roleToRoute[role]) {
+      navigate({ to: roleToRoute[role] });
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    } else {
+      navigate({ to: "/" }); // fallback
+    }
+  };
+  
 
   return (
     <header className="sticky top-0 bg-white text-black py-4 px-4 sm:px-6 lg:px-8 border-b border-gray-200 z-10 w-full">
@@ -13,7 +33,7 @@ export default function Header() {
 
         {/* Logo + Role-specific Buttons */}
         <div className="flex items-center space-x-4">
-          <h1 className="cursor-pointer" onClick={() => navigate({ to: "/" })}>
+          <h1 className="cursor-pointer" onClick={handleLogoClick}>
             <img src={logo} alt="Logo" className="w-auto h-10" />
           </h1>
         </div>
