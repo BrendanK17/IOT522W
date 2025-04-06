@@ -121,20 +121,20 @@ export default function Checkout() {
                 </SelectContent>
               </Select>
 
-              <Button className="w-full bg-blue-600 hover:bg-blue-700 text-white" type="submit">
-                Place Order
-              </Button>
-              <Button
-                variant="secondary"
-                className="w-full"
-                onClick={() => navigate({ to: "/customer/order" })}
-              >
-                Back to Menu
-              </Button>
-            </form>
-          </CardContent>
-        </Card>
-      </div>
+            <Button className="w-full bg-blue-600 hover:bg-blue-700 text-white" type="submit">
+              Place Order
+            </Button>
+            <Button
+              variant="secondary"
+              className="w-full"
+              onClick={() => navigate({ to: "/customer/order" })}
+            >
+              Back to Order
+            </Button>
+          </form>
+        </CardContent>
+      </Card>
+    </div>
     </div>
   );
 }

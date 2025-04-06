@@ -3,13 +3,13 @@ import { useNavigate } from "@tanstack/react-router"
 import { Switch } from "@/components/ui/switch"
 import { Label } from "@/components/ui/label"
 import OrderCard from "@/components/generic/FoodPrepOrderCard";
-import Sidebar from "@/components/generic/Sidebar";
 import FoodPrepOrdersTable from "@/components/generic/FoodPrepTable";
 import CircularProgress from "@/components/customized/progress/progress-10";
 import { pendingOrders } from "@/lib/foodPrep/orders";
 import { completedOrders } from "@/lib/foodPrep/orders";
 import DashboardHeader from "@/components/generic/DashboardHeader";
-import { menuItems } from "@/lib/foodPrep/menuItems";
+import { SidebarProvider, SidebarInset, SidebarTrigger } from "@/components/ui/sidebar"
+import { FoodPrepSidebar } from "@/components/customized/sidebar/FoodPrepSidebar"
 
 const progress = Math.round(completedOrders.length/(pendingOrders.length + completedOrders.length)*100)
 
@@ -36,17 +36,25 @@ export default function FoodPrepOrders() {
         }
       />
 
-      <div className="flex">
+      <div className="flex-1 flex max-h-96">
         {/* Sidebar */}
-        <div className="sticky top-0 h-screen overflow-y-auto border-r bg-white shadow-sm">
-          <Sidebar
-            menuItems={menuItems}
+        <SidebarProvider defaultOpen={!sidebarOpen}>
+          <FoodPrepSidebar
             activeTab={activeTab}
             setActiveTab={setActiveTab}
-            onNavigate={(path) => navigate({ to: path })}
-            sidebarOpen={sidebarOpen}
           />
-        </div>  
+
+          <SidebarInset className="flex-1 flex flex-col">
+            <div className="flex items-center h-12 px-4 border-b mt-4">
+              <SidebarTrigger className="mr-2 hover:bg-gray-100 rounded-md transition-colors" />
+              <span className="font-medium text-sm text-muted-foreground">
+                {activeTab === "dashboard"
+                  ? "Food Prep Dashboard"
+                  : activeTab === "orders"
+                    ? "Orders"
+                    : "Inventory"}
+              </span>
+            </div>
 
         {/* Main content */}
         <div className="flex-1 px-4 py-6 md:px-6 lg:px-8">
@@ -99,8 +107,9 @@ export default function FoodPrepOrders() {
             </div>
           </div>
         </div>
-
-        </div>
+        </SidebarInset>
+        </SidebarProvider>
+      </div>
     </div>
   );
 

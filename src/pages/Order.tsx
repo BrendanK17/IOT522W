@@ -5,23 +5,30 @@ import { useNavigate } from "@tanstack/react-router";
 import { useBasket } from "@/context/BasketContext"; // Use BasketContext
 import DashboardHeader from "@/components/generic/DashboardHeader";
 import { useState } from "react";
+import { BarChart3, Package } from "lucide-react";
 
 const menuItems = [
-  { id: 1, name: "Club Sandwich", price: 6.95, description: "To your desk in 15 minutes!" },
-  { id: 2, name: "Steak and Salad", price: 13.95, description: "To your desk in 20 minutes!" },
-  { id: 3, name: "American Feast Deal", price: 12.95, description: "Available for delivery at 12:00" },
-  { id: 4, name: "Roast Dinner Deal", price: 11.95, description: "Available for delivery at 12:00" },
-  { id: 5, name: "Mexican Fiesta Deal", price: 9.95, description: "Available for delivery at 12:00" },
+  { id: 1, name: "Club Sandwich", price: 6.95, photo: "https://www.seriouseats.com/thmb/HliR9y_Dqf3zbBR86k9Aie2uEnM=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/20231204-SEA-TurkeyClub-FredHardy-01-6679650f138a4f419e330a8a0f31576d.jpg" },
+  { id: 2, name: "Chicken Salad", price: 9.95, photo: "https://images.immediate.co.uk/production/volatile/sites/30/2020/08/recipe-image-legacy-id-327831_11-3524329.jpg" },
+  { id: 3, name: "Fish and Chips", price: 12.95, photo: "https://i0.wp.com/travelandmunchies.com/wp-content/uploads/2022/12/IMG_9513-scaled.jpg?fit=2560%2C1828&ssl=1" },
+  { id: 4, name: "Pasta Salad", price: 8.95, photo: "https://www.southernliving.com/thmb/uv4cMY0isMucRojsotaKgzSqE2c=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/Pasta-Salad_Beauty-03_SEO51-b0632e62b2354da489fd418a9edc22f4-d7f09ce9d11742e5a61f8073d6d294f5.jpeg" },
+  { id: 5, name: "Sushi", price: 11.95, photo: "https://www.thespruceeats.com/thmb/KKVYHEcAN6Jt7yvULfCB4r3ad30=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/what-is-sushi-5079606-hero-01-e5a0a26f194a49478f84e04193baaefa.jpg" },
+  { id: 6, name: "Bean Wrap", price: 7.95, photo: "https://cdn.sanity.io/images/cq7w2e71/production/b9291dd6afead7ffac3a45b23b8b9c2a8722606e-973x1300.jpg" },
 ];
 
 export default function Order() {
-  const { basket, addToBasket, increaseQuantity, decreaseQuantity, removeFromBasket, updateComment } = useBasket(); // Using BasketContext
+  const [activeTab, setActiveTab] = useState("orders");
+  const { basket, addToBasket, increaseQuantity, decreaseQuantity, removeFromBasket, updateComment } = useBasket();
   const navigate = useNavigate();
-  const [activeTab, setActiveTab] = useState("order") // to implement by the whoever is adding the sidebar
 
   const handleCheckout = () => {
-    navigate({ to: "/customer/checkout" }); // Navigate to the checkout page
+    navigate({ to: "/customer/checkout" });
   };
+
+  const sideMenuItems = [
+    { label: "Order", icon: <BarChart3 className="mr-2 h-5 w-5" />, value: "order", path: "/customer/order" },
+    { label: "Tracking", icon: <Package className="mr-2 h-5 w-5" />, value: "tracking", path: "/customer/track-order" },
+  ];
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white">
@@ -43,7 +50,7 @@ export default function Order() {
                   <CardTitle className="text-blue-900">{item.name}</CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <p className="text-gray-600">{item.description}</p>
+                  <img src={item.photo} alt={item.name} className="w-full h-32 object-cover rounded-lg" />
                   <p className="font-bold text-lg my-2 text-blue-700">£{item.price.toFixed(2)}</p>
                   <Button
                     className="bg-blue-600 hover:bg-blue-700 text-white"

@@ -49,7 +49,6 @@ const NextShiftCard: React.FC<NextShiftCardProps> = ({ shiftSchedule }) => {
 
   return (
     <Card className="overflow-hidden border-none shadow-md">
-      <div className="absolute top-0 right-0 h-16 w-16 rounded-bl-full bg-gradient-to-br from-indigo-100 to-indigo-200"></div>
       <CardHeader className="flex flex-row items-center justify-between pb-2">
         <CardTitle className="text-sm font-medium">Next Shift</CardTitle>
         <div className="h-8 w-8 rounded-full bg-blue-100 flex items-center justify-center">

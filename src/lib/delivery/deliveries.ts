@@ -20,6 +20,7 @@ export const pendingDeliveries = [
     floor: "3",
     deskId: "42",
     coordinates: { x: 65, y: 5 },
+    phoneNumber: "+1-555-0123",
   },
   {
     id: "ORD-1235",
@@ -33,6 +34,7 @@ export const pendingDeliveries = [
     floor: "2",
     deskId: "MR-B",
     coordinates: { x: 65, y: 65 },
+    phoneNumber: "+1-555-0789",
   },
   {
     id: "ORD-1236",
@@ -46,6 +48,7 @@ export const pendingDeliveries = [
     floor: "4",
     deskId: "15",
     coordinates: { x: 45, y: 30 },
+    phoneNumber: "+1-555-0912",
   },
   {
     id: "ORD-1237",
@@ -59,6 +62,7 @@ export const pendingDeliveries = [
     floor: "1",
     deskId: "Reception",
     coordinates: { x: 58, y: 40 },
+    phoneNumber: "+1-555-0848",
   },
 ]
 
@@ -74,6 +78,7 @@ export const completedDeliveries = [
     floor: "1",
     deskId: "Reception",
     coordinates: { x: 81, y: 80 },
+    phoneNumber: "+1-555-1345",
   },
   {
     id: "ORD-1231",
@@ -86,6 +91,7 @@ export const completedDeliveries = [
     floor: "3",
     deskId: "28",
     coordinates: { x: 54, y: 82 },
+    phoneNumber: "+1-555-1678",
   },
   {
     id: "ORD-1232",
@@ -98,5 +104,6 @@ export const completedDeliveries = [
     floor: "2",
     deskId: "MR-A",
     coordinates: { x: 25, y: 45 },
+    phoneNumber: "+1-555-1901",
   },
 ]
