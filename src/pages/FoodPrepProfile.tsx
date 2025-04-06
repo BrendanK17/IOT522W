@@ -3,7 +3,7 @@ import { Separator } from "@/components/ui/separator"
 import { Button } from "@/components/ui/button"
 import { Avatar, AvatarImage } from "@/components/ui/avatar"
 import { ArrowLeft, Mail, Phone, MapPin, Calendar, Package, CheckCircle } from "lucide-react"
-import deliveryStaffIcon from "../assets/delivery_staff_icon.png"
+import foodPrepLogo from "../assets/persona/food_prep_logo.png"
 import { Link } from "@tanstack/react-router"
 
 export default function ProfilePage() {
@@ -22,7 +22,7 @@ export default function ProfilePage() {
 
       <div className="py-10 px-4 md:px-12 lg:px-24">
         <div className="mb-6">
-        <Link to="/delivery-dashboard" className="flex items-center">
+        <Link to="/food-prep-dashboard" className="flex items-center">
           <Button variant="outline" size="sm" className="gap-2 rounded-full">
             <ArrowLeft className="h-4 w-4" />
             Back to Dashboard
@@ -39,7 +39,7 @@ export default function ProfilePage() {
             <div className="flex flex-col md:flex-row items-center gap-6 z-10">
             <div className="flex items-center gap-2 cursor-pointer">
             <Avatar className="h-20 w-20 border-4 border-[#0052CC]">
-                <AvatarImage src={deliveryStaffIcon} />
+                <AvatarImage src={foodPrepLogo} />
             </Avatar>
             </div>
               <div className="text-center md:text-left">
