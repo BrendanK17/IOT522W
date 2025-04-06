@@ -22,7 +22,7 @@ export default function ProfilePage() {
   return (
     <div className="min-h-screen bg-gradient-to-b from-blue-50 to-white">
 
-      <div className="py-10 px-4 md:px-12 lg:px-24"> {/* Increased padding */}
+      <div className="py-10 px-4 md:px-12 lg:px-24">
         <div className="mb-6">
         <Link to="/delivery-dashboard" className="flex items-center">
           <Button variant="outline" size="sm" className="gap-2 rounded-full">
@@ -32,7 +32,7 @@ export default function ProfilePage() {
         </Link>  
         </div>
 
-        <Card className="w-full border-none shadow-xl overflow-hidden"> {/* Full width */}
+        <Card className="w-full border-none shadow-xl overflow-hidden">
           <CardHeader className="bg-gradient-to-r from-blue-600 to-indigo-700 text-white p-8 relative">
             <div className="absolute inset-0 opacity-10">
               <div className="absolute -right-10 -top-10 w-40 h-40 rounded-full bg-white/20"></div>
@@ -47,7 +47,7 @@ export default function ProfilePage() {
             </div>
               <div className="text-center md:text-left">
                 <CardTitle className="text-2xl font-bold">{profileData.name}</CardTitle>
-                <CardDescription className="text-blue-100 text-lg mt-1">Delivery Personnel</CardDescription>
+                <CardDescription className="text-blue-100 text-lg mt-1">Canteen Personnel</CardDescription>
                 <div className="flex items-center justify-center md:justify-start mt-3 gap-2">
                   <Badge variant="secondary" className="bg-blue-700 text-white hover:bg-blue-800">
                     <Star className="h-3 w-3 mr-1 fill-yellow-300 stroke-yellow-400" />

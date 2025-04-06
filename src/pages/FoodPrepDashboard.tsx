@@ -4,7 +4,6 @@ import {
   Package,
   CheckCircle,
   Clock,
-  BarChart3,
   CalendarClock,
   ChevronRight,
   TrendingUp,
@@ -14,163 +13,52 @@ import {
   Building,
 } from "lucide-react"
 import { Badge } from "@/components/ui/badge"
-import { useNavigate } from "@tanstack/react-router"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import Sidebar from "@/components/generic/Sidebar"
 import NextShiftCard from "@/components/generic/NextShiftCard"
 
-import avatar1 from "../assets/avatar_1.png"
-import avatar2 from "../assets/avatar_2.png"
-import avatar3 from "../assets/avatar_3.png"
+import { pendingOrders } from "@/lib/foodPrep/orders";
+import { completedOrders } from "@/lib/foodPrep/orders";
+import DashboardHeader from "@/components/generic/DashboardHeader"
+import { SidebarProvider, SidebarInset, SidebarTrigger } from "@/components/ui/sidebar"
+import { FoodPrepSidebar } from "@/components/customized/sidebar/FoodPrepSidebar"
 
-const pendingOrders = [
-  {
-      id: "ORD-1234",
-      customer: "Alex Johnson",
-      location: "Floor 3, Desk 42",
-      items: ["Chicken Salad", "Sparkling Water"],
-      placedAt: "12:00 PM",
-      dueAt: "13:45 PM",
-      notes: ["Extra dressing on the side"],
-      status: "orderPlaced",
-      time: "2 mins ago",
-      avatar: avatar1,
-      priority: "high",
-      floor: "3",
-      deskId: "42",
-      coordinates: { x: 65, y: 5 },
-    },
-    {
-      id: "ORD-1235",
-      customer: "Sarah Miller",
-      location: "Floor 2, Meeting Room B",
-      items: ["Veggie Wrap", "Green Tea", "Chocolate Brownie"],
-      placedAt: "11:43 AM",
-      dueAt: "12:30 PM",
-      notes: ["No lettuce in the wrap"],
-      status: "orderPlaced",
-      time: "5 mins ago",
-      avatar: avatar2,
-      priority: "medium",
-      floor: "2",
-      deskId: "MR-B",
-      coordinates: { x: 65, y: 65 },
-    },
-    {
-      id: "ORD-1236",
-      customer: "David Chen",
-      location: "Floor 4, Desk 15",
-      items: ["Beef Burger", "Fries", "Cola"],
-      placedAt: "10:39 AM",
-      dueAt: "13:00 PM",
-      notes: [],
-      status: "beingPrepared",
-      time: "7 mins ago",
-      avatar: avatar3,
-      priority: "medium",
-      floor: "4",
-      deskId: "15",
-      coordinates: { x: 45, y: 30 },
-    },
-    {
-      id: "ORD-1237",
-      customer: "Emily Davis",
-      location: "Floor 1, Desk 5",
-      items: ["Caesar Salad", "Iced Tea"],
-      placedAt: "09:00 AM",
-      dueAt: "10:30 AM",
-      notes: ["No croutons"],
-      status: "orderPlaced",
-      time: "10 mins ago",
-      avatar: avatar1,
-      priority: "low",
-      floor: "1",
-      deskId: "5",
-      coordinates: { x: 20, y: 80 },
-    },
-];
-
-const completedOrders = [
-{
-  timePlaced: "09:00 AM",
-  orderNumber: "ORD001",
-  order: "Margherita Pizza",
-  specialRequests: "Extra Cheese",
-  extras: "Garlic Bread",
-  status: "Completed",
-},
-{
-  timePlaced: "11:15 AM",
-  orderNumber: "ORD002",
-  order: "Veggie Burger",
-  specialRequests: "No Mayo",
-  extras: "Sweet Potato Fries",
-  status: "In Progress",
-},
-{
-  timePlaced: "12:00 PM",
-  orderNumber: "ORD003",
-  order: "Chicken Caesar Salad",
-  specialRequests: "Dressing on the Side",
-  extras: "Breadsticks",
-  status: "Pending",
-},
-{
-  timePlaced: "12:00 PM",
-  orderNumber: "ORD003",
-  order: "Chicken Caesar Salad",
-  specialRequests: "Dressing on the Side",
-  extras: "Breadsticks",
-  status: "Pending",
-},
-
-];
-
-const userLocation = {
-  building: "Building 5",
-  street: "Baker Street",
-  city: "London",
-};
-
-const shiftSchedule = [
-  { day: "Monday", shift: "08:00 AM - 04:00 PM" },
-  { day: "Tuesday", shift: "10:00 AM - 06:00 PM" },
-  { day: "Wednesday", shift: "OFF" },
-  { day: "Thursday", shift: "08:00 AM - 04:00 PM" },
-  { day: "Friday", shift: "12:00 PM - 08:00 PM" },
-];
+import { shiftSchedule, userLocation } from "@/lib/foodPrep/user"
 
 export default function FoodPrepDashboard() {
   const [sidebarOpen, setSidebarOpen] = useState(false)
   const [activeTab, setActiveTab] = useState("dashboard")
-  const navigate = useNavigate()
-  const [orders, setOrders] = useState(pendingOrders);
   
-
-  const handleLogout = () => {
-    // Scroll to the top of the page
-    window.scrollTo({ top: 0, behavior: "smooth" });
-
-    navigate({ to: "/" });
-  };
-
-  const menuItems = [
-    { label: "Dashboard", icon: <BarChart3 className="mr-2 h-5 w-5" />, value: "dashboard", path: "/food-prep-dashboard" },
-    { label: "Orders", icon: <Package className="mr-2 h-5 w-5" />, value: "orders", badgeCount: orders.length, path: "/food-prep-dashboard/orders" },
-    { label: "Inventory", icon: <Package className="mr-2 h-5 w-5" />, value: "inventory" },
-  ];
-
   return (
-    <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white">
-      <div className="flex">
+    <div className="min-h-screen flex flex-col bg-gradient-to-b from-gray-50 to-white">
+      <DashboardHeader
+        title={
+          activeTab === 'dashboard'
+            ? 'Food Prep Dashboard'
+            : activeTab === 'orders'
+            ? 'Orders'
+            : 'Inventory'
+        }
+      />
+
+      <div className="flex-1 flex max-h-96">
         {/* Sidebar */}
-        <Sidebar
-            menuItems={menuItems}
+        <SidebarProvider defaultOpen={!sidebarOpen}>
+          <FoodPrepSidebar
             activeTab={activeTab}
             setActiveTab={setActiveTab}
-            onNavigate={(path) => navigate({ to: path })}
-            sidebarOpen={sidebarOpen}
-        />
+          />
+
+          <SidebarInset className="flex-1 flex flex-col">
+            <div className="flex items-center h-12 px-4 border-b mt-4">
+              <SidebarTrigger className="mr-2 hover:bg-gray-100 rounded-md transition-colors" />
+              <span className="font-medium text-sm text-muted-foreground">
+                {activeTab === "dashboard"
+                  ? "Food Prep Dashboard"
+                  : activeTab === "orders"
+                    ? "Orders"
+                    : "Inventory"}
+              </span>
+            </div>
 
         {/* Main content */}
         <div className="flex-1 px-4 py-6 md:px-6 lg:px-8">
@@ -207,7 +95,6 @@ export default function FoodPrepDashboard() {
             {/* Stats cards */}
             <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
                 <Card className="overflow-hidden border-none shadow-md">
-                  <div className="absolute top-0 right-0 h-16 w-16 rounded-bl-full bg-gradient-to-br from-[#0052CC]/10 to-[#0052CC]/30"></div>
                   <CardHeader className="flex flex-row items-center justify-between pb-2">
                     <CardTitle className="text-sm font-medium">Orders Prepared</CardTitle>
                     <div className="h-8 w-8 rounded-full bg-[#0052CC]/10 flex items-center justify-center">
@@ -226,7 +113,6 @@ export default function FoodPrepDashboard() {
                 </Card>
 
                 <Card className="overflow-hidden border-none shadow-md">
-                  <div className="absolute top-0 right-0 h-16 w-16 rounded-bl-full bg-gradient-to-br from-green-100 to-green-200"></div>
                   <CardHeader className="flex flex-row items-center justify-between pb-2">
                     <CardTitle className="text-sm font-medium">Completed Today</CardTitle>
                     <div className="h-8 w-8 rounded-full bg-green-100 flex items-center justify-center">
@@ -245,7 +131,6 @@ export default function FoodPrepDashboard() {
                 </Card>
 
                 <Card className="overflow-hidden border-none shadow-md">
-                  <div className="absolute top-0 right-0 h-16 w-16 rounded-bl-full bg-gradient-to-br from-amber-100 to-amber-200"></div>
                   <CardHeader className="flex flex-row items-center justify-between pb-2">
                     <CardTitle className="text-sm font-medium">Avg. Preparation Time</CardTitle>
                     <div className="h-8 w-8 rounded-full bg-amber-100 flex items-center justify-center">
@@ -264,7 +149,6 @@ export default function FoodPrepDashboard() {
                 </Card>
 
                 <Card className="overflow-hidden border-none shadow-md">
-                  <div className="absolute top-0 right-0 h-16 w-16 rounded-bl-full bg-gradient-to-br from-purple-100 to-purple-200"></div>
                   <CardHeader className="flex flex-row items-center justify-between pb-2">
                     <CardTitle className="text-sm font-medium">Customer Rating</CardTitle>
                     <div className="h-8 w-8 rounded-full bg-purple-100 flex items-center justify-center">
@@ -293,7 +177,6 @@ export default function FoodPrepDashboard() {
 
                 {/* User Location */}
                 <Card className="overflow-hidden border-none shadow-md h-full">
-                  <div className="absolute top-0 right-0 h-16 w-16 rounded-bl-full bg-gradient-to-br from-blue-100 to-blue-200"></div>
                   <CardHeader className="flex flex-row items-center justify-between pb-2">
                     <CardTitle className="text-sm font-medium">Your Location</CardTitle>
                     <div className="h-8 w-8 rounded-full bg-blue-100 flex items-center justify-center">
@@ -318,7 +201,6 @@ export default function FoodPrepDashboard() {
               {/* Shift Schedule */}
               <div className="col-span-2">
                 <Card className="overflow-hidden border-none shadow-md h-full">
-                  <div className="absolute top-0 right-0 h-16 w-16 rounded-bl-full bg-gradient-to-br from-indigo-100 to-indigo-200"></div>
                   <CardHeader className="flex flex-row items-center justify-between pb-2">
                     <CardTitle className="text-sm font-medium">Shift Schedule</CardTitle>
                     <div className="h-8 w-8 rounded-full bg-blue-100 flex items-center justify-center">
@@ -345,15 +227,13 @@ export default function FoodPrepDashboard() {
                   </CardContent>
                 </Card>
               </div>
-
             </div>         
           </div>
         )}
         </div>
+        </SidebarInset>
+        </SidebarProvider>
       </div>
-
     </div>
   );
-  
-
 }

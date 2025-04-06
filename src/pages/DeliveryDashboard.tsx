@@ -1,139 +1,32 @@
-import { useState, useEffect, } from "react"
-import { UserMenu } from "@/components/generic/UserMenu"
+import { useState, useEffect } from "react"
 import {
   Package,
   MapPin,
   CheckCircle,
   Clock,
-  BarChart3,
-  LogOut,
   ChevronRight,
   Coffee,
-  Menu,
-  X,
-  AlertCircle,
-  TrendingUp,
   Truck,
   Award,
   Navigation,
+  TrendingUp,
 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { useNavigate } from "@tanstack/react-router"
-import { Link } from "@tanstack/react-router"
+import { ChatButton } from "@/components/generic/ChatButton"
+import { ChatProvider } from "@/components/generic/ChatContext"
+import { SidebarProvider, SidebarInset, SidebarTrigger } from "@/components/ui/sidebar"
 
-import logo from "../assets/logo.png"
-import deliveryStaffIcon from "../assets/delivery_staff_icon.png"
-import avatar1 from "../assets/avatar_1.png"
-import avatar2 from "../assets/avatar_2.png"
-import avatar3 from "../assets/avatar_3.png"
-import avatar4 from "../assets/avatar_4.png"
-import avatar5 from "../assets/avatar_5.png"
-import avatar6 from "../assets/avatar_6.png"
-import avatar7 from "../assets/avatar_7.png"
-
-import floor1 from '../assets/floor-1.png'
-import floor2 from '../assets/floor-2.png'
+import floor1 from "../assets/floor-1.png"
+import floor2 from "../assets/floor-2.png"
 import floor3 from "../assets/floor-3.png"
 import floor4 from "../assets/floor-4.png"
-
-// Update the mock data to include floor, deskId and coordinates for map functionality
-const pendingDeliveries = [
-  {
-    id: "ORD-1234",
-    customer: "Alex Johnson",
-    location: "Floor 3, Desk 42",
-    items: ["Chicken Salad", "Sparkling Water"],
-    status: "ready",
-    time: "2 mins ago",
-    avatar: avatar1,
-    priority: "high",
-    floor: "3",
-    deskId: "42",
-    coordinates: { x: 65, y: 5 },
-  },
-  {
-    id: "ORD-1235",
-    customer: "Sarah Miller",
-    location: "Floor 2, Meeting Room B",
-    items: ["Veggie Wrap", "Green Tea", "Chocolate Brownie"],
-    status: "ready",
-    time: "5 mins ago",
-    avatar: avatar2,
-    priority: "medium",
-    floor: "2",
-    deskId: "MR-B",
-    coordinates: { x: 65, y: 65 },
-  },
-  {
-    id: "ORD-1236",
-    customer: "David Chen",
-    location: "Floor 4, Desk 15",
-    items: ["Beef Burger", "Fries", "Cola"],
-    status: "ready",
-    time: "7 mins ago",
-    avatar: avatar3,
-    priority: "medium",
-    floor: "4",
-    deskId: "15",
-    coordinates: { x: 45, y: 30 },
-  },
-  {
-    id: "ORD-1237",
-    customer: "Lisa Wong",
-    location: "Floor 1, Reception",
-    items: ["Pasta Carbonara", "Garlic Bread", "Iced Tea"],
-    status: "ready",
-    time: "10 mins ago",
-    avatar: avatar4,
-    priority: "low",
-    floor: "1",
-    deskId: "Reception",
-    coordinates: { x: 58, y: 40 },
-  },
-]
-
-const completedDeliveries = [
-  {
-    id: "ORD-1230",
-    customer: "Emma Wilson",
-    location: "Floor 1, Reception",
-    items: ["Caesar Salad", "Orange Juice"],
-    status: "completed",
-    time: "25 mins ago",
-    avatar: avatar5,
-    floor: "1",
-    deskId: "Reception",
-    coordinates: { x: 81, y: 80 },
-  },
-  {
-    id: "ORD-1231",
-    customer: "Michael Brown",
-    location: "Floor 3, Desk 28",
-    items: ["Tuna Sandwich", "Apple", "Water"],
-    status: "completed",
-    time: "45 mins ago",
-    avatar: avatar6,
-    floor: "3",
-    deskId: "28",
-    coordinates: { x: 54, y: 82 },
-  },
-  {
-    id: "ORD-1232",
-    customer: "James Smith",
-    location: "Floor 2, Meeting Room A",
-    items: ["Chicken Wrap", "Coffee"],
-    status: "completed",
-    time: "1 hour ago",
-    avatar: avatar7,
-    floor: "2",
-    deskId: "MR-A",
-    coordinates: { x: 25, y: 45 },
-  },
-]
+import DashboardHeader from "@/components/generic/DashboardHeader"
+import { completedDeliveries, pendingDeliveries } from "@/lib/delivery/deliveries"
+import { DeliverySidebar } from "@/components/customized/sidebar/DeliverySidebar"
 
 // All deliveries combined for map view
 const allDeliveries = [...pendingDeliveries, ...completedDeliveries]
@@ -144,14 +37,6 @@ export default function DeliveryDashboard() {
   const [selectedDelivery, setSelectedDelivery] = useState<string | null>(null)
   const [activeFloor, setActiveFloor] = useState("1")
   const [highlightedDesk, setHighlightedDesk] = useState<{ floor: string; deskId: string } | null>(null)
-  const navigate = useNavigate()
-
-  const handleLogout = () => {
-    // Scroll to the top of the page
-    window.scrollTo({ top: 0, behavior: "smooth" });
-
-    navigate({ to: "/" });
-  };
 
   // Function to view a delivery on the map
   const viewOnMap = (delivery: any) => {
@@ -162,12 +47,12 @@ export default function DeliveryDashboard() {
       deskId: delivery.deskId,
     })
     // Add a delay to ensure the tab switch completes before scrolling
-      setTimeout(() => {
-        window.scrollTo({
-          top: 0,
-          behavior: "smooth",
-        });
-      }, 300); // Adjust delay if needed
+    setTimeout(() => {
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth",
+      })
+    }, 300) // Adjust delay if needed
   }
 
   // Reset highlighted desk when changing tabs
@@ -183,382 +68,170 @@ export default function DeliveryDashboard() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white">
-      {/* Header */}
-      <header className="sticky top-0 z-50 bg-white border-b shadow-sm">
-        <div className="flex h-16 items-center justify-between px-4 md:px-6">
-          {/* Mobile sidebar toggle */}
-          <Button
-            variant="outline"
-            size="icon"
-            onClick={() => setSidebarOpen(!sidebarOpen)}
-            className="lg:hidden rounded-full"
-          >
-            {sidebarOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
-          </Button>
+    <div className="min-h-screen flex flex-col bg-gradient-to-b from-gray-50 to-white">
+      <DashboardHeader
+        title={
+          activeTab === "dashboard"
+            ? "Delivery Dashboard"
+            : activeTab === "deliveries"
+              ? "Deliveries"
+              : "Office Floor Map"
+        }
+      />
 
-          {/* Logo and title */}
-          <div className="flex items-center gap-3">
-            <div className="hidden lg:flex items-center gap-2">
-              {/* Logo */}
-              <h1 className="cursor-pointer" onClick={() => navigate({ to: "/delivery-dashboard" })}>
-                <img src={logo || "/placeholder.svg"} alt="Logo" className="w-auto h-10" />
-              </h1>
+      <div className="flex-1 flex max-h-96">
+        <SidebarProvider defaultOpen={!sidebarOpen}>
+          <DeliverySidebar
+            activeTab={activeTab}
+            setActiveTab={setActiveTab}
+            pendingDeliveriesCount={pendingDeliveries.length}
+          />
+
+          <SidebarInset className="flex-1 flex flex-col">
+            <div className="flex items-center h-12 px-4 border-b mt-4">
+              <SidebarTrigger className="mr-2 hover:bg-gray-100 rounded-md transition-colors" />
+              <span className="font-medium text-sm text-muted-foreground">
+                {activeTab === "dashboard"
+                  ? "Overview"
+                  : activeTab === "deliveries"
+                    ? "All Deliveries"
+                    : "Floor Navigation"}
+              </span>
             </div>
-            <div className="h-8 w-[1px] bg-gray-200 hidden lg:block"></div>
-            <h1 className="text-lg font-semibold md:text-xl">
-              {activeTab === "dashboard" && "Delivery Dashboard"}
-              {activeTab === "deliveries" && "Deliveries"}
-              {activeTab === "map" && "Office Floor Map"}
-            </h1>
-          </div>
 
-          {/* Right side actions */}
-          <div className="flex items-center gap-3">
-            <Link to="/report-issue" className="flex items-center">
-              {/* Round Button */}
-              <Button variant="outline" size="lg" className="rounded-full py-3 px-6 flex items-center space-x-3">
-                {/* Report Issue Icon */}
-                <AlertCircle className="h-5 w-5 text-red-500" />
-
-                {/* Report Issue Text */}
-                <span className="text-red-500 text-sm font-semibold">Report Issue</span>
-              </Button>
-            </Link>
-
-            {/* User menu */}
-            <UserMenu
-              role="delivery-staff"
-              name="Delivery Staff"
-              email="delivery@example.com"
-              avatarSrc={deliveryStaffIcon}
-              onLogout={handleLogout}
-            />
-            
-          </div>
-        </div>
-      </header>
-
-      <div className="flex">
-        {/* Sidebar */}
-        <div
-          className={`fixed inset-y-0 left-0 z-40 w-64 transform bg-white shadow-lg transition-transform duration-200 ease-in-out lg:translate-x-0 ${
-            sidebarOpen ? "translate-x-0" : "-translate-x-full"
-          } lg:relative lg:w-64 border-r`}
-        >
-          {/* Sidebar layout */}
-          <div className="flex h-full flex-col">
-            
-            {/* Move Main Menu to the top */}
-            <nav className="flex flex-col space-y-2 px-3 py-4">
-              <div className="px-3">
-                <h2 className="text-xs font-semibold text-gray-500 uppercase tracking-wider">Main Menu</h2>
-              </div>
-
-              <Button
-                variant={activeTab === "dashboard" ? "default" : "ghost"}
-                className={`w-full justify-start rounded-lg ${activeTab === "dashboard" ? "bg-[#0052CC]" : ""}`}
-                onClick={() => setActiveTab("dashboard")}
-              >
-                <BarChart3 className="mr-2 h-5 w-5" />
-                Dashboard
-              </Button>
-
-              <Button
-                variant={activeTab === "deliveries" ? "default" : "ghost"}
-                className={`w-full justify-start rounded-lg ${activeTab === "deliveries" ? "bg-[#0052CC]" : ""}`}
-                onClick={() => setActiveTab("deliveries")}
-              >
-                <Package className="mr-2 h-5 w-5" />
-                Deliveries
-                <Badge className="ml-auto bg-red-500 text-white">{pendingDeliveries.length}</Badge>
-              </Button>
-
-              <Button
-                variant={activeTab === "map" ? "default" : "ghost"}
-                className={`w-full justify-start rounded-lg ${activeTab === "map" ? "bg-[#0052CC]" : ""}`}
-                onClick={() => setActiveTab("map")}
-              >
-                <MapPin className="mr-2 h-5 w-5" />
-                Office Map
-              </Button>
-            </nav>
-
-            {/* User profile */}
-            <div className="border-t p-4 mt-auto">
-              {/* Status indicator */}
-            <div className="mx-3 mb-6">
-              <div className="rounded-lg bg-gradient-to-r from-green-50 to-green-100 p-3 border border-green-200">
-                <div className="flex items-center">
-                  <div className="h-8 w-8 rounded-full bg-green-500/20 flex items-center justify-center">
-                    <CheckCircle className="h-4 w-4 text-green-600" />
-                  </div>
-                  <div className="ml-3">
-                    <p className="text-sm font-medium text-green-800">Active Status</p>
-                    <p className="text-xs text-green-700">You're online and ready for deliveries</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-              <Button
-                variant="outline"
-                className="w-full justify-start text-red-500 hover:bg-red-50 hover:text-red-600 rounded-lg"
-                onClick={handleLogout}
-              >
-                <LogOut className="mr-2 h-4 w-4" />
-                Log Out
-              </Button>
-            </div>
-          </div>
-        </div>
-
-        {/* Main content */}
-        <div className="flex-1 px-4 py-6 md:px-6 lg:px-8">
-          {activeTab === "dashboard" && (
-            <div className="space-y-8">
-              {/* Welcome banner */}
-              <div className="rounded-xl bg-gradient-to-r from-[#0052CC] to-[#0039A6] p-6 text-white shadow-lg">
-                <div className="flex flex-col md:flex-row md:items-center md:justify-between">
-                  <div className="mb-4 md:mb-0">
-                    <h2 className="text-2xl font-bold">Welcome back, Delivery Staff!</h2>
-                    <p className="mt-1 text-blue-100">
-                      You have {pendingDeliveries.length} deliveries waiting for you today.
-                    </p>
-                  </div>
-                  <Button
-                    className="bg-white text-[#0052CC] hover:bg-blue-50"
-                    onClick={() => {
-                      setActiveTab("deliveries")
-                      window.scrollTo({
-                        top: 0,
-                        behavior: "smooth",
-                      });
-                    }}
-                  >
-                    Start Delivering
-                    <ChevronRight className="ml-2 h-4 w-4" />
-                  </Button>
-                </div>
-              </div>
-
-              {/* Stats cards */}
-              <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
-                <Card className="overflow-hidden border-none shadow-md">
-                  <div className="absolute top-0 right-0 h-16 w-16 rounded-bl-full bg-gradient-to-br from-[#0052CC]/10 to-[#0052CC]/30"></div>
-                  <CardHeader className="flex flex-row items-center justify-between pb-2">
-                    <CardTitle className="text-sm font-medium">Deliveries</CardTitle>
-                    <div className="h-8 w-8 rounded-full bg-[#0052CC]/10 flex items-center justify-center">
-                      <Package className="h-4 w-4 text-[#0052CC]" />
-                    </div>
-                  </CardHeader>
-                  <CardContent>
-                    <div className="text-3xl font-bold text-[#0052CC]">{pendingDeliveries.length}</div>
-                    <div className="mt-1 flex items-center text-xs">
-                      <Badge className="bg-green-100 text-green-800 hover:bg-green-100">
-                        <TrendingUp className="mr-1 h-3 w-3" />
-                        +2 from yesterday
-                      </Badge>
-                    </div>
-                  </CardContent>
-                </Card>
-
-                <Card className="overflow-hidden border-none shadow-md">
-                  <div className="absolute top-0 right-0 h-16 w-16 rounded-bl-full bg-gradient-to-br from-green-100 to-green-200"></div>
-                  <CardHeader className="flex flex-row items-center justify-between pb-2">
-                    <CardTitle className="text-sm font-medium">Completed Today</CardTitle>
-                    <div className="h-8 w-8 rounded-full bg-green-100 flex items-center justify-center">
-                      <CheckCircle className="h-4 w-4 text-green-600" />
-                    </div>
-                  </CardHeader>
-                  <CardContent>
-                    <div className="text-3xl font-bold text-green-600">{completedDeliveries.length}</div>
-                    <div className="mt-1 flex items-center text-xs">
-                      <Badge className="bg-green-100 text-green-800 hover:bg-green-100">
-                        <TrendingUp className="mr-1 h-3 w-3" />
-                        +1 from yesterday
-                      </Badge>
-                    </div>
-                  </CardContent>
-                </Card>
-
-                <Card className="overflow-hidden border-none shadow-md">
-                  <div className="absolute top-0 right-0 h-16 w-16 rounded-bl-full bg-gradient-to-br from-amber-100 to-amber-200"></div>
-                  <CardHeader className="flex flex-row items-center justify-between pb-2">
-                    <CardTitle className="text-sm font-medium">Avg. Delivery Time</CardTitle>
-                    <div className="h-8 w-8 rounded-full bg-amber-100 flex items-center justify-center">
-                      <Clock className="h-4 w-4 text-amber-600" />
-                    </div>
-                  </CardHeader>
-                  <CardContent>
-                    <div className="text-3xl font-bold text-amber-600">4.2 min</div>
-                    <div className="mt-1 flex items-center text-xs">
-                      <Badge className="bg-green-100 text-green-800 hover:bg-green-100">
-                        <TrendingUp className="mr-1 h-3 w-3" />
-                        -0.5 min from yesterday
-                      </Badge>
-                    </div>
-                  </CardContent>
-                </Card>
-
-                <Card className="overflow-hidden border-none shadow-md">
-                  <div className="absolute top-0 right-0 h-16 w-16 rounded-bl-full bg-gradient-to-br from-purple-100 to-purple-200"></div>
-                  <CardHeader className="flex flex-row items-center justify-between pb-2">
-                    <CardTitle className="text-sm font-medium">Customer Rating</CardTitle>
-                    <div className="h-8 w-8 rounded-full bg-purple-100 flex items-center justify-center">
-                      <Award className="h-4 w-4 text-purple-600" />
-                    </div>
-                  </CardHeader>
-                  <CardContent>
-                    <div className="text-3xl font-bold text-purple-600">4.9/5</div>
-                    <div className="mt-1 flex items-center text-xs">
-                      <Badge className="bg-green-100 text-green-800 hover:bg-green-100">
-                        <TrendingUp className="mr-1 h-3 w-3" />
-                        +0.2 from last week
-                      </Badge>
-                    </div>
-                  </CardContent>
-                </Card>
-              </div>
-
-              {/* Recent deliveries */}
-              <Card className="border-none shadow-lg">
-                <CardHeader className="bg-gradient-to-r from-gray-50 to-gray-100 border-b">
-                  <div className="flex items-center justify-between mt-4">
-                    <CardTitle>Recent Deliveries</CardTitle>
-                    <Button
-                      variant="outline"
-                      size="sm"
-                      className="rounded-lg mt-2"
-                      onClick={() => {
-                        setActiveTab("deliveries")
-                        window.scrollTo({
-                          top: 0,
-                          behavior: "smooth",
-                        });
-                      }}
-                    >
-                      View All
-                    </Button>
-                  </div>
-                  <CardDescription>Your most recent deliveries and their status</CardDescription>
-                </CardHeader>
-                <CardContent className="p-0">
-                  <div className="divide-y">
-                    {[...pendingDeliveries, ...completedDeliveries].slice(0, 4).map((delivery) => (
-                      <div key={delivery.id} className="flex items-center gap-4 p-4 hover:bg-gray-50 transition-colors">
-                        <Avatar className="h-10 w-10 border border-gray-200">
-                          <AvatarImage src={delivery.avatar} alt={delivery.customer} />
-                          <AvatarFallback>
-                            {delivery.customer
-                              .split(" ")
-                              .map((n) => n[0])
-                              .join("")}
-                          </AvatarFallback>
-                        </Avatar>
-                        <div className="flex-1">
-                          <div className="flex items-center justify-between">
-                            <p className="font-medium">{delivery.customer}</p>
-                            <Badge
-                              variant={delivery.status === "completed" ? "outline" : "default"}
-                              className={
-                                delivery.status === "completed"
-                                  ? "bg-green-50 text-green-700 border-green-200"
-                                  : "bg-[#0052CC]"
-                              }
-                            >
-                              {delivery.status === "completed" ? "Delivered" : "Ready for Pickup"}
-                            </Badge>
-                          </div>
-                          <div className="flex items-center justify-between">
-                            <div className="flex items-center text-sm text-muted-foreground">
-                              <MapPin className="mr-1 h-3 w-3" />
-                              {delivery.location}
-                            </div>
-                            <p className="text-xs text-muted-foreground">{delivery.time}</p>
-                          </div>
-                        </div>
+            <div className="flex-1 px-4 py-6 md:px-6 lg:px-8">
+              {activeTab === "dashboard" && (
+                <div className="space-y-8">
+                  {/* Welcome banner */}
+                  <div className="rounded-xl bg-gradient-to-r from-[#0052CC] to-[#0039A6] p-6 text-white shadow-lg">
+                    <div className="flex flex-col md:flex-row md:items-center md:justify-between">
+                      <div className="mb-4 md:mb-0">
+                        <h2 className="text-2xl font-bold">Welcome back, Delivery Staff!</h2>
+                        <p className="mt-1 text-blue-100">
+                          You have {pendingDeliveries.length} deliveries waiting for you today.
+                        </p>
                       </div>
-                    ))}
-                  </div>
-                </CardContent>
-              </Card>
-            </div>
-          )}
-
-          {activeTab === "deliveries" && (
-            <div className="space-y-6">
-              <div className="flex items-center justify-between">
-                <h2 className="text-2xl font-bold">Deliveries</h2>
-              </div>
-
-              <Tabs defaultValue="pending" className="w-full">
-                <TabsList className="grid w-full grid-cols-2 rounded-lg p-1 bg-gray-100">
-                  <TabsTrigger
-                    value="pending"
-                    className="rounded-md data-[state=active]:bg-white data-[state=active]:text-[#0052CC] data-[state=active]:shadow"
-                  >
-                    <Package className="mr-2 h-4 w-4" />
-                    Pending ({pendingDeliveries.length})
-                  </TabsTrigger>
-                  <TabsTrigger
-                    value="completed"
-                    className="rounded-md data-[state=active]:bg-white data-[state=active]:text-green-600 data-[state=active]:shadow"
-                  >
-                    <CheckCircle className="mr-2 h-4 w-4" />
-                    Completed ({completedDeliveries.length})
-                  </TabsTrigger>
-                </TabsList>
-
-                <TabsContent value="pending" className="mt-6">
-                  <div className="grid gap-6 md:grid-cols-2">
-                    {pendingDeliveries.map((delivery) => (
-                      <Card
-                        key={delivery.id}
-                        className={`overflow-hidden border-none shadow-lg transition-all hover:shadow-xl ${
-                          selectedDelivery === delivery.id ? "ring-2 ring-[#0052CC]" : ""
-                        }`}
+                      <Button
+                        className="bg-white text-[#0052CC] hover:bg-blue-50"
+                        onClick={() => {
+                          setActiveTab("deliveries")
+                          window.scrollTo({
+                            top: 0,
+                            behavior: "smooth",
+                          })
+                        }}
                       >
-                        <div
-                          className={`h-2 w-full ${
-                            delivery.priority === "high"
-                              ? "bg-red-500"
-                              : delivery.priority === "medium"
-                                ? "bg-amber-500"
-                                : "bg-green-500"
-                          }`}
-                        ></div>
-                        <CardHeader className="bg-gradient-to-r from-gray-50 to-gray-100 pb-3 border-b">
-                          <div className="flex items-center justify-between">
-                            <div className="flex items-center gap-2">
-                              <Badge variant="outline" className="bg-[#0052CC] text-white border-none mt-3">
-                                {delivery.id}
-                              </Badge>
-                              <Badge
-                                variant="outline"
-                                className={`
-                                border-none mt-3
-                                ${
-                                  delivery.priority === "high"
-                                    ? "bg-red-100 text-red-700"
-                                    : delivery.priority === "medium"
-                                      ? "bg-amber-100 text-amber-700"
-                                      : "bg-green-100 text-green-700"
-                                }
-                              `}
-                              >
-                                {delivery.priority === "high"
-                                  ? "High Priority"
-                                  : delivery.priority === "medium"
-                                    ? "Medium Priority"
-                                    : "Low Priority"}
-                              </Badge>
-                            </div>
-                            <p className="text-sm font-medium mt-3">{delivery.time}</p>
-                          </div>
-                        </CardHeader>
-                        <CardContent className="pt-4">
-                          <div className="flex items-start gap-4">
-                            <Avatar className="h-12 w-12 border-2 border-gray-200">
+                        Start Delivering
+                        <ChevronRight className="ml-2 h-4 w-4" />
+                      </Button>
+                    </div>
+                  </div>
+
+                  {/* Stats cards */}
+                  <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
+                    <Card className="overflow-hidden border-none shadow-md">
+                      <CardHeader className="flex flex-row items-center justify-between pb-2">
+                        <CardTitle className="text-sm font-medium">Deliveries</CardTitle>
+                        <div className="h-8 w-8 rounded-full bg-[#0052CC]/10 flex items-center justify-center">
+                          <Package className="h-4 w-4 text-[#0052CC]" />
+                        </div>
+                      </CardHeader>
+                      <CardContent>
+                        <div className="text-3xl font-bold text-[#0052CC]">{pendingDeliveries.length}</div>
+                        <div className="mt-1 flex items-center text-xs">
+                          <Badge className="bg-green-100 text-green-800 hover:bg-green-100">
+                            <TrendingUp className="mr-1 h-3 w-3" />
+                            +2 from yesterday
+                          </Badge>
+                        </div>
+                      </CardContent>
+                    </Card>
+
+                    <Card className="overflow-hidden border-none shadow-md">
+                      <CardHeader className="flex flex-row items-center justify-between pb-2">
+                        <CardTitle className="text-sm font-medium">Completed Today</CardTitle>
+                        <div className="h-8 w-8 rounded-full bg-green-100 flex items-center justify-center">
+                          <CheckCircle className="h-4 w-4 text-green-600" />
+                        </div>
+                      </CardHeader>
+                      <CardContent>
+                        <div className="text-3xl font-bold text-green-600">{completedDeliveries.length}</div>
+                        <div className="mt-1 flex items-center text-xs">
+                          <Badge className="bg-green-100 text-green-800 hover:bg-green-100">
+                            <TrendingUp className="mr-1 h-3 w-3" />
+                            +1 from yesterday
+                          </Badge>
+                        </div>
+                      </CardContent>
+                    </Card>
+
+                    <Card className="overflow-hidden border-none shadow-md">
+                      <CardHeader className="flex flex-row items-center justify-between pb-2">
+                        <CardTitle className="text-sm font-medium">Avg. Delivery Time</CardTitle>
+                        <div className="h-8 w-8 rounded-full bg-amber-100 flex items-center justify-center">
+                          <Clock className="h-4 w-4 text-amber-600" />
+                        </div>
+                      </CardHeader>
+                      <CardContent>
+                        <div className="text-3xl font-bold text-amber-600">4.2 min</div>
+                        <div className="mt-1 flex items-center text-xs">
+                          <Badge className="bg-green-100 text-green-800 hover:bg-green-100">
+                            <TrendingUp className="mr-1 h-3 w-3" />
+                            -0.5 min from yesterday
+                          </Badge>
+                        </div>
+                      </CardContent>
+                    </Card>
+
+                    <Card className="overflow-hidden border-none shadow-md">
+                      <CardHeader className="flex flex-row items-center justify-between pb-2">
+                        <CardTitle className="text-sm font-medium">Customer Rating</CardTitle>
+                        <div className="h-8 w-8 rounded-full bg-purple-100 flex items-center justify-center">
+                          <Award className="h-4 w-4 text-purple-600" />
+                        </div>
+                      </CardHeader>
+                      <CardContent>
+                        <div className="text-3xl font-bold text-purple-600">4.9/5</div>
+                        <div className="mt-1 flex items-center text-xs">
+                          <Badge className="bg-green-100 text-green-800 hover:bg-green-100">
+                            <TrendingUp className="mr-1 h-3 w-3" />
+                            +0.2 from last week
+                          </Badge>
+                        </div>
+                      </CardContent>
+                    </Card>
+                  </div>
+
+                  {/* Recent deliveries */}
+                  <Card className="border-none shadow-lg">
+                    <CardHeader className="bg-gradient-to-r from-gray-50 to-gray-100 border-b">
+                      <div className="flex items-center justify-between mt-4">
+                        <CardTitle>Recent Deliveries</CardTitle>
+                        <Button
+                          variant="outline"
+                          size="sm"
+                          className="rounded-lg mt-2"
+                          onClick={() => {
+                            setActiveTab("deliveries")
+                            window.scrollTo({
+                              top: 0,
+                              behavior: "smooth",
+                            })
+                          }}
+                        >
+                          View All
+                        </Button>
+                      </div>
+                      <CardDescription>Your most recent deliveries and their status</CardDescription>
+                    </CardHeader>
+                    <CardContent className="p-0">
+                      <div className="divide-y">
+                        {[...pendingDeliveries, ...completedDeliveries].slice(0, 4).map((delivery) => (
+                          <div
+                            key={delivery.id}
+                            className="flex items-center gap-4 p-4 hover:bg-gray-50 transition-colors"
+                          >
+                            <Avatar className="h-10 w-10 border border-gray-200">
                               <AvatarImage src={delivery.avatar} alt={delivery.customer} />
                               <AvatarFallback>
                                 {delivery.customer
@@ -568,516 +241,639 @@ export default function DeliveryDashboard() {
                               </AvatarFallback>
                             </Avatar>
                             <div className="flex-1">
-                              <p className="font-medium text-lg">{delivery.customer}</p>
-                              <div className="flex items-center text-sm text-muted-foreground mt-1">
-                                <MapPin className="mr-1 h-3 w-3" />
-                                {delivery.location}
+                              <div className="flex items-center justify-between">
+                                <p className="font-medium">{delivery.customer}</p>
+                                <Badge
+                                  variant={delivery.status === "completed" ? "outline" : "default"}
+                                  className={
+                                    delivery.status === "completed"
+                                      ? "bg-green-50 text-green-700 border-green-200"
+                                      : "bg-[#0052CC]"
+                                  }
+                                >
+                                  {delivery.status === "completed" ? "Delivered" : "Ready for Pickup"}
+                                </Badge>
                               </div>
-                              <div className="mt-4">
-                                <p className="text-sm font-medium mb-2">Items:</p>
-                                <div className="grid grid-cols-1 gap-2">
-                                  {delivery.items.map((item, index) => (
-                                    <div key={index} className="flex items-center rounded-lg bg-gray-50 p-2 text-sm">
-                                      <Coffee className="mr-2 h-4 w-4 text-[#0052CC]" />
-                                      {item}
-                                    </div>
-                                  ))}
+                              <div className="flex items-center justify-between">
+                                <div className="flex items-center text-sm text-muted-foreground">
+                                  <MapPin className="mr-1 h-3 w-3" />
+                                  {delivery.location}
                                 </div>
+                                <p className="text-xs text-muted-foreground">{delivery.time}</p>
                               </div>
                             </div>
                           </div>
-                        </CardContent>
-                        <CardFooter className="flex justify-between border-t bg-gray-50 px-6 py-4">
-                          <Button
-                            variant="outline"
-                            onClick={() => viewOnMap(delivery)}
-                            className="rounded-lg border-gray-300"
-                          >
-                            <MapPin className="mr-2 h-4 w-4" />
-                            View on Map
-                          </Button>
-                          <Button
-                            onClick={() => setSelectedDelivery(delivery.id)}
-                            className="bg-[#0052CC] rounded-lg shadow-md hover:shadow-lg transition-all"
-                          >
-                            Scan QR Code
-                            <Truck className="ml-2 h-4 w-4" />
-                          </Button>
-                        </CardFooter>
-                      </Card>
-                    ))}
-                  </div>
-                </TabsContent>
-
-                <TabsContent value="completed" className="mt-6">
-                  <div className="grid gap-6 md:grid-cols-2">
-                    {completedDeliveries.map((delivery) => (
-                      <Card key={delivery.id} className="overflow-hidden border-none shadow-md">
-                        <div className="h-2 w-full bg-green-500"></div>
-                        <CardHeader className="bg-gradient-to-r from-gray-50 to-gray-100 pb-3 border-b">
-                          <div className="flex items-center justify-between">
-                            <div className="flex items-center gap-2 mt-4">
-                              <Badge variant="outline" className="bg-gray-200 text-gray-700 border-none">
-                                {delivery.id}
-                              </Badge>
-                              <Badge variant="outline" className="bg-green-100 text-green-700 border-none">
-                                <CheckCircle className="mr-1 h-3 w-3" />
-                                Delivered
-                              </Badge>
-                            </div>
-                            <p className="text-sm font-medium">{delivery.time}</p>
-                          </div>
-                        </CardHeader>
-                        <CardContent className="pt-4">
-                          <div className="flex items-start gap-4">
-                            <Avatar className="h-12 w-12 border-2 border-gray-200">
-                              <AvatarImage src={delivery.avatar} alt={delivery.customer} />
-                              <AvatarFallback>
-                                {delivery.customer
-                                  .split(" ")
-                                  .map((n) => n[0])
-                                  .join("")}
-                              </AvatarFallback>
-                            </Avatar>
-                            <div className="flex-1">
-                              <p className="font-medium text-lg">{delivery.customer}</p>
-                              <div className="flex items-center text-sm text-muted-foreground mt-1">
-                                <MapPin className="mr-1 h-3 w-3" />
-                                {delivery.location}
-                              </div>
-                              <div className="mt-4">
-                                <p className="text-sm font-medium mb-2">Items:</p>
-                                <div className="grid grid-cols-1 gap-2">
-                                  {delivery.items.map((item, index) => (
-                                    <div key={index} className="flex items-center rounded-lg bg-gray-50 p-2 text-sm">
-                                      <Coffee className="mr-2 h-4 w-4 text-gray-500" />
-                                      {item}
-                                    </div>
-                                  ))}
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </CardContent>
-                      </Card>
-                    ))}
-                  </div>
-                </TabsContent>
-              </Tabs>
-            </div>
-          )}
-
-          {activeTab === "map" && (
-            <div className="space-y-6">
-              <div className="flex items-center justify-between">
-                <h2 className="text-2xl font-bold">Office Floor Map</h2>
-                {/* Key for Pin Colors */}
-                <div className="flex items-center gap-4 text-sm">
-                  <div className="flex items-center">
-                    <div className="h-4 w-4 rounded-full bg-green-500 mr-2"></div>
-                    <span>Delivered</span>
-                  </div>
-                  <div className="flex items-center">
-                    <div className="h-4 w-4 rounded-full bg-[#0052CC] mr-2"></div>
-                    <span>Pending</span>
-                  </div>
-                  <div className="flex items-center">
-                    <div className="h-4 w-4 rounded-full bg-red-500 mr-2"></div>
-                    <span>High Priority</span>
-                  </div>
+                        ))}
+                      </div>
+                    </CardContent>
+                  </Card>
                 </div>
-              </div>
+              )}
 
-              <Card className="border-none shadow-lg">
-                <CardHeader className="bg-gradient-to-r from-gray-50 to-gray-100 border-b">
-                  <div className="flex items-center justify-between mt-8">
-                    <CardTitle>Floor Maps</CardTitle>
-                    <CardDescription>Navigate through different floors to find delivery locations</CardDescription>
+              {activeTab === "deliveries" && (
+                <div className="space-y-6">
+                  <div className="flex items-center justify-between">
+                    <h2 className="text-2xl font-bold">Deliveries</h2>
                   </div>
-                </CardHeader>
-                <CardContent className="p-0">
-                <Tabs value={activeFloor} onValueChange={setActiveFloor} className="w-full">
-                  <div className="border-b">
-                    <TabsList className="flex w-full rounded-none bg-transparent h-12 border-b">
+
+                  <Tabs defaultValue="pending" className="w-full">
+                    <TabsList className="grid w-full grid-cols-2 rounded-lg p-1 bg-gray-100">
                       <TabsTrigger
-                        value="1"
-                        className="
-                          flex-1 translate-y-[-10px]  /* Moves the tab name up */
-                          border-b-2 border-transparent 
-                          data-[state=active]:border-[#0052CC] 
-                          data-[state=active]:bg-transparent 
-                          data-[state=active]:text-[#0052CC] 
-                          data-[state=active]:rounded-lg  /* Adds rounded corners to active tab */
-                        "
+                        value="pending"
+                        className="rounded-md data-[state=active]:bg-white data-[state=active]:text-[#0052CC] data-[state=active]:shadow"
                       >
-                          Floor 1
-                        </TabsTrigger>
-                        <TabsTrigger
-                          value="2"
-                          className="
-                          flex-1 translate-y-[-10px]  /* Moves the tab name up */
-                          border-b-2 border-transparent 
-                          data-[state=active]:border-[#0052CC] 
-                          data-[state=active]:bg-transparent 
-                          data-[state=active]:text-[#0052CC] 
-                          data-[state=active]:rounded-lg  /* Adds rounded corners to active tab */
-                        "
-                        >
-                          Floor 2
-                        </TabsTrigger>
-                        <TabsTrigger
-                          value="3"
-                          className="
-                          flex-1 translate-y-[-10px]  /* Moves the tab name up */
-                          border-b-2 border-transparent 
-                          data-[state=active]:border-[#0052CC] 
-                          data-[state=active]:bg-transparent 
-                          data-[state=active]:text-[#0052CC] 
-                          data-[state=active]:rounded-lg  /* Adds rounded corners to active tab */
-                        "
-                        >
-                          Floor 3
-                        </TabsTrigger>
-                        <TabsTrigger
-                          value="4"
-                          className="
-                          flex-1 translate-y-[-10px]  /* Moves the tab name up */
-                          border-b-2 border-transparent 
-                          data-[state=active]:border-[#0052CC] 
-                          data-[state=active]:bg-transparent 
-                          data-[state=active]:text-[#0052CC] 
-                          data-[state=active]:rounded-lg  /* Adds rounded corners to active tab */
-                        "
-                        >
-                          Floor 4
-                        </TabsTrigger>
-                      </TabsList>
-                    </div>
+                        <Package className="mr-2 h-4 w-4" />
+                        Pending ({pendingDeliveries.length})
+                      </TabsTrigger>
+                      <TabsTrigger
+                        value="completed"
+                        className="rounded-md data-[state=active]:bg-white data-[state=active]:text-green-600 data-[state=active]:shadow"
+                      >
+                        <CheckCircle className="mr-2 h-4 w-4" />
+                        Completed ({completedDeliveries.length})
+                      </TabsTrigger>
+                    </TabsList>
 
-                    {/* Floor 1 Map */}
-                    <TabsContent value="1" className="mt-0">
-                      <div className="relative aspect-[16/9] w-full bg-gray-100 p-4">
-                        <div className="h-full w-full bg-white rounded-lg border border-gray-200 relative">
-                        <img
-                            src={floor1}
-                            alt="Floor 2 Plan"
-                            className="absolute inset-0 w-full h-full object-contain"
-                          />
-                          <div className="absolute top-4 left-4 bg-white rounded-md shadow-md p-2">
-                            <h3 className="text-sm font-bold">Floor 1</h3>
-                            <p className="text-xs text-muted-foreground">Reception & Lobby Area</p>
-                          </div>
-
-                          {/* Your location indicator */}
-                          <div className="absolute" style={{ top: "59%", left: "10%" }}>
-                            <div className="flex h-10 w-10 items-center justify-center rounded-full bg-blue-500 text-white animate-pulse">
-                              <Navigation className="h-5 w-5" />
-                            </div>
-                            <div className="mt-1 rounded-md bg-white px-2 py-1 text-xs font-medium shadow-sm">
-                              Your Location
-                            </div>
-                          </div>
-
-                          {/* Delivery markers for this floor */}
-                          {getDeliveriesForFloor("1").map((delivery) => (
+                    <TabsContent value="pending" className="mt-6">
+                      <div className="grid gap-6 md:grid-cols-2">
+                        {pendingDeliveries.map((delivery) => (
+                          <Card
+                            key={delivery.id}
+                            className={`overflow-hidden border-none shadow-lg transition-all hover:shadow-xl ${
+                              selectedDelivery === delivery.id ? "ring-2 ring-[#0052CC]" : ""
+                            }`}
+                          >
                             <div
-                              key={delivery.id}
-                              className="absolute"
-                              style={{
-                                top: `${delivery.coordinates.y}%`,
-                                left: `${delivery.coordinates.x}%`,
-                              }}
-                            >
-                              <div
-                                className={`flex h-10 w-10 items-center justify-center rounded-full
-                                  ${
-                                    highlightedDesk &&
-                                    highlightedDesk.floor === delivery.floor &&
-                                    highlightedDesk.deskId === delivery.deskId
-                                      ? "bg-red-500 text-white animate-bounce"
-                                      : delivery.status === "completed"
-                                        ? "bg-green-500 text-white"
-                                        : "bg-[#0052CC] text-white"
-                                  }`}
-                              >
-                                <MapPin className="h-5 w-5" />
+                              className={`h-2 w-full ${
+                                delivery.priority === "high"
+                                  ? "bg-red-500"
+                                  : delivery.priority === "medium"
+                                    ? "bg-amber-500"
+                                    : "bg-green-500"
+                              }`}
+                            ></div>
+                            <CardHeader className="bg-gradient-to-r from-gray-50 to-gray-100 pb-3 border-b">
+                              <div className="flex items-center justify-between">
+                                <div className="flex items-center gap-2">
+                                  <Badge variant="outline" className="bg-[#0052CC] text-white border-none mt-3">
+                                    {delivery.id}
+                                  </Badge>
+                                  <Badge
+                                    variant="outline"
+                                    className={`
+                                    border-none mt-3
+                                    ${
+                                      delivery.priority === "high"
+                                        ? "bg-red-100 text-red-700"
+                                        : delivery.priority === "medium"
+                                          ? "bg-amber-100 text-amber-700"
+                                          : "bg-green-100 text-green-700"
+                                    }
+                                  `}
+                                  >
+                                    {delivery.priority === "high"
+                                      ? "High Priority"
+                                      : delivery.priority === "medium"
+                                        ? "Medium Priority"
+                                        : "Low Priority"}
+                                  </Badge>
+                                </div>
+                                <p className="text-sm font-medium mt-3">{delivery.time}</p>
                               </div>
-                              <div
-                                className={`mt-1 rounded-md bg-white px-2 py-1 text-xs font-medium shadow-sm
-                                ${
-                                  highlightedDesk &&
-                                  highlightedDesk.floor === delivery.floor &&
-                                  highlightedDesk.deskId === delivery.deskId
-                                    ? "ring-2 ring-red-500"
-                                    : ""
-                                }`}
-                              >
-                                {delivery.customer} - {delivery.deskId}
+                            </CardHeader>
+                            <CardContent className="pt-4">
+                              <div className="flex items-start gap-4">
+                                <Avatar className="h-12 w-12 border-2 border-gray-200">
+                                  <AvatarImage src={delivery.avatar} alt={delivery.customer} />
+                                  <AvatarFallback>
+                                    {delivery.customer
+                                      .split(" ")
+                                      .map((n) => n[0])
+                                      .join("")}
+                                  </AvatarFallback>
+                                </Avatar>
+                                <div className="flex-1">
+                                  <p className="font-medium text-lg">{delivery.customer}</p>
+                                  <div className="flex items-center text-sm text-muted-foreground mt-1">
+                                    <MapPin className="mr-1 h-3 w-3" />
+                                    {delivery.location}
+                                  </div>
+                                  <div className="mt-4">
+                                    <p className="text-sm font-medium mb-2">Items:</p>
+                                    <div className="grid grid-cols-1 gap-2">
+                                      {delivery.items.map((item, index) => (
+                                        <div
+                                          key={index}
+                                          className="flex items-center rounded-lg bg-gray-50 p-2 text-sm"
+                                        >
+                                          <Coffee className="mr-2 h-4 w-4 text-[#0052CC]" />
+                                          {item}
+                                        </div>
+                                      ))}
+                                    </div>
+                                  </div>
+                                </div>
                               </div>
-                            </div>
-                          ))}
-                        </div>
+                            </CardContent>
+                            <CardFooter className="flex justify-between border-t bg-gray-50 px-6 py-4">
+                              <Button
+                                variant="outline"
+                                onClick={() => viewOnMap(delivery)}
+                                className="rounded-lg border-gray-300"
+                              >
+                                <MapPin className="mr-2 h-4 w-4" />
+                                View on Map
+                              </Button>
+                              <Button
+                                onClick={() => setSelectedDelivery(delivery.id)}
+                                className="bg-[#0052CC] rounded-lg shadow-md hover:shadow-lg transition-all"
+                              >
+                                Scan QR Code
+                                <Truck className="ml-2 h-4 w-4" />
+                              </Button>
+                            </CardFooter>
+                          </Card>
+                        ))}
                       </div>
                     </TabsContent>
 
-                    {/* Floor 2 Map */}
-                    <TabsContent value="2" className="mt-0">
-                      <div className="relative aspect-[16/9] w-full bg-gray-100 p-4">
-                        <div className="h-full w-full bg-white rounded-lg border border-gray-200 relative">
-                          <img
-                            src={floor2}
-                            alt="Floor 2 Plan"
-                            className="absolute inset-0 w-full h-full object-contain"
-                          />
-
-                          <div className="absolute top-4 left-4 bg-white/90 rounded-md shadow-md p-2 z-10">
-                            <h3 className="text-sm font-bold">Floor 2</h3>
-                            <p className="text-xs text-muted-foreground">Meeting Rooms & Open Space</p>
-                          </div>
-
-                          {/* Delivery markers for this floor */}
-                          {getDeliveriesForFloor("2").map((delivery) => (
-                            <div
-                              key={delivery.id}
-                              className="absolute z-20"
-                              style={{
-                                top: `${delivery.coordinates.y}%`,
-                                left: `${delivery.coordinates.x}%`,
-                              }}
-                            >
-                              <div
-                                className={`flex h-10 w-10 items-center justify-center rounded-full
-                                  ${
-                                    highlightedDesk &&
-                                    highlightedDesk.floor === delivery.floor &&
-                                    highlightedDesk.deskId === delivery.deskId
-                                      ? "bg-red-500 text-white animate-bounce"
-                                      : delivery.status === "completed"
-                                        ? "bg-green-500 text-white"
-                                        : "bg-[#0052CC] text-white"
-                                  }`}
-                              >
-                                <MapPin className="h-5 w-5" />
+                    <TabsContent value="completed" className="mt-6">
+                      <div className="grid gap-6 md:grid-cols-2">
+                        {completedDeliveries.map((delivery) => (
+                          <Card key={delivery.id} className="overflow-hidden border-none shadow-md">
+                            <div className="h-2 w-full bg-green-500"></div>
+                            <CardHeader className="bg-gradient-to-r from-gray-50 to-gray-100 pb-3 border-b">
+                              <div className="flex items-center justify-between">
+                                <div className="flex items-center gap-2 mt-4">
+                                  <Badge variant="outline" className="bg-gray-200 text-gray-700 border-none">
+                                    {delivery.id}
+                                  </Badge>
+                                  <Badge variant="outline" className="bg-green-100 text-green-700 border-none">
+                                    <CheckCircle className="mr-1 h-3 w-3" />
+                                    Delivered
+                                  </Badge>
+                                </div>
+                                <p className="text-sm font-medium">{delivery.time}</p>
                               </div>
-                              <div
-                                className={`mt-1 rounded-md bg-white px-2 py-1 text-xs font-medium shadow-sm
-                                ${
-                                  highlightedDesk &&
-                                  highlightedDesk.floor === delivery.floor &&
-                                  highlightedDesk.deskId === delivery.deskId
-                                    ? "ring-2 ring-red-500"
-                                    : ""
-                                }`}
-                              >
-                                {delivery.customer} - {delivery.deskId}
+                            </CardHeader>
+                            <CardContent className="pt-4">
+                              <div className="flex items-start gap-4">
+                                <Avatar className="h-12 w-12 border-2 border-gray-200">
+                                  <AvatarImage src={delivery.avatar} alt={delivery.customer} />
+                                  <AvatarFallback>
+                                    {delivery.customer
+                                      .split(" ")
+                                      .map((n) => n[0])
+                                      .join("")}
+                                  </AvatarFallback>
+                                </Avatar>
+                                <div className="flex-1">
+                                  <p className="font-medium text-lg">{delivery.customer}</p>
+                                  <div className="flex items-center text-sm text-muted-foreground mt-1">
+                                    <MapPin className="mr-1 h-3 w-3" />
+                                    {delivery.location}
+                                  </div>
+                                  <div className="mt-4">
+                                    <p className="text-sm font-medium mb-2">Items:</p>
+                                    <div className="grid grid-cols-1 gap-2">
+                                      {delivery.items.map((item, index) => (
+                                        <div
+                                          key={index}
+                                          className="flex items-center rounded-lg bg-gray-50 p-2 text-sm"
+                                        >
+                                          <Coffee className="mr-2 h-4 w-4 text-gray-500" />
+                                          {item}
+                                        </div>
+                                      ))}
+                                    </div>
+                                  </div>
+                                </div>
                               </div>
-                            </div>
-                          ))}
-                        </div>
-                      </div>
-                    </TabsContent>
-
-
-                    {/* Floor 3 Map */}
-                    <TabsContent value="3" className="mt-0">
-                      <div className="relative aspect-[16/9] w-full bg-gray-100 p-4">
-                        <div className="h-full w-full bg-white rounded-lg border border-gray-200 relative">
-                          <img
-                            src={floor3}
-                            alt="Floor 3 Plan"
-                            className="absolute inset-0 w-full h-full object-contain"
-                          />
-
-                          <div className="absolute top-4 left-4 bg-white/90 rounded-md shadow-md p-2 z-10">
-                            <h3 className="text-sm font-bold">Floor 3</h3>
-                            <p className="text-xs text-muted-foreground">Engineering & Product Teams</p>
-                          </div>
-
-                          {/* Delivery markers for this floor */}
-                          {getDeliveriesForFloor("3").map((delivery) => (
-                            <div
-                              key={delivery.id}
-                              className="absolute z-20"
-                              style={{
-                                top: `${delivery.coordinates.y}%`,
-                                left: `${delivery.coordinates.x}%`,
-                              }}
-                            >
-                              <div
-                                className={`flex h-10 w-10 items-center justify-center rounded-full
-                                  ${
-                                    highlightedDesk &&
-                                    highlightedDesk.floor === delivery.floor &&
-                                    highlightedDesk.deskId === delivery.deskId
-                                      ? "bg-red-500 text-white animate-bounce"
-                                      : delivery.status === "completed"
-                                        ? "bg-green-500 text-white"
-                                        : "bg-[#0052CC] text-white"
-                                  }`}
-                              >
-                                <MapPin className="h-5 w-5" />
-                              </div>
-                              <div
-                                className={`mt-1 rounded-md bg-white px-2 py-1 text-xs font-medium shadow-sm
-                                ${
-                                  highlightedDesk &&
-                                  highlightedDesk.floor === delivery.floor &&
-                                  highlightedDesk.deskId === delivery.deskId
-                                    ? "ring-2 ring-red-500"
-                                    : ""
-                                }`}
-                              >
-                                {delivery.customer} - {delivery.deskId}
-                              </div>
-                            </div>
-                          ))}
-                        </div>
-                      </div>
-                    </TabsContent>
-
-                    {/* Floor 4 Map */}
-                    <TabsContent value="4" className="mt-0">
-                      <div className="relative aspect-[16/9] w-full bg-gray-100 p-4">
-                        <div className="h-full w-full bg-white rounded-lg border border-gray-200 relative">
-                          <div className="absolute top-4 left-4 bg-white rounded-md shadow-md p-2">
-                            <h3 className="text-sm font-bold">Floor 4</h3>
-                            <p className="text-xs text-muted-foreground">Executive Offices & Finance</p>
-                          </div>
-
-                          <img
-                            src={floor4}
-                            alt="Floor 4 Plan"
-                            className="absolute inset-0 w-full h-full object-contain"
-                          />
-
-                          {/* Delivery markers for this floor */}
-                          {getDeliveriesForFloor("4").map((delivery) => (
-                            <div
-                              key={delivery.id}
-                              className="absolute"
-                              style={{
-                                top: `${delivery.coordinates.y}%`,
-                                left: `${delivery.coordinates.x}%`,
-                              }}
-                            >
-                              <div
-                                className={`flex h-10 w-10 items-center justify-center rounded-full
-                                  ${
-                                    highlightedDesk &&
-                                    highlightedDesk.floor === delivery.floor &&
-                                    highlightedDesk.deskId === delivery.deskId
-                                      ? "bg-red-500 text-white animate-bounce"
-                                      : delivery.status === "completed"
-                                        ? "bg-green-500 text-white"
-                                        : "bg-[#0052CC] text-white"
-                                  }`}
-                              >
-                                <MapPin className="h-5 w-5" />
-                              </div>
-                              <div
-                                className={`mt-1 rounded-md bg-white px-2 py-1 text-xs font-medium shadow-sm
-                                ${
-                                  highlightedDesk &&
-                                  highlightedDesk.floor === delivery.floor &&
-                                  highlightedDesk.deskId === delivery.deskId
-                                    ? "ring-2 ring-red-500"
-                                    : ""
-                                }`}
-                              >
-                                {delivery.customer} - {delivery.deskId}
-                              </div>
-                            </div>
-                          ))}
-                        </div>
+                            </CardContent>
+                          </Card>
+                        ))}
                       </div>
                     </TabsContent>
                   </Tabs>
-                </CardContent>
-              </Card>
+                </div>
+              )}
 
-              {/* Nearby deliveries on this floor */}
-              <Card className="border-none shadow-lg">
-                <CardHeader className="bg-gradient-to-r from-gray-50 to-gray-100 border-b">
-                  <div className="flex items-center justify-between mt-5">
-                    <CardTitle>Deliveries on Floor {activeFloor}</CardTitle>
-                    <Badge className="bg-[#0052CC]">{getDeliveriesForFloor(activeFloor).length} Deliveries</Badge>
+              {activeTab === "map" && (
+                <div className="space-y-6">
+                  <div className="flex items-center justify-between">
+                    <h2 className="text-2xl font-bold">Office Floor Map</h2>
+                    {/* Key for Pin Colors */}
+                    <div className="flex items-center gap-4 text-sm">
+                      <div className="flex items-center">
+                        <div className="h-4 w-4 rounded-full bg-green-500 mr-2"></div>
+                        <span>Delivered</span>
+                      </div>
+                      <div className="flex items-center">
+                        <div className="h-4 w-4 rounded-full bg-[#0052CC] mr-2"></div>
+                        <span>Pending</span>
+                      </div>
+                      <div className="flex items-center">
+                        <div className="h-4 w-4 rounded-full bg-red-500 mr-2"></div>
+                        <span>High Priority</span>
+                      </div>
+                    </div>
                   </div>
-                  <CardDescription>All deliveries located on the current floor</CardDescription>
-                </CardHeader>
-                <CardContent className="p-0">
-                  <div className="divide-y">
-                    {getDeliveriesForFloor(activeFloor).map((delivery) => (
-                      <div
-                        key={delivery.id}
-                        className={`flex items-center gap-4 p-4 hover:bg-gray-50 transition-colors cursor-pointer
-                          ${
-                            highlightedDesk &&
-                            highlightedDesk.floor === delivery.floor &&
-                            highlightedDesk.deskId === delivery.deskId
-                              ? "bg-red-50"
-                              : ""
-                          }`}
-                        onClick={() =>
-                          setHighlightedDesk({
-                            floor: delivery.floor,
-                            deskId: delivery.deskId,
-                          })
-                        }
-                      >
-                        <div
-                          className={`h-10 w-10 rounded-full flex items-center justify-center
-                          ${
-                            delivery.status === "completed"
-                              ? "bg-green-100 text-green-600"
-                              : "bg-[#0052CC]/10 text-[#0052CC]"
-                          }`}
-                        >
-                          <MapPin className="h-5 w-5" />
-                        </div>
-                        <div className="flex-1">
-                          <div className="flex items-center justify-between">
-                            <p className="font-medium">{delivery.customer}</p>
-                            <Badge
-                              variant={delivery.status === "completed" ? "outline" : "default"}
-                              className={
-                                delivery.status === "completed"
-                                  ? "bg-green-50 text-green-700 border-green-200"
-                                  : "bg-[#0052CC]"
-                              }
+
+                  <Card className="border-none shadow-lg">
+                    <CardHeader className="bg-gradient-to-r from-gray-50 to-gray-100 border-b">
+                      <div className="flex items-center justify-between mt-8">
+                        <CardTitle>Floor Maps</CardTitle>
+                        <CardDescription>Navigate through different floors to find delivery locations</CardDescription>
+                      </div>
+                    </CardHeader>
+                    <CardContent className="p-0">
+                      <Tabs value={activeFloor} onValueChange={setActiveFloor} className="w-full">
+                        <div className="border-b">
+                          <TabsList className="flex w-full rounded-none bg-transparent h-12 border-b">
+                            <TabsTrigger
+                              value="1"
+                              className="
+                              flex-1 translate-y-[-10px]  /* Moves the tab name up */
+                              border-b-2 border-transparent 
+                              data-[state=active]:border-[#0052CC] 
+                              data-[state=active]:bg-transparent 
+                              data-[state=active]:text-[#0052CC] 
+                              data-[state=active]:rounded-lg  /* Adds rounded corners to active tab */
+                            "
                             >
-                              {delivery.status === "completed" ? "Delivered" : "Ready for Pickup"}
-                            </Badge>
-                          </div>
-                          <div className="flex items-center justify-between">
-                            <div className="flex items-center text-sm text-muted-foreground">
-                              <MapPin className="mr-1 h-3 w-3" />
-                              {delivery.location}
-                            </div>
-                            <p className="text-xs text-muted-foreground">{delivery.time}</p>
-                          </div>
+                              Floor 1
+                            </TabsTrigger>
+                            <TabsTrigger
+                              value="2"
+                              className="
+                              flex-1 translate-y-[-10px]  /* Moves the tab name up */
+                              border-b-2 border-transparent 
+                              data-[state=active]:border-[#0052CC] 
+                              data-[state=active]:bg-transparent 
+                              data-[state=active]:text-[#0052CC] 
+                              data-[state=active]:rounded-lg  /* Adds rounded corners to active tab */
+                            "
+                            >
+                              Floor 2
+                            </TabsTrigger>
+                            <TabsTrigger
+                              value="3"
+                              className="
+                              flex-1 translate-y-[-10px]  /* Moves the tab name up */
+                              border-b-2 border-transparent 
+                              data-[state=active]:border-[#0052CC] 
+                              data-[state=active]:bg-transparent 
+                              data-[state=active]:text-[#0052CC] 
+                              data-[state=active]:rounded-lg  /* Adds rounded corners to active tab */
+                            "
+                            >
+                              Floor 3
+                            </TabsTrigger>
+                            <TabsTrigger
+                              value="4"
+                              className="
+                              flex-1 translate-y-[-10px]  /* Moves the tab name up */
+                              border-b-2 border-transparent 
+                              data-[state=active]:border-[#0052CC] 
+                              data-[state=active]:bg-transparent 
+                              data-[state=active]:text-[#0052CC] 
+                              data-[state=active]:rounded-lg  /* Adds rounded corners to active tab */
+                            "
+                            >
+                              Floor 4
+                            </TabsTrigger>
+                          </TabsList>
                         </div>
-                      </div>
-                    ))}
 
-                    {getDeliveriesForFloor(activeFloor).length === 0 && (
-                      <div className="flex flex-col items-center justify-center py-8 px-4 text-center">
-                        <div className="h-12 w-12 rounded-full bg-gray-100 flex items-center justify-center mb-3">
-                          <Package className="h-6 w-6 text-gray-400" />
-                        </div>
-                        <h3 className="text-lg font-medium mb-1">No Deliveries</h3>
-                        <p className="text-sm text-muted-foreground max-w-md">
-                          There are currently no deliveries scheduled for Floor {activeFloor}.
-                        </p>
+                        {/* Floor 1 Map */}
+                        <TabsContent value="1" className="mt-0">
+                          <div className="relative aspect-[16/9] w-full bg-gray-100 p-4">
+                            <div className="h-full w-full bg-white rounded-lg border border-gray-200 relative">
+                              <img
+                                src={floor1 || "/placeholder.svg"}
+                                alt="Floor 2 Plan"
+                                className="absolute inset-0 w-full h-full object-contain"
+                              />
+                              <div className="absolute top-4 left-4 bg-white rounded-md shadow-md p-2">
+                                <h3 className="text-sm font-bold">Floor 1</h3>
+                                <p className="text-xs text-muted-foreground">Reception & Lobby Area</p>
+                              </div>
+
+                              {/* Your location indicator */}
+                              <div className="absolute" style={{ top: "59%", left: "10%" }}>
+                                <div className="flex h-10 w-10 items-center justify-center rounded-full bg-blue-500 text-white animate-pulse">
+                                  <Navigation className="h-5 w-5" />
+                                </div>
+                                <div className="mt-1 rounded-md bg-white px-2 py-1 text-xs font-medium shadow-sm">
+                                  Your Location
+                                </div>
+                              </div>
+
+                              {/* Delivery markers for this floor */}
+                              {getDeliveriesForFloor("1").map((delivery) => (
+                                <div
+                                  key={delivery.id}
+                                  className="absolute"
+                                  style={{
+                                    top: `${delivery.coordinates.y}%`,
+                                    left: `${delivery.coordinates.x}%`,
+                                  }}
+                                >
+                                  <div
+                                    className={`flex h-10 w-10 items-center justify-center rounded-full
+                                      ${
+                                        highlightedDesk &&
+                                        highlightedDesk.floor === delivery.floor &&
+                                        highlightedDesk.deskId === delivery.deskId
+                                          ? "bg-red-500 text-white animate-bounce"
+                                          : delivery.status === "completed"
+                                            ? "bg-green-500 text-white"
+                                            : "bg-[#0052CC] text-white"
+                                      }`}
+                                  >
+                                    <MapPin className="h-5 w-5" />
+                                  </div>
+                                  <div
+                                    className={`mt-1 rounded-md bg-white px-2 py-1 text-xs font-medium shadow-sm
+                                    ${
+                                      highlightedDesk &&
+                                      highlightedDesk.floor === delivery.floor &&
+                                      highlightedDesk.deskId === delivery.deskId
+                                        ? "ring-2 ring-red-500"
+                                        : ""
+                                    }`}
+                                  >
+                                    {delivery.customer} - {delivery.deskId}
+                                  </div>
+                                </div>
+                              ))}
+                            </div>
+                          </div>
+                        </TabsContent>
+
+                        {/* Floor 2 Map */}
+                        <TabsContent value="2" className="mt-0">
+                          <div className="relative aspect-[16/9] w-full bg-gray-100 p-4">
+                            <div className="h-full w-full bg-white rounded-lg border border-gray-200 relative">
+                              <img
+                                src={floor2 || "/placeholder.svg"}
+                                alt="Floor 2 Plan"
+                                className="absolute inset-0 w-full h-full object-contain"
+                              />
+
+                              <div className="absolute top-4 left-4 bg-white/90 rounded-md shadow-md p-2 z-10">
+                                <h3 className="text-sm font-bold">Floor 2</h3>
+                                <p className="text-xs text-muted-foreground">Meeting Rooms & Open Space</p>
+                              </div>
+
+                              {/* Delivery markers for this floor */}
+                              {getDeliveriesForFloor("2").map((delivery) => (
+                                <div
+                                  key={delivery.id}
+                                  className="absolute z-20"
+                                  style={{
+                                    top: `${delivery.coordinates.y}%`,
+                                    left: `${delivery.coordinates.x}%`,
+                                  }}
+                                >
+                                  <div
+                                    className={`flex h-10 w-10 items-center justify-center rounded-full
+                                      ${
+                                        highlightedDesk &&
+                                        highlightedDesk.floor === delivery.floor &&
+                                        highlightedDesk.deskId === delivery.deskId
+                                          ? "bg-red-500 text-white animate-bounce"
+                                          : delivery.status === "completed"
+                                            ? "bg-green-500 text-white"
+                                            : "bg-[#0052CC] text-white"
+                                      }`}
+                                  >
+                                    <MapPin className="h-5 w-5" />
+                                  </div>
+                                  <div
+                                    className={`mt-1 rounded-md bg-white px-2 py-1 text-xs font-medium shadow-sm
+                                    ${
+                                      highlightedDesk &&
+                                      highlightedDesk.floor === delivery.floor &&
+                                      highlightedDesk.deskId === delivery.deskId
+                                        ? "ring-2 ring-red-500"
+                                        : ""
+                                    }`}
+                                  >
+                                    {delivery.customer} - {delivery.deskId}
+                                  </div>
+                                </div>
+                              ))}
+                            </div>
+                          </div>
+                        </TabsContent>
+
+                        {/* Floor 3 Map */}
+                        <TabsContent value="3" className="mt-0">
+                          <div className="relative aspect-[16/9] w-full bg-gray-100 p-4">
+                            <div className="h-full w-full bg-white rounded-lg border border-gray-200 relative">
+                              <img
+                                src={floor3 || "/placeholder.svg"}
+                                alt="Floor 3 Plan"
+                                className="absolute inset-0 w-full h-full object-contain"
+                              />
+
+                              <div className="absolute top-4 left-4 bg-white/90 rounded-md shadow-md p-2 z-10">
+                                <h3 className="text-sm font-bold">Floor 3</h3>
+                                <p className="text-xs text-muted-foreground">Engineering & Product Teams</p>
+                              </div>
+
+                              {/* Delivery markers for this floor */}
+                              {getDeliveriesForFloor("3").map((delivery) => (
+                                <div
+                                  key={delivery.id}
+                                  className="absolute z-20"
+                                  style={{
+                                    top: `${delivery.coordinates.y}%`,
+                                    left: `${delivery.coordinates.x}%`,
+                                  }}
+                                >
+                                  <div
+                                    className={`flex h-10 w-10 items-center justify-center rounded-full
+                                      ${
+                                        highlightedDesk &&
+                                        highlightedDesk.floor === delivery.floor &&
+                                        highlightedDesk.deskId === delivery.deskId
+                                          ? "bg-red-500 text-white animate-bounce"
+                                          : delivery.status === "completed"
+                                            ? "bg-green-500 text-white"
+                                            : "bg-[#0052CC] text-white"
+                                      }`}
+                                  >
+                                    <MapPin className="h-5 w-5" />
+                                  </div>
+                                  <div
+                                    className={`mt-1 rounded-md bg-white px-2 py-1 text-xs font-medium shadow-sm
+                                    ${
+                                      highlightedDesk &&
+                                      highlightedDesk.floor === delivery.floor &&
+                                      highlightedDesk.deskId === delivery.deskId
+                                        ? "ring-2 ring-red-500"
+                                        : ""
+                                    }`}
+                                  >
+                                    {delivery.customer} - {delivery.deskId}
+                                  </div>
+                                </div>
+                              ))}
+                            </div>
+                          </div>
+                        </TabsContent>
+
+                        {/* Floor 4 Map */}
+                        <TabsContent value="4" className="mt-0">
+                          <div className="relative aspect-[16/9] w-full bg-gray-100 p-4">
+                            <div className="h-full w-full bg-white rounded-lg border border-gray-200 relative">
+                              <div className="absolute top-4 left-4 bg-white rounded-md shadow-md p-2">
+                                <h3 className="text-sm font-bold">Floor 4</h3>
+                                <p className="text-xs text-muted-foreground">Executive Offices & Finance</p>
+                              </div>
+
+                              <img
+                                src={floor4 || "/placeholder.svg"}
+                                alt="Floor 4 Plan"
+                                className="absolute inset-0 w-full h-full object-contain"
+                              />
+
+                              {/* Delivery markers for this floor */}
+                              {getDeliveriesForFloor("4").map((delivery) => (
+                                <div
+                                  key={delivery.id}
+                                  className="absolute"
+                                  style={{
+                                    top: `${delivery.coordinates.y}%`,
+                                    left: `${delivery.coordinates.x}%`,
+                                  }}
+                                >
+                                  <div
+                                    className={`flex h-10 w-10 items-center justify-center rounded-full
+                                      ${
+                                        highlightedDesk &&
+                                        highlightedDesk.floor === delivery.floor &&
+                                        highlightedDesk.deskId === delivery.deskId
+                                          ? "bg-red-500 text-white animate-bounce"
+                                          : delivery.status === "completed"
+                                            ? "bg-green-500 text-white"
+                                            : "bg-[#0052CC] text-white"
+                                      }`}
+                                  >
+                                    <MapPin className="h-5 w-5" />
+                                  </div>
+                                  <div
+                                    className={`mt-1 rounded-md bg-white px-2 py-1 text-xs font-medium shadow-sm
+                                    ${
+                                      highlightedDesk &&
+                                      highlightedDesk.floor === delivery.floor &&
+                                      highlightedDesk.deskId === delivery.deskId
+                                        ? "ring-2 ring-red-500"
+                                        : ""
+                                    }`}
+                                  >
+                                    {delivery.customer} - {delivery.deskId}
+                                  </div>
+                                </div>
+                              ))}
+                            </div>
+                          </div>
+                        </TabsContent>
+                      </Tabs>
+                    </CardContent>
+                  </Card>
+
+                  {/* Nearby deliveries on this floor */}
+                  <Card className="border-none shadow-lg">
+                    <CardHeader className="bg-gradient-to-r from-gray-50 to-gray-100 border-b">
+                      <div className="flex items-center justify-between mt-5">
+                        <CardTitle>Deliveries on Floor {activeFloor}</CardTitle>
+                        <Badge className="bg-[#0052CC]">{getDeliveriesForFloor(activeFloor).length} Deliveries</Badge>
                       </div>
-                    )}
-                  </div>
-                </CardContent>
-              </Card>
-            </div>
-          )}
-        </div>
+                      <CardDescription>All deliveries located on the current floor</CardDescription>
+                    </CardHeader>
+                    <CardContent className="p-0">
+                      <div className="divide-y">
+                        {getDeliveriesForFloor(activeFloor).map((delivery) => (
+                          <div
+                            key={delivery.id}
+                            className={`flex items-center gap-4 p-4 hover:bg-gray-50 transition-colors cursor-pointer
+                              ${
+                                highlightedDesk &&
+                                highlightedDesk.floor === delivery.floor &&
+                                highlightedDesk.deskId === delivery.deskId
+                                  ? "bg-red-50"
+                                  : ""
+                              }`}
+                            onClick={() =>
+                              setHighlightedDesk({
+                                floor: delivery.floor,
+                                deskId: delivery.deskId,
+                              })
+                            }
+                          >
+                            <div
+                              className={`h-10 w-10 rounded-full flex items-center justify-center
+                              ${
+                                delivery.status === "completed"
+                                  ? "bg-green-100 text-green-600"
+                                  : "bg-[#0052CC]/10 text-[#0052CC]"
+                              }`}
+                            >
+                              <MapPin className="h-5 w-5" />
+                            </div>
+                            <div className="flex-1">
+                              <div className="flex items-center justify-between">
+                                <p className="font-medium">{delivery.customer}</p>
+                                <Badge
+                                  variant={delivery.status === "completed" ? "outline" : "default"}
+                                  className={
+                                    delivery.status === "completed"
+                                      ? "bg-green-50 text-green-700 border-green-200"
+                                      : "bg-[#0052CC]"
+                                  }
+                                >
+                                  {delivery.status === "completed" ? "Delivered" : "Ready for Pickup"}
+                                </Badge>
+                              </div>
+                              <div className="flex items-center justify-between">
+                                <div className="flex items-center text-sm text-muted-foreground">
+                                  <MapPin className="mr-1 h-3 w-3" />
+                                  {delivery.location}
+                                </div>
+                                <p className="text-xs text-muted-foreground">{delivery.time}</p>
+                              </div>
+                            </div>
+                          </div>
+                        ))}
+
+                        {getDeliveriesForFloor(activeFloor).length === 0 && (
+                          <div className="flex flex-col items-center justify-center py-8 px-4 text-center">
+                            <div className="h-12 w-12 rounded-full bg-gray-100 flex items-center justify-center mb-3">
+                              <Package className="h-6 w-6 text-gray-400" />
+                            </div>
+                            <h3 className="text-lg font-medium mb-1">No Deliveries</h3>
+                            <p className="text-sm text-muted-foreground max-w-md">
+                              There are currently no deliveries scheduled for Floor {activeFloor}.
+                            </p>
+                          </div>
+                        )}
+                      </div>
+                    </CardContent>
+                  </Card>
+                </div>
+              )}
+
+              <ChatProvider>
+                <ChatButton />
+              </ChatProvider>
+              </div>
+          </SidebarInset>
+        </SidebarProvider>
       </div>
     </div>
-  )
+  );
 }
 
