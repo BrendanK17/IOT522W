@@ -21,12 +21,14 @@ import { completedOrders } from "@/lib/foodPrep/orders";
 import DashboardHeader from "@/components/generic/DashboardHeader"
 import { SidebarProvider, SidebarInset, SidebarTrigger } from "@/components/ui/sidebar"
 import { FoodPrepSidebar } from "@/components/customized/sidebar/FoodPrepSidebar"
+import { useNavigate } from "@tanstack/react-router"
 
 import { shiftSchedule, userLocation } from "@/lib/foodPrep/user"
 
 export default function FoodPrepDashboard() {
   const [sidebarOpen, setSidebarOpen] = useState(false)
   const [activeTab, setActiveTab] = useState("dashboard")
+  const navigate = useNavigate()
   
   return (
     <div className="min-h-screen flex flex-col bg-gradient-to-b from-gray-50 to-white">
@@ -77,6 +79,7 @@ export default function FoodPrepDashboard() {
                     className="bg-white text-[#0052CC] hover:bg-blue-50"
                     onClick={() => {
                       setActiveTab("orders")
+                      navigate({ to: "/food-prep-dashboard/orders" })
                       window.scrollTo({
                         top: 0,
                         behavior: "smooth",
