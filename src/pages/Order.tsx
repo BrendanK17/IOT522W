@@ -8,6 +8,7 @@ import { useState } from "react";
 import { BarChart3, Package } from "lucide-react";
 import { Sidebar } from "@/components/ui/sidebar";
 import { CustomerSidebar } from "@/components/customized/sidebar/CustomerSidebar";
+import { SidebarProvider, SidebarInset, SidebarTrigger } from "@/components/ui/sidebar"
 
 const menuItems = [
   { id: 1, name: "Club Sandwich", price: 6.95, photo: "https://www.seriouseats.com/thmb/HliR9y_Dqf3zbBR86k9Aie2uEnM=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/20231204-SEA-TurkeyClub-FredHardy-01-6679650f138a4f419e330a8a0f31576d.jpg" },
@@ -32,15 +33,38 @@ export default function Order() {
     { label: "Tracking", icon: <Package className="mr-2 h-5 w-5" />, value: "tracking", path: "/customer/track-order" },
   ];
 
+  const [sidebarOpen, setSidebarOpen] = useState(false)
+
   return (
     <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white">
       <DashboardHeader
-                title={
-                  activeTab === 'order'
-                    ? 'Order Page'
-                    : 'Checkout'
+        title={
+          activeTab === 'dashboard' ? 'Dashboard' :
+          activeTab === 'schedule' ? 'Schedule' :
+          activeTab === 'notifications' ? 'Notifications' : 'Customer Dashboard'
                 }
               />
+        <div className="flex-1 flex max-h-96">
+        <SidebarProvider defaultOpen={!sidebarOpen}>
+          <CustomerSidebar
+            activeTab={activeTab}
+            setActiveTab={setActiveTab}
+          />
+
+          <SidebarInset className="flex-1 flex flex-col">
+            <div className="flex items-center h-12 px-4 border-b mt-4">
+              <SidebarTrigger className="mr-2 hover:bg-gray-100 rounded-md transition-colors" />
+              <span className="font-medium text-sm text-muted-foreground">
+                {activeTab === "dashboard"
+                ? "Overview"
+                : activeTab === "schedule"
+                ? "Schedule Overview"
+                : activeTab === "notifications"
+                ? "Recent Notifications"
+                : "Order Here"
+              }
+              </span>
+            </div>        
 
       <div className="min-h-screen p-6 bg-gray-50 flex">
       <CustomerSidebar
@@ -123,7 +147,10 @@ export default function Order() {
             </ul>
           )}
         </aside>
-      </div>
+        </div>
+        </SidebarInset>
+        </SidebarProvider>
     </div>
+  </div>
   );
 }

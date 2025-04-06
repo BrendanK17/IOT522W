@@ -1,5 +1,7 @@
 import { BarChart3, CheckCircle, MapPin, Package } from "lucide-react"
 import { Badge } from "@/components/ui/badge"
+"use client"
+import { useNavigate } from "@tanstack/react-router"
 import {
   Sidebar,
   SidebarContent,
@@ -26,14 +28,36 @@ export function CustomerSidebar({
   setActiveTab,
   pendingDeliveriesCount,
 }: CustomerSidebarProps) {
+
   const { state } = useSidebar()
+  const navigate = useNavigate()
+
+  // Function to handle navigation
+  const handleNavigation = (tab: string) => {
+    setActiveTab(tab)
+
+    // Navigate to the appropriate route based on the tab
+    switch (tab) {
+      case "dashboard":
+        navigate({ to: "/customer/order" })
+        break
+      case "schedule":
+        navigate({ to: "/customer/delivery-calendar" })
+        break
+      case "notifications":
+        navigate({ to: "/customer/notifications" })
+        break
+      default:
+        navigate({ to: "/customer/order" })
+    }
+  }
 
   return (
     <Sidebar collapsible="offcanvas" variant="sidebar" className="h-screen">
       <SidebarHeader className="h-12 flex items-center justify-between px-4">
         <div className="flex items-center">
           <span className="font-semibold text-sidebar-foreground group-data-[collapsible=offcanvas]:hidden">
-            Delivery System
+            Customer Dashboard
           </span>
         </div>
       </SidebarHeader>
@@ -46,7 +70,7 @@ export function CustomerSidebar({
               <SidebarMenuItem>
                 <SidebarMenuButton
                   isActive={activeTab === "dashboard"}
-                  onClick={() => setActiveTab("dashboard")}
+                  onClick={() => handleNavigation("dashboard")}
                   tooltip="Dashboard"
                 >
                   <BarChart3 className="h-5 w-5" />
@@ -56,28 +80,23 @@ export function CustomerSidebar({
 
               <SidebarMenuItem>
                 <SidebarMenuButton
-                  isActive={activeTab === "deliveries"}
-                  onClick={() => setActiveTab("deliveries")}
-                  tooltip="Deliveries"
+                  isActive={activeTab === "schedule"}
+                  onClick={() => handleNavigation("schedule")}
+                  tooltip="Schedule"
                 >
                   <Package className="h-5 w-5" />
-                  <span>Deliveries</span>
-                  {pendingDeliveriesCount > 0 && (
-                    <Badge className="ml-auto bg-red-500 text-white">
-                      {pendingDeliveriesCount}
-                    </Badge>
-                  )}
+                  <span>Schedule</span>
                 </SidebarMenuButton>
               </SidebarMenuItem>
 
               <SidebarMenuItem>
                 <SidebarMenuButton
-                  isActive={activeTab === "map"}
-                  onClick={() => setActiveTab("map")}
-                  tooltip="Office Map"
+                  isActive={activeTab === "notifications"}
+                  onClick={() => handleNavigation("notifications")}
+                  tooltip="Notifications"
                 >
                   <MapPin className="h-5 w-5" />
-                  <span>Office Map</span>
+                  <span>Notifications</span>
                 </SidebarMenuButton>
               </SidebarMenuItem>
             </SidebarMenu>
@@ -94,9 +113,7 @@ export function CustomerSidebar({
               </div>
               <div className="ml-3 group-data-[collapsible=offcanvas]:hidden">
                 <p className="text-sm font-medium text-green-800">Active Status</p>
-                <p className="text-xs text-green-700">
-                  You're online and ready for deliveries
-                </p>
+                <p className="text-xs text-green-700">You're online and ready to order</p>
               </div>
             </div>
           </div>
@@ -106,3 +123,4 @@ export function CustomerSidebar({
     </Sidebar>
   )
 }
+
