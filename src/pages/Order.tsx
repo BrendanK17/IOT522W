@@ -4,7 +4,6 @@ import { Input } from "@/components/ui/input";
 import { useNavigate } from "@tanstack/react-router";
 import { useBasket } from "@/context/BasketContext"; // Use BasketContext
 import DashboardHeader from "@/components/generic/DashboardHeader";
-import Sidebar from "@/components/generic/Sidebar";
 import { useState } from "react";
 import { BarChart3, Package } from "lucide-react";
 
@@ -21,7 +20,6 @@ export default function Order() {
   const [activeTab, setActiveTab] = useState("orders");
   const { basket, addToBasket, increaseQuantity, decreaseQuantity, removeFromBasket, updateComment } = useBasket();
   const navigate = useNavigate();
-  const [activeTab, setActiveTab] = useState("order") // to implement by the whoever is adding the sidebar
 
   const handleCheckout = () => {
     navigate({ to: "/customer/checkout" });
@@ -52,7 +50,7 @@ export default function Order() {
                   <CardTitle className="text-blue-900">{item.name}</CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <p className="text-gray-600">{item.description}</p>
+                  <img src={item.photo} alt={item.name} className="w-full h-32 object-cover rounded-lg" />
                   <p className="font-bold text-lg my-2 text-blue-700">£{item.price.toFixed(2)}</p>
                   <Button
                     className="bg-blue-600 hover:bg-blue-700 text-white"

@@ -135,5 +135,6 @@ export default function Checkout() {
         </CardContent>
       </Card>
     </div>
+    </div>
   );
 }
