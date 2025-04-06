@@ -119,7 +119,7 @@ export default function Checkout() {
               className="w-full"
               onClick={() => navigate({ to: "/customer/order" })}
             >
-              Back to Menu
+              Back to Order
             </Button>
           </form>
         </CardContent>
