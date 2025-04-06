@@ -54,8 +54,8 @@ import item40 from "../../assets/inventory/milk.png"
 // Meat + Fish inventory
 export const meat_fish_inventory = [
   { id: 1, name: "Beef", image: item1, count: 0 },
-  { id: 2, name: "Chicken", image: item2, count: 13 },
-  { id: 3, name: "Cod", image: item3, count: 17 },
+  { id: 2, name: "Chicken", image: item2, count: 52 },
+  { id: 3, name: "Cod", image: item3, count: 87 },
   { id: 4, name: "Lamb", image: item4, count: 21 }, 
   { id: 5, name: "Prawns", image: item5, count: 34 },
   { id: 6, name: "Salmon", image: item6, count: 100 },
@@ -67,31 +67,31 @@ export const meat_fish_inventory = [
 export const vegetables_inventory = [
   { id: 9, name: "Tomato", image: item9, count: 0 },
   { id: 10, name: "Onion", image: item10, count: 13 },
-  { id: 11, name: "Broccoli", image: item11, count: 17 },
-  { id: 12, name: "Lettuce", image: item12, count: 21 }, 
+  { id: 11, name: "Broccoli", image: item11, count: 0 },
+  { id: 12, name: "Lettuce", image: item12, count: 33 }, 
   { id: 13, name: "Cucumber", image: item13, count: 34 },
   { id: 14, name: "Peppers", image: item14, count: 62 },
-  { id: 15, name: "Carrots", image: item15, count: 0 }, 
-  { id: 16, name: "Cauliflower", image: item16, count: 34 }, 
+  { id: 15, name: "Carrots", image: item15, count: 90 }, 
+  { id: 16, name: "Cauliflower", image: item16, count: 21 }, 
 ];
 
 // Carbs inventory
 export const carbs_inventory = [
   { id: 17, name: "Rice", image: item17, count: 60 }, 
-  { id: 18, name: "Cous Cous", image: item18, count: 34 }, 
-  { id: 19, name: "Lentils", image: item19, count: 34 }, 
-  { id: 20, name: "Spaghetti", image: item20, count: 34 }, 
+  { id: 18, name: "Cous Cous", image: item18, count: 74 }, 
+  { id: 19, name: "Lentils", image: item19, count: 83 }, 
+  { id: 20, name: "Spaghetti", image: item20, count: 0 }, 
   { id: 21, name: "Penne", image: item21, count: 34 }, 
-  { id: 22, name: "Potato", image: item22, count: 4 }, 
-  { id: 23, name: "Sweet Potato", image: item23, count: 34 }, 
+  { id: 22, name: "Potato", image: item22, count: 15 }, 
+  { id: 23, name: "Sweet Potato", image: item23, count: 51 }, 
   { id: 24, name: "Beans", image: item24, count: 34 }, 
 ];
 
 // Fruits inventory
 export const fruits_inventory = [
-  { id: 25, name: "Lemon", image: item25, count: 0 },
-  { id: 26, name: "Lime", image: item26, count: 13 },
-  { id: 27, name: "Banana", image: item27, count: 17 },
+  { id: 25, name: "Lemon", image: item25, count: 130 },
+  { id: 26, name: "Lime", image: item26, count: 123 },
+  { id: 27, name: "Banana", image: item27, count: 0 },
   { id: 28, name: "Strawberries", image: item28, count: 21 }, 
   { id: 29, name: "Avocado", image: item29, count: 0 },
   { id: 30, name: "Oranges", image: item30, count: 62 },
@@ -102,12 +102,12 @@ export const fruits_inventory = [
 // Beverages inventory
 export const beverages_inventory = [
   { id: 33, name: "Water", image: item33, count: 0 },
-  { id: 34, name: "Sparkling Water", image: item34, count: 13 },
+  { id: 34, name: "Sparkling Water", image: item34, count: 97 },
   { id: 35, name: "Cola", image: item35, count: 0 },
-  { id: 36, name: "Sprite", image: item36, count: 21 }, 
-  { id: 37, name: "Fanta", image: item37, count: 7 },
+  { id: 36, name: "Sprite", image: item36, count: 29 }, 
+  { id: 37, name: "Fanta", image: item37, count: 74 },
   { id: 38, name: "Orange Juice", image: item38, count: 62 },
-  { id: 39, name: "Apple Juice", image: item39, count: 60 }, 
-  { id: 40, name: "Milk", image: item40, count: 34 }, 
+  { id: 39, name: "Apple Juice", image: item39, count: 50 }, 
+  { id: 40, name: "Milk", image: item40, count: 29 }, 
 ];
 

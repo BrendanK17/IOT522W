@@ -11,6 +11,7 @@
 // Import Routes
 
 import { Route as rootRoute } from './routes/__root'
+import { Route as FoodPrepInventoryImport } from './routes/food-prep-inventory'
 import { Route as IndexImport } from './routes/index'
 import { Route as UnauthorisedIndexImport } from './routes/unauthorised.index'
 import { Route as SignupIndexImport } from './routes/signup.index'
@@ -25,11 +26,19 @@ import { Route as FoodPrepDashboardOrdersImport } from './routes/food-prep-dashb
 import { Route as FoodPrepDashboardInventoryImport } from './routes/food-prep-dashboard.inventory'
 import { Route as CustomerTrackOrderImport } from './routes/customer.track-order'
 import { Route as CustomerOrderImport } from './routes/customer.order'
+import { Route as CustomerNotificationsImport } from './routes/customer.notifications'
+import { Route as CustomerDeliveryCalendarImport } from './routes/customer.delivery-calendar'
 import { Route as CustomerCheckoutImport } from './routes/customer.checkout'
 import { Route as DeliveryDashboardMapIndexImport } from './routes/delivery-dashboard.map.index'
 import { Route as DeliveryDashboardDeliveriesIndexImport } from './routes/delivery-dashboard.deliveries.index'
 
 // Create/Update Routes
+
+const FoodPrepInventoryRoute = FoodPrepInventoryImport.update({
+  id: '/food-prep-inventory',
+  path: '/food-prep-inventory',
+  getParentRoute: () => rootRoute,
+} as any)
 
 const IndexRoute = IndexImport.update({
   id: '/',
@@ -117,6 +126,18 @@ const CustomerOrderRoute = CustomerOrderImport.update({
   getParentRoute: () => rootRoute,
 } as any)
 
+const CustomerNotificationsRoute = CustomerNotificationsImport.update({
+  id: '/customer/notifications',
+  path: '/customer/notifications',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const CustomerDeliveryCalendarRoute = CustomerDeliveryCalendarImport.update({
+  id: '/customer/delivery-calendar',
+  path: '/customer/delivery-calendar',
+  getParentRoute: () => rootRoute,
+} as any)
+
 const CustomerCheckoutRoute = CustomerCheckoutImport.update({
   id: '/customer/checkout',
   path: '/customer/checkout',
@@ -147,11 +168,32 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexImport
       parentRoute: typeof rootRoute
     }
+    '/food-prep-inventory': {
+      id: '/food-prep-inventory'
+      path: '/food-prep-inventory'
+      fullPath: '/food-prep-inventory'
+      preLoaderRoute: typeof FoodPrepInventoryImport
+      parentRoute: typeof rootRoute
+    }
     '/customer/checkout': {
       id: '/customer/checkout'
       path: '/customer/checkout'
       fullPath: '/customer/checkout'
       preLoaderRoute: typeof CustomerCheckoutImport
+      parentRoute: typeof rootRoute
+    }
+    '/customer/delivery-calendar': {
+      id: '/customer/delivery-calendar'
+      path: '/customer/delivery-calendar'
+      fullPath: '/customer/delivery-calendar'
+      preLoaderRoute: typeof CustomerDeliveryCalendarImport
+      parentRoute: typeof rootRoute
+    }
+    '/customer/notifications': {
+      id: '/customer/notifications'
+      path: '/customer/notifications'
+      fullPath: '/customer/notifications'
+      preLoaderRoute: typeof CustomerNotificationsImport
       parentRoute: typeof rootRoute
     }
     '/customer/order': {
@@ -266,7 +308,10 @@ declare module '@tanstack/react-router' {
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/food-prep-inventory': typeof FoodPrepInventoryRoute
   '/customer/checkout': typeof CustomerCheckoutRoute
+  '/customer/delivery-calendar': typeof CustomerDeliveryCalendarRoute
+  '/customer/notifications': typeof CustomerNotificationsRoute
   '/customer/order': typeof CustomerOrderRoute
   '/customer/track-order': typeof CustomerTrackOrderRoute
   '/food-prep-dashboard/inventory': typeof FoodPrepDashboardInventoryRoute
@@ -286,7 +331,10 @@ export interface FileRoutesByFullPath {
 
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/food-prep-inventory': typeof FoodPrepInventoryRoute
   '/customer/checkout': typeof CustomerCheckoutRoute
+  '/customer/delivery-calendar': typeof CustomerDeliveryCalendarRoute
+  '/customer/notifications': typeof CustomerNotificationsRoute
   '/customer/order': typeof CustomerOrderRoute
   '/customer/track-order': typeof CustomerTrackOrderRoute
   '/food-prep-dashboard/inventory': typeof FoodPrepDashboardInventoryRoute
@@ -307,7 +355,10 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRoute
   '/': typeof IndexRoute
+  '/food-prep-inventory': typeof FoodPrepInventoryRoute
   '/customer/checkout': typeof CustomerCheckoutRoute
+  '/customer/delivery-calendar': typeof CustomerDeliveryCalendarRoute
+  '/customer/notifications': typeof CustomerNotificationsRoute
   '/customer/order': typeof CustomerOrderRoute
   '/customer/track-order': typeof CustomerTrackOrderRoute
   '/food-prep-dashboard/inventory': typeof FoodPrepDashboardInventoryRoute
@@ -329,7 +380,10 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/food-prep-inventory'
     | '/customer/checkout'
+    | '/customer/delivery-calendar'
+    | '/customer/notifications'
     | '/customer/order'
     | '/customer/track-order'
     | '/food-prep-dashboard/inventory'
@@ -348,7 +402,10 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/food-prep-inventory'
     | '/customer/checkout'
+    | '/customer/delivery-calendar'
+    | '/customer/notifications'
     | '/customer/order'
     | '/customer/track-order'
     | '/food-prep-dashboard/inventory'
@@ -367,7 +424,10 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/'
+    | '/food-prep-inventory'
     | '/customer/checkout'
+    | '/customer/delivery-calendar'
+    | '/customer/notifications'
     | '/customer/order'
     | '/customer/track-order'
     | '/food-prep-dashboard/inventory'
@@ -388,7 +448,10 @@ export interface FileRouteTypes {
 
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  FoodPrepInventoryRoute: typeof FoodPrepInventoryRoute
   CustomerCheckoutRoute: typeof CustomerCheckoutRoute
+  CustomerDeliveryCalendarRoute: typeof CustomerDeliveryCalendarRoute
+  CustomerNotificationsRoute: typeof CustomerNotificationsRoute
   CustomerOrderRoute: typeof CustomerOrderRoute
   CustomerTrackOrderRoute: typeof CustomerTrackOrderRoute
   FoodPrepDashboardInventoryRoute: typeof FoodPrepDashboardInventoryRoute
@@ -408,7 +471,10 @@ export interface RootRouteChildren {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  FoodPrepInventoryRoute: FoodPrepInventoryRoute,
   CustomerCheckoutRoute: CustomerCheckoutRoute,
+  CustomerDeliveryCalendarRoute: CustomerDeliveryCalendarRoute,
+  CustomerNotificationsRoute: CustomerNotificationsRoute,
   CustomerOrderRoute: CustomerOrderRoute,
   CustomerTrackOrderRoute: CustomerTrackOrderRoute,
   FoodPrepDashboardInventoryRoute: FoodPrepDashboardInventoryRoute,
@@ -437,7 +503,10 @@ export const routeTree = rootRoute
       "filePath": "__root.tsx",
       "children": [
         "/",
+        "/food-prep-inventory",
         "/customer/checkout",
+        "/customer/delivery-calendar",
+        "/customer/notifications",
         "/customer/order",
         "/customer/track-order",
         "/food-prep-dashboard/inventory",
@@ -458,8 +527,17 @@ export const routeTree = rootRoute
     "/": {
       "filePath": "index.tsx"
     },
+    "/food-prep-inventory": {
+      "filePath": "food-prep-inventory.tsx"
+    },
     "/customer/checkout": {
       "filePath": "customer.checkout.tsx"
+    },
+    "/customer/delivery-calendar": {
+      "filePath": "customer.delivery-calendar.tsx"
+    },
+    "/customer/notifications": {
+      "filePath": "customer.notifications.tsx"
     },
     "/customer/order": {
       "filePath": "customer.order.tsx"
