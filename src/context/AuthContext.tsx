@@ -28,6 +28,11 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     return storedUser ? JSON.parse(storedUser) : null;
   });
 
+  useEffect(() => {
+    localStorage.removeItem("user");
+    setUser(null);
+  }, []);
+
   const [users, setUsers] = useState(() => {
     const storedUsers = localStorage.getItem("users");
     return storedUsers ? JSON.parse(storedUsers) : initialUsers;
