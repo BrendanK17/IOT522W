@@ -1,3 +1,4 @@
+// UserMenu.tsx
 import { useState } from "react";
 import { useNavigate } from "@tanstack/react-router";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -8,9 +9,10 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { LogOut, User } from "lucide-react";
+import { LogOut, User, Moon, Sun } from "lucide-react";
 import { useAuth } from "@/context/AuthContext";
 import { toast } from "sonner";
+import { useDarkMode } from "@/context/DarkModeContext";
 
 interface UserMenuProps {
   role: "customer" | "food-prep-staff" | "delivery-staff";
@@ -23,6 +25,7 @@ export function UserMenu({ role, name, email, avatarSrc }: UserMenuProps) {
   const navigate = useNavigate();
   const [open, setOpen] = useState(false);
   const { logout } = useAuth();
+  const { darkMode, toggleDarkMode } = useDarkMode();
 
   const rolesToRoute: Record<UserMenuProps["role"], string> = {
     "customer": "/customer-profile",
@@ -60,12 +63,26 @@ export function UserMenu({ role, name, email, avatarSrc }: UserMenuProps) {
           </div>
         </div>
       </DropdownMenuTrigger>
+
       <DropdownMenuContent align="end" className="w-56">
         <DropdownMenuItem onClick={handleViewProfile} className="cursor-pointer">
           <User className="mr-2 h-4 w-4" />
           <span>View Profile</span>
         </DropdownMenuItem>
+
         <DropdownMenuSeparator />
+
+        <DropdownMenuItem onClick={toggleDarkMode} className="cursor-pointer">
+          {darkMode ? (
+            <Sun className="mr-2 h-4 w-4" />
+          ) : (
+            <Moon className="mr-2 h-4 w-4" />
+          )}
+          <span>{darkMode ? "Light Mode" : "Dark Mode"}</span>
+        </DropdownMenuItem>
+
+        <DropdownMenuSeparator />
+
         <DropdownMenuItem
           onClick={handleLogout}
           className="text-red-500 focus:text-red-500 cursor-pointer"
