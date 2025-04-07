@@ -2,6 +2,7 @@ import { Button } from "@/components/ui/button";
 import { useNavigate } from "@tanstack/react-router";
 import { useAuth } from "@/context/AuthContext";
 import logo from '../../assets/logo.png';
+import { ThemeToggle } from "@/components/themes/ThemeToggle"
 
 interface HeaderProps{
   role: "customer" | "food-prep-staff" | "delivery-staff";
@@ -67,8 +68,9 @@ export default function Header({ role }: HeaderProps) {
             </>
           )}
         </nav>
-
+        
       </div>
+      
     </header>
   );
 }
