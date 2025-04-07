@@ -91,7 +91,7 @@ export default function FoodPrepDashboard() {
                   </Button>
               </div>
             </div> 
-            <div className="flex items-center rounded-lg bg-gray-50 p-2 text-lg text-black gap-4 font-bold">
+            <div className="flex items-center rounded-lg p-2 text-lg text-black gap-4 font-bold">
               <h3>Shift Stats Overview</h3>
             </div>
 
@@ -143,7 +143,7 @@ export default function FoodPrepDashboard() {
                   <CardContent>
                     <div className="text-3xl font-bold text-amber-600">12.6 min</div>
                     <div className="mt-1 flex items-center text-xs">
-                      <Badge className="bg-green-100 text-green-800 hover:bg-green-100">
+                      <Badge className="bg-red-100 text-red-800 hover:bg-red-100">
                         <TrendingUp className="mr-1 h-3 w-3" />
                         +2.1 min from yesterday
                       </Badge>

@@ -13,7 +13,7 @@ export default function TrackOrder() {
   const [activeTab, setActiveTab] = useState("tracking");
 
   // Developer flag: set to true to simulate having an order, false otherwise
-  const hasOrder = false;
+  const hasOrder = true;
 
   // Hardcoded order data for demo
   const demoOrder = [

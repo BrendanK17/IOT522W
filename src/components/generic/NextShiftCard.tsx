@@ -14,36 +14,34 @@ const NextShiftCard: React.FC<NextShiftCardProps> = ({ shiftSchedule }) => {
   const getNextShift = () => {
     const now = new Date();
     const currentDay = now.getDay(); // Sunday = 0, Monday = 1, ..., Saturday = 6
-
-    let nextShift = null;
-
-    for (let i = 0; i < shiftSchedule.length; i++) {
-      const shiftDay = shiftSchedule[i];
-
-      // Skip weekends (Saturday = 6, Sunday = 0)
-      if (shiftDay.day === "Saturday" || shiftDay.day === "Sunday") continue;
-      
-      // Skip OFF shifts
-      if (shiftDay.shift === "OFF") continue;
-
-      const shiftStartTime = shiftDay.shift.split(" - ")[0];
+  
+    // If it's weekend, return Monday's shift
+    if (currentDay === 0 || currentDay === 6) {
+      const mondayShift = shiftSchedule[0];
+      return mondayShift.shift !== "OFF" ? mondayShift : null;
+    }
+  
+    // currentDay - 1 gives us correct index for shiftSchedule (Mon = 0 to Fri = 4)
+    for (let i = currentDay - 1; i < shiftSchedule.length; i++) {
+      const shift = shiftSchedule[i];
+  
+      if (shift.shift === "OFF") continue;
+  
+      const shiftStartTime = shift.shift.split(" - ")[0];
       const [shiftHour] = shiftStartTime.split(":").map(Number);
-
-      // If today is a weekday and the shift hasn't started yet
-      if (currentDay === i && now.getHours() < shiftHour) {
-        nextShift = shiftDay;
-        break;
+  
+      if (i === currentDay - 1 && now.getHours() < shiftHour) {
+        return shift;
       }
-
-      // If it's a future weekday
-      if (currentDay < i && i >= 1 && i <= 5) {
-        nextShift = shiftDay;
-        break;
+  
+      if (i > currentDay - 1) {
+        return shift;
       }
     }
-
-    return nextShift;
+  
+    return null;
   };
+  
 
   const nextShift = getNextShift();
 
