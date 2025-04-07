@@ -4,6 +4,7 @@ import ReactDOM from 'react-dom/client'
 import { RouterProvider, createRouter } from '@tanstack/react-router'
 import { BasketProvider } from "@/context/BasketContext";
 import { AuthProvider } from "@/context/AuthContext";
+import { DarkModeProvider } from "@/context/DarkModeContext";
 
 // Import the generated route tree
 import { routeTree } from './routeTree.gen.ts'
@@ -22,11 +23,13 @@ if (!rootElement.innerHTML) {
   const root = ReactDOM.createRoot(rootElement)
   root.render(
     <StrictMode>
-      <AuthProvider>
-        <BasketProvider>
-          <RouterProvider router={router} />
-        </BasketProvider>
-      </AuthProvider>
+      <DarkModeProvider>
+        <AuthProvider>
+          <BasketProvider>
+            <RouterProvider router={router} />
+          </BasketProvider>
+        </AuthProvider>
+      </DarkModeProvider>
     </StrictMode>,
   )
 }
