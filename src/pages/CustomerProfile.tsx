@@ -94,7 +94,7 @@ export default function ProfilePage() {
     <div className="min-h-screen bg-gradient-to-b from-blue-50 to-white">
       <div className="py-10 px-4 md:px-12 lg:px-24">
         <div className="mb-6">
-          <Link to="/delivery-dashboard" className="flex items-center">
+          <Link to="/customer/order" className="flex items-center">
             <Button variant="outline" size="sm" className="gap-2 rounded-full">
               <ArrowLeft className="h-4 w-4" />
               Back to Dashboard

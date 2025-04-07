@@ -6,7 +6,7 @@ import logo from '../../assets/logo.png';
 
 // Import your avatar images here
 import deliveryStaffIcon from '../../assets/delivery_staff_icon.png';
-import foodPrepStaffIcon from '../../assets/foodprep_staff_icon.png';
+import foodPrepStaffIcon from '../../assets/avatar_4.png';
 import customerIcon from '../../assets/avatar_1.png';
 
 import { useAuth } from '@/context/AuthContext';
