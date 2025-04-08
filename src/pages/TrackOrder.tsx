@@ -13,7 +13,7 @@ export default function TrackOrder() {
   const [activeTab, setActiveTab] = useState("tracking");
 
   // Developer flag: set to true to simulate having an order, false otherwise
-  const hasOrder = false;
+  const hasOrder = true;
 
   // Hardcoded order data for demo
   const demoOrder = [
@@ -44,7 +44,7 @@ export default function TrackOrder() {
   return (
     <div className="flex flex-col min-h-screen bg-gray-50">
       <DashboardHeader title="Track Your Order" />
-      <div className="flex flex-1 overflow-hidden">
+      <div className="flex flex-1 max-h-96">
         <SidebarProvider defaultOpen={true}>
           <CustomerSidebar activeTab={activeTab} setActiveTab={setActiveTab} />
 
