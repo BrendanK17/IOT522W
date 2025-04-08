@@ -13,6 +13,7 @@ import {
   SidebarRail,
   useSidebar,
 } from "@/components/ui/sidebar"
+import { Badge } from "@/components/ui/badge"
 import { useNavigate } from "@tanstack/react-router"
 
 interface FoodPrepSidebarProps {
@@ -69,6 +70,9 @@ export function FoodPrepSidebar({
                 >
                   <Package className="h-5 w-5" />
                   <span>Orders</span>
+                  <Badge className="ml-auto bg-red-500 text-white">
+                      {4}
+                  </Badge>
                 </SidebarMenuButton>
               </SidebarMenuItem>
 

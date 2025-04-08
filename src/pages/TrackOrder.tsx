@@ -44,7 +44,7 @@ export default function TrackOrder() {
   return (
     <div className="flex flex-col min-h-screen bg-gray-50">
       <DashboardHeader title="Track Your Order" />
-      <div className="flex flex-1 overflow-hidden">
+      <div className="flex flex-1 max-h-96">
         <SidebarProvider defaultOpen={true}>
           <CustomerSidebar activeTab={activeTab} setActiveTab={setActiveTab} />
 

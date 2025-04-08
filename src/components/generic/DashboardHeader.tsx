@@ -12,11 +12,14 @@ import customerIcon from '../../assets/avatar_1.png';
 import { useAuth } from '@/context/AuthContext';
 import ReportIssueModal from './ReportIssueModal';
 import { useState } from 'react';
+import { ThemeToggle } from '@/components/themes/ThemeToggle'
+import { useTheme } from "@/components/themes/ThemeContext"
 
 export default function DashboardHeader({ title }: { title: string }) {
   const navigate = useNavigate();
   const { user } = useAuth();
   const [modalOpen, setModalOpen] = useState(false);
+  const { isHighContrast } = useTheme()
 
   // Explicitly define allowed user roles
   type UserRole = 'delivery-staff' | 'food-prep-staff' | 'customer';
@@ -52,35 +55,43 @@ export default function DashboardHeader({ title }: { title: string }) {
 
   return (
     <>
-      <header className="sticky top-0 z-50 bg-white border-b shadow-sm">
+      <header
+        className={`sticky top-0 z-50 ${isHighContrast ? "bg-white border-b-2 border-black shadow-md" : "bg-white border-b shadow-sm"}`}
+      >
         <div className="flex h-16 items-center justify-between px-4 md:px-6">
           <div className="flex items-center gap-3">
             <div className="hidden lg:flex items-center gap-2">
               <h1 className="cursor-pointer" onClick={handleLogoClick}>
-                <img src={logo || '/placeholder.svg'} alt="Logo" className="w-auto h-10" />
+                <img src={logo || '/placeholder.svg'} alt="Logo" 
+                className={`w-auto h-10 ${isHighContrast ? "contrast-200 brightness-50 grayscale" : ""}`} />
               </h1>
             </div>
-            <div className="h-8 w-[1px] bg-gray-200 hidden lg:block"></div>
-            <h1 className="text-lg font-semibold md:text-xl">{title}</h1>
+            <div className={`h-8 w-[1px] ${isHighContrast ? "bg-black" : "bg-gray-200"} hidden lg:block`}></div>
+            <h1 className={`text-lg font-semibold md:text-xl ${isHighContrast ? "text-black" : ""}`}>{title}</h1>
           </div>
 
           <div className="flex items-center gap-3">
             <Button
               variant="outline"
               size="lg"
-              className="rounded-full py-3 px-6 flex items-center space-x-3"
+              className={`rounded-full py-3 px-6 flex items-center space-x-3 ${
+                isHighContrast ? "border-2 border-black hover:bg-gray-100" : ""
+              }`}
               onClick={() => setModalOpen(true)}
             >
-              <AlertCircle className="h-5 w-5 text-red-500" />
-              <span className="text-red-500 text-sm font-semibold">Report Technical Issue</span>
+              <AlertCircle className={`h-5 w-5 ${isHighContrast ? "text-black" : "text-red-500"}`} />
+              <span className={`${isHighContrast ? "text-black" : "text-red-500"} text-sm font-semibold`}>
+              Report Technical Issue
+              </span>
             </Button>
-
+            
             <UserMenu
               role={user.role as UserRole}
               name={displayName}
               email={email}
               avatarSrc={avatarSrc}
             />
+            <ThemeToggle/>
           </div>
         </div>
       </header>

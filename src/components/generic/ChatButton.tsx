@@ -14,6 +14,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Badge } from "@/components/ui/badge"
 import { Input } from "@/components/ui/input"
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog"
+import { useTheme } from "@/components/themes/ThemeContext"
 
 // Import the pending deliveries type
 import { pendingDeliveries } from "@/lib/delivery/deliveries"
@@ -27,7 +28,11 @@ type Customer = {
   phoneNumber: string
 }
 
-export function ChatButton() {
+type ChatButtonProps = {
+  isHighContrast: boolean
+}
+
+export function ChatButton({ isHighContrast }: ChatButtonProps) {
   const [isOpen, setIsOpen] = useState(false)
   const [selectedCustomer, setSelectedCustomer] = useState<Customer | null>(null)
   const [searchQuery, setSearchQuery] = useState("")
@@ -158,10 +163,18 @@ export function ChatButton() {
           <DropdownMenuTrigger asChild>
             <Button
               className={`h-14 w-14 rounded-full shadow-lg p-0 ${
-                isOpen ? "bg-gray-700 hover:bg-gray-800" : "bg-[#0052CC] hover:bg-[#0039A6]"
+                isHighContrast
+                  ? "bg-black text-white hover:bg-black"
+                  : isOpen
+                    ? "bg-gray-700 hover:bg-gray-800"
+                    : "bg-[#0052CC] hover:bg-[#0039A6]"
               }`}
             >
-              {isOpen ? <X className="h-6 w-6" /> : <MessageSquare className="h-6 w-6" />}
+              {isOpen ? (
+                <X className={`h-6 w-6 ${isHighContrast ? "text-white" : ""}`} />
+              ) : (
+                <MessageSquare className={`h-6 w-6 ${isHighContrast ? "text-white" : ""}`} />
+              )}
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end" className="w-56">
