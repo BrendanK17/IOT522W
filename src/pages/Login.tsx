@@ -33,7 +33,7 @@ const Login = () => {
   };
 
   return (
-    <div className="flex flex-col h-screen">
+    <div className="flex flex-col min-h-screen">
       <Header />
       <div className="flex min-h-screen items-center justify-center bg-gradient-to-b from-[#E6F0FF] to-white p-4">
         <Toaster position="top-right" />
