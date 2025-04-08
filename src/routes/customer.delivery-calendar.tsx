@@ -1,10 +1,11 @@
+import { ProtectedRoute } from '@/context/ProtectedRoute'
 import DeliveryCalendar from '@/pages/CustomerCalendar'
 import { createFileRoute } from '@tanstack/react-router'
 
 export const Route = createFileRoute('/customer/delivery-calendar')({
-  component: RouteComponent,
+  component: () => (
+    <ProtectedRoute allowedRoles={["customer"]}>
+      <DeliveryCalendar />
+    </ProtectedRoute>
+  ),
 })
-
-function RouteComponent() {
-  return <DeliveryCalendar />
-}
