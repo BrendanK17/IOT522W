@@ -121,7 +121,7 @@ export default function Checkout() {
                 </SelectContent>
               </Select>
 
-            <Button className="w-full bg-blue-600 hover:bg-blue-700 text-white" type="submit">
+            <Button className="w-full bg-blue-600 hover:bg-blue-700 text-white" type="submit" onClick={() => navigate({ to: "/customer/track-order" })}>
               Place Order
             </Button>
             <Button
