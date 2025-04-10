@@ -455,6 +455,12 @@ export default function CustomerDeliveryCalendar() {
                     <Button variant="outline" className="rounded-lg border-gray-300">
                       Reschedule
                     </Button>
+                    <Button
+                    variant="outline"
+                    className="rounded-lg border-red-300 bg-red-100 text-red-700 hover:bg-red-200 -ml-20"
+                    >
+                    Cancel
+                    </Button>
                     <Button className="bg-[#0052CC] rounded-lg">View Details</Button>
                   </CardFooter>
                 </Card>

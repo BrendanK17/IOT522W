@@ -30,7 +30,7 @@ export default function Checkout() {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     alert("Order placed successfully!");
-    navigate({ to: "/" });
+    navigate({ to: "/customer/track-order" });
   };
 
   // Calculate the total price from the basket context
