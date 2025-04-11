@@ -1,12 +1,11 @@
 import { Link } from "@tanstack/react-router";
 import { ArrowRight, ChefHat, Clock, CreditCard, MapPin, Utensils } from "lucide-react"
-
 import { Button } from "@/components/ui/button"
-
 import orderFoodImg from "../assets/order_food.png";
 import prepareFoodImg from "../assets/prepare_food.png";
 import deliverFoodImg from "../assets/deliver_food.png";
 import Header from "@/components/generic/Header";
+import video_image from "../assets/DeskDashVideo.png"
 
 export default function LandingPage() {
 
@@ -237,7 +236,63 @@ export default function LandingPage() {
               </div>
             </div>
           </div>
-        </section>
+          </section>
+
+          <section id="video-demo" className="w-full py-12 md:py-24 lg:py-32 bg-[#E6F0FF] relative text-center">
+  {/* Floating bubble graphics in the background */}
+  <div className="absolute inset-0 overflow-hidden pointer-events-none z-0">
+    <div className="food-item absolute" style={{ top: "10%", right: "85%" }}>
+      <div className="h-16 w-16 rounded-full bg-[#FFD700]/20 shadow-lg"></div>
+    </div>
+    <div className="food-item absolute" style={{ top: "70%", left: "5%" }}>
+      <div className="h-12 w-12 rounded-full bg-[#FF6347]/20 shadow-lg"></div>
+    </div>
+    <div className="food-item absolute" style={{ bottom: "50%", right: "5%" }}>
+      <div className="h-14 w-14 rounded-full bg-[#32CD32]/20 shadow-lg"></div>
+    </div>
+    <div className="food-item absolute" style={{ bottom: "7%", right: "40%" }}>
+      <div className="h-10 w-10 rounded-full bg-[#9370DB]/20 shadow-lg"></div>
+    </div>
+    <div className="food-item absolute" style={{ top: "7%", right: "15%" }}>
+      <div className="h-10 w-10 rounded-full bg-[#F794ED]/20 shadow-lg"></div>
+    </div>
+  </div>
+
+  {/* Video Section */}
+  <h2 className="text-3xl font-bold tracking-tighter md:text-4xl">
+    DeskDash Video Tutorial
+  </h2>
+
+  {/* Add some margin-top for spacing between the heading and the text */}
+  <p className="max-w-[900px] text-muted-foreground md:text-xl mx-auto mt-4">
+    See how DeskDash brings together customers, kitchens, and couriers in one smooth experience.
+  </p>
+
+  <div className="mt-16 relative w-full max-w-4xl mx-auto rounded-xl overflow-hidden shadow-lg group cursor-pointer">
+    <img
+      src={video_image}
+      alt="DeskDash Video Tutorial"
+      className="w-full h-auto object-cover"
+    />
+    {/* Overlay */}
+    <div className="absolute inset-0 bg-black/40 transition-opacity group-hover:bg-black/50 flex items-center justify-center">
+      {/* Play Icon */}
+      <div className="bg-white p-3 rounded-full shadow-lg">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="#0052CC"
+          viewBox="0 0 24 24"
+          width="40"
+          height="40"
+        >
+          <path d="M8 5v14l11-7z" />
+        </svg>
+      </div>
+    </div>
+  </div>
+</section>
+
+
 
         <section className="w-full py-12 md:py-24 lg:py-32 bg-[#0052CC] text-white">
         <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
