@@ -99,10 +99,14 @@ export default function Checkout() {
                   <span>{formData.deliveryTime || "Select Delivery Time"}</span>
                 </SelectTrigger>
                 <SelectContent className="bg-white border border-gray-300 rounded-md shadow-lg">
-                  <SelectItem value="12:00">12:00</SelectItem>
-                  <SelectItem value="12:30">12:30</SelectItem>
-                  <SelectItem value="13:00">13:00</SelectItem>
-                  <SelectItem value="13:30">13:30</SelectItem>
+                  <SelectItem value="12:00-12:15">12:00-12:15</SelectItem>
+                  <SelectItem value="12:15-12:30">12:15-12:30</SelectItem>
+                  <SelectItem value="12:30-12:45">12:30-12:45</SelectItem>
+                  <SelectItem value="12:45-13:00">12:45-13:00</SelectItem>
+                  <SelectItem value="13:00-13:15">13:00-13:15</SelectItem>
+                  <SelectItem value="13:15-13:30">13:15-13:30</SelectItem>
+                  <SelectItem value="13:30-13:45">13:30-13:45</SelectItem>
+                  <SelectItem value="13:45-14:00">13:45-14:00</SelectItem>
                 </SelectContent>
               </Select>
 

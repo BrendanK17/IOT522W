@@ -22,7 +22,8 @@ const getFirstDayOfMonth = (year: number, month: number) => {
 const sampleDeliveries = [
   {
     id: "DEL-1001",
-    date: new Date(2025, 3, 8, 10, 30), // April 8, 2025, 10:30 AM
+    date: new Date(2025, 3, 8),
+    time: "10:30-10:45",
     items: ["Cappuccino", "Blueberry Muffin"],
     status: "scheduled",
     location: "Floor 2, Desk 2B",
@@ -30,7 +31,8 @@ const sampleDeliveries = [
   },
   {
     id: "DEL-1002",
-    date: new Date(2025, 3, 12, 14, 15), // April 12, 2025, 2:15 PM
+    date: new Date(2025, 3, 12),
+    time: "14:15-14:30",
     items: ["Chicken Salad", "Sparkling Water"],
     status: "scheduled",
     location: "Floor 3, Meeting Room A",
@@ -38,7 +40,8 @@ const sampleDeliveries = [
   },
   {
     id: "DEL-1003",
-    date: new Date(2025, 3, 15, 9, 0), // April 15, 2025, 9:00 AM
+    date: new Date(2025, 3, 15),
+    time: "09:00-09:15",
     items: ["Breakfast Platter", "Orange Juice"],
     status: "scheduled",
     location: "Floor 1, Desk 1C",
@@ -46,7 +49,8 @@ const sampleDeliveries = [
   },
   {
     id: "DEL-1004",
-    date: new Date(2025, 3, 15, 12, 30), // April 15, 2025, 12:30 PM
+    date: new Date(2025, 3, 15),
+    time: "12:30-12:45",
     items: ["Veggie Wrap", "Iced Tea"],
     status: "scheduled",
     location: "Floor 2, Desk 2D",
@@ -54,7 +58,8 @@ const sampleDeliveries = [
   },
   {
     id: "DEL-1005",
-    date: new Date(2025, 3, 22, 11, 45), // April 22, 2025, 11:45 AM
+    date: new Date(2025, 3, 22),
+    time: "11:45-12:00",
     items: ["Caesar Salad", "Lemonade"],
     status: "scheduled",
     location: "Floor 4, Executive Suite",
@@ -62,24 +67,14 @@ const sampleDeliveries = [
   },
   {
     id: "DEL-1006",
-    date: new Date(2025, 3, 28, 15, 0), // April 28, 2025, 3:00 PM
+    date: new Date(2025, 3, 28),
+    time: "15:00-15:15",
     items: ["Coffee Box (12 cups)", "Assorted Pastries"],
     status: "scheduled",
     location: "Floor 3, Conference Room B",
     notes: "For the quarterly review meeting",
   },
 ]
-
-// Format time to 12-hour format
-const formatTime = (date: Date) => {
-  let hours = date.getHours()
-  const minutes = date.getMinutes()
-  const ampm = hours >= 12 ? "PM" : "AM"
-  hours = hours % 12
-  hours = hours ? hours : 12 // the hour '0' should be '12'
-  const minutesStr = minutes < 10 ? "0" + minutes : minutes
-  return `${hours}:${minutesStr} ${ampm}`
-}
 
 // Format date to Month Day, Year
 const formatDate = (date: Date) => {
@@ -101,7 +96,6 @@ export default function CustomerDeliveryCalendar() {
   const [activeTab, setActiveTab] = useState("orders");
   const [sidebarOpen, setSidebarOpen] = useState(false)
 
-  // Month names for display
   const monthNames = [
     "January",
     "February",
@@ -117,7 +111,6 @@ export default function CustomerDeliveryCalendar() {
     "December",
   ]
 
-  // Day names for display
   const dayNames = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"]
 
   // Navigate to previous month
@@ -214,7 +207,7 @@ export default function CustomerDeliveryCalendar() {
                     className="text-xs bg-[#0052CC]/10 text-[#0052CC] rounded p-1 truncate flex items-center"
                   >
                     <Clock className="h-3 w-3 mr-1 flex-shrink-0" />
-                    {formatTime(delivery.date)}
+                    {delivery.time}
                   </div>
                 ))}
               {deliveryCount > 2 && <div className="text-xs text-gray-500 italic">+ {deliveryCount - 2} more</div>}
@@ -377,7 +370,7 @@ export default function CustomerDeliveryCalendar() {
                             </div>
                             <div className="flex items-center text-sm text-muted-foreground">
                               <Clock className="mr-1 h-3 w-3" />
-                              {formatDate(delivery.date)} at {formatTime(delivery.date)}
+                              {formatDate(delivery.date)} at {delivery.time}
                             </div>
                           </div>
                         </div>
@@ -420,7 +413,7 @@ export default function CustomerDeliveryCalendar() {
                       <Badge variant="outline" className="bg-[#0052CC] text-white border-none">
                         {delivery.id}
                       </Badge>
-                      <p className="text-sm font-medium">{formatTime(delivery.date)}</p>
+                      <p className="text-sm font-medium">{delivery.time}</p>
                     </div>
                   </CardHeader>
                   <CardContent>
