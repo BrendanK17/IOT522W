@@ -1,54 +1,55 @@
-# React + TypeScript + Vite
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+# DeskDash Project Setup Guide
 
-Currently, two official plugins are available:
+This guide will help you download and run DeskDash locally.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+---
 
-## Expanding the ESLint configuration
+## Getting Started
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+Follow these steps to download DeskDash and run it on your computer.
 
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+### What You Need
+Before you begin, make sure you have the following installed:
+- **Node.js** (version 16 or higher recommended) — [Download here](https://nodejs.org/)
+- **Git** — [Download here](https://git-scm.com/downloads)
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+### Step 1: Open the Project
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+1. Go into the project folder:
+   ```
+   cd IOT522W
+   ```
 
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
-```
+---
+
+### Step 2: Install Dependencies
+
+1. In the terminal, run this command to install everything the app needs:
+   ```
+   npm install
+   ```
+
+This might take a minute as it is downloading all the packages for the project
+
+---
+
+### Step 3: Start the App
+
+1. Now start the app by running:
+   ```
+   npm run dev
+   ```
+
+2. After a few seconds, it will give you a local link like:
+   ```
+   Local: http://localhost:5173/
+   ```
+
+3. Click or copy-paste that link into your browser to see the app!
+
+---
+
+### Done!
+
+If everything worked, the app should now be running in your browser.  
