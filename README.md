@@ -1,13 +1,13 @@
 
-# IOT522W Project Setup Guide
+# DeskDash Project Setup Guide
 
-This guide will help you download and run this project on your own computer.
+This guide will help you download and run DeskDash locally.
 
 ---
 
 ## Getting Started
 
-Follow these steps to download this project and run it on your computer.
+Follow these steps to download DeskDash and run it on your computer.
 
 ### What You Need
 Before you begin, make sure you have the following installed:
