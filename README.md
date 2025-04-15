@@ -16,7 +16,7 @@ Before you begin, make sure you have the following installed:
 
 ### Step 1: Open the Project
 
-1. After it's downloaded, go into the project folder:
+1. Go into the project folder:
    ```
    cd IOT522W
    ```
